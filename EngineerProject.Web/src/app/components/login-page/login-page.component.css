@@ -1,0 +1,141 @@
+.login-panel__header-container {
+    width: 100vw;
+    height: 200px;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../../assets/img/login-header.jpg');
+    background-size: cover;
+}
+
+.login-panel__header {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.login-panel__form {
+    width: 50%;
+    margin: 50px auto;
+    padding-left: 20px;
+    border-left: 5px solid #19cc89;
+}
+
+.login-panel__form fieldset {
+    border: none;
+    padding: 0;
+}
+
+.login-panel__field {
+    margin: 40px 0;
+    display: flex;
+    align-items: center;
+}
+
+.login-panel__label {
+    margin-right: 10px;
+}
+
+.login-panel__input {
+    border: none;
+    border-bottom: 1px solid #e4dddd;
+    background: none !important;
+    padding: 5px;
+    width: 100%;
+}
+
+.login-panel__button {
+    background: #19cc89;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 35px;
+    color: white;
+    float: right;
+}
+
+.login-panel__button:hover {
+    cursor: pointer;
+    background: #10b577;
+}
+
+.forgot-password__link {
+    opacity: 0.6;
+    font-size: small;
+}
+
+
+
+
+
+
+/*
+.login-website {
+    width: 100vw;
+    height: calc(100vh - 8rem);
+    background-image: url("https://www.mojekonferencje.pl/media/objects/object5673/4.jpg");
+    background-size: 120% 120%;
+    transform: scale(1.1);
+    background-repeat: no-repeat;
+    overflow: hidden;
+    filter: blur(4px);
+    z-index: -1;
+    position: absolute;
+}
+
+.log-in-container {
+    border: 1px solid rgba(222, 222, 222, 0.4);
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 80px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, .6);
+}
+
+.log-in-container__title {
+    text-align: left;
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    font-weight: 500;
+    color: #673ab7;
+}
+
+.log-in-container__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.log-in-container__label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.log-in-container__icon {
+    background: #673ab7;
+    padding: 10px;
+    color: white;
+    font-size: 1rem;
+    width: auto;
+    height: auto;
+}
+
+.log-in-container__input {
+    border: 1px solid rgba(222, 222, 222, 0.4);
+    padding: 8px 0;
+    margin: 0;
+    padding-left: 10px;
+}
+
+.log-in-container__submit-button {
+    background: #673ab7;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}*/

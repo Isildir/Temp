@@ -1,0 +1,34 @@
+<div class="profile">
+  <div class="profile-password-change">
+    <form [formGroup]="passwordChangeForm" (ngSubmit)="onPasswordChange()" class="form">
+      <h3 class="form__header">Zmiana hasła</h3>
+      <fieldset>
+        <div class="form__form-field">
+          <label class="form__label">Stare hasło:</label>
+          <input name="oldPassword" formControlName="oldPassword" type="password" class="form__input">
+        </div>
+        <div class="form__form-field">
+          <label class="form__label">Nowe hasło:</label>
+          <input name="password" formControlName="password" type="password" class="form__input">
+        </div>
+        <div class="form__form-field">
+          <label class="form__label">Powtórz nowe hasło:</label>
+          <input name="confirmedPassword" formControlName="confirmedPassword" type="password" class="form__input">
+        </div>
+        <div *ngIf="errors" class="errors__header">
+          <div *ngFor="let error of errors" [innerHTML]="error" class="errors__row"></div>
+        </div>
+        <div class="form__form-field form__form-button">
+          <button class="btn btn-primary form__button">Zmień</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="profile-settings">
+    <h3 class="profile-settings__header">Pozostałe ustawienia</h3>
+    <div class="profile-settings__row">
+      <p>Chce otrzymywać wiadomości e-mail</p>
+      <mat-checkbox [checked]="userData.UseNotifications" (click)="changeEmailReceiving()"></mat-checkbox>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div>
+    <div class="login-panel__header-container">
+        <h1 class="login-panel__header">Logowanie</h1>
+    </div>
+    <form [formGroup]="loginForm" class="login-panel__form">
+        <fieldset>  
+            <div class="form-field login-panel__field">
+                <label class="login-panel__label">Email:</label>
+                <input name="login" formControlName="login" type="text" class="login-panel__input">
+            </div>
+            <div *ngIf="loginMode||registerMode" class="form-field login-panel__field">
+                <label class="login-panel__label">Hasło:</label>
+                <input name="password" formControlName="password" type="password" class="login-panel__input">
+            </div>  
+            <div *ngIf="registerMode" class="form-field login-panel__field">
+                <label class="login-panel__label">Powtórz hasło:</label>
+                <input name="confirmedPassword" formControlName="confirmedPassword" type="password" class="login-panel__input">
+            </div>
+        </fieldset>
+        <a *ngIf="loginMode||recoveryMode" (click)="onPasswordRecoveryMode()" class="forgot-password__link">{{ !loginMode && recoveryMode ? "Powrót" : "Przypomnij hasło" }}</a>
+        <a *ngIf="loginMode||registerMode" (click)="onRegisterModeChange()" class="forgot-password__link">{{ !loginMode && registerMode ? "Powrót" : "Zarejestruj" }}</a>
+        <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary login-panel__button">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Zatwierdź
+        </button>
+      </form>
+</div>

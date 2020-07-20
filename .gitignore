@@ -1,0 +1,11 @@
+.vs
+EngineerProject.API/bin
+EngineerProject.API/obj
+EngineerProject.Commons/bin
+EngineerProject.Commons/obj
+EngineerProject.Mobile/bin
+EngineerProject.Mobile/obj
+EngineerProject.Mobile.Android/bin
+EngineerProject.Mobile.Android/obj
+EngineerProject.Web/dist
+EngineerProject.Web/node_modules
