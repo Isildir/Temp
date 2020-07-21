@@ -12,6 +12,8 @@ namespace EngineerProject.API.Entities.Models
         [Key]
         public int Id { get; set; }
 
+        public bool IsPrivate { get; set; }
+
         [Required, StringLength(100)]
         public string Name { get; set; }
 

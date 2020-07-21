@@ -16,6 +16,9 @@ namespace EngineerProject.API.Entities.Models
         [Key]
         public int Id { get; set; }
 
+        [Required, StringLength(100)]
+        public string Login { get; set; }
+
         public List<Message> Messages { get; set; }
 
         [Required]
@@ -23,6 +26,8 @@ namespace EngineerProject.API.Entities.Models
 
         [Required]
         public byte[] PasswordSalt { get; set; }
+
+        public bool ReceiveNotifications { get; set; }
 
         public string RecoveryCode { get; set; }
 

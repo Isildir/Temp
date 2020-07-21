@@ -1,8 +1,8 @@
 ﻿namespace EngineerProject.Commons.Dtos
 {
-    public class UserPasswordResetDto
+    public class PasswordRecoveryDto
     {
-        public string OldPassword { get; set; }
+        public string Code { get; set; }
 
         public string Password { get; set; }
     }

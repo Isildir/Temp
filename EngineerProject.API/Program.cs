@@ -1,6 +1,6 @@
+using EngineerProject.API.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using EngineerProject.API.Configuration;
 
 namespace EngineerProject.API
 {

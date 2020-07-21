@@ -29,19 +29,20 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Authenticate([FromBody] UserDto userDto)
+        public IActionResult Authenticate([FromBody] UserLoginDto userDto)
         {
-            if (string.IsNullOrEmpty(userDto.Email) || string.IsNullOrEmpty(userDto.Password))
+            if (string.IsNullOrEmpty(userDto.Identifier) || string.IsNullOrEmpty(userDto.Password))
                 return BadRequest();
 
-            User user;
+            var user = context.Users.SingleOrDefault(x => x.Email.Equals(userDto.Identifier) || x.Login.Equals(userDto.Identifier));
+
+            if (user == null)
+                return NotFound();
 
             try
             {
-                user = context.Users.SingleOrDefault(x => x.Email.Equals(userDto.Email));
-
-                if (user == null || !VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
-                    return BadRequest(new { message = "Username or password is incorrect" });
+                if (!VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
+                    return BadRequest("Username or password is incorrect");
             }
             catch (Exception ex)
             {
@@ -65,26 +66,14 @@ namespace EngineerProject.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new
-            {
-                user.Id,
-                user.Email,
-                Token = tokenString
-            });
-        }
-
-        [HttpGet, Authorize]
-        public IActionResult GetProfile()
-        {
-            return Ok();
+            return Ok(tokenString);
         }
 
         [HttpPost, Authorize]
         public IActionResult ChangePassword([FromBody] UserPasswordResetDto model)
         {
             var userId = ClaimsReader.GetUserId(Request.HttpContext.Request);
-
-            var user = context.Users.FirstOrDefault(a => a.Id == userId);
+            var user = context.Users.SingleOrDefault(a => a.Id == userId);
 
             if (user == null)
                 return NotFound();
@@ -133,11 +122,28 @@ namespace EngineerProject.API.Controllers
             return Ok();
         }
 
+        [HttpGet, Authorize]
+        public IActionResult GetProfile()
+        {
+            var userId = ClaimsReader.GetUserId(HttpContext.Request);
+            var user = context.Users.SingleOrDefault(x => x.Id == userId);
+
+            return Ok(new UserProfileDto
+            {
+                Login = user.Login,
+                Email = user.Email,
+                ReceiveNotifications = user.ReceiveNotifications
+            });
+        }
+
         [HttpPost]
-        public IActionResult Register([FromBody] UserDto userDto)
+        public IActionResult Register([FromBody] UserRegisterDto userDto)
         {
             if (!UserValidators.CheckIfEmailIsCorrect(userDto.Email))
                 return BadRequest("Podaj poprawny email");
+
+            if (string.IsNullOrEmpty(userDto.Login))
+                return BadRequest("Podaj poprawny login");
 
             if (string.IsNullOrWhiteSpace(userDto.Password))
                 return BadRequest("Podaj poprawne hasło");
@@ -145,11 +151,14 @@ namespace EngineerProject.API.Controllers
             if (context.Users.Any(x => x.Email.Equals(userDto.Email)))
                 return BadRequest($"Adres email {userDto.Email} jest już zajęty");
 
+            if (context.Users.Any(x => x.Login.Equals(userDto.Login)))
+                return BadRequest($"Login {userDto.Login} jest już zajęty");
+
             CreatePasswordHash(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var user = new User
             {
-                Id = userDto.Id,
+                Login = userDto.Login,
                 Email = userDto.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt
@@ -172,9 +181,9 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendPasswordRecovery([FromBody] string login)
+        public IActionResult SendPasswordRecovery([FromBody] string identifier)
         {
-            var user = context.Users.FirstOrDefault(a => a.Email.Equals(login));
+            var user = context.Users.FirstOrDefault(a => a.Email.Equals(identifier) || a.Login.Equals(identifier));
 
             if (user == null)
                 return BadRequest("Podany użytkownik nie istnieje");
@@ -201,7 +210,7 @@ namespace EngineerProject.API.Controllers
         [HttpPost]
         public IActionResult UsePasswordRecovery([FromBody] PasswordRecoveryDto model)
         {
-            var user = context.Users.FirstOrDefault(a => a.Email.Equals(model.Email) && a.Email.Equals(model.Email) && a.RecoveryCode.Equals(model.Code));
+            var user = context.Users.FirstOrDefault(a => a.RecoveryCode.Equals(model.Code));
 
             if (user == null)
                 return BadRequest("Podane błędne dane");
