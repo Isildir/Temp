@@ -28,6 +28,10 @@
     padding: 0;
 }
 
+.login-panel__form a {
+    padding-right: 5px;
+}
+
 .login-panel__field {
     margin: 40px 0;
     display: flex;

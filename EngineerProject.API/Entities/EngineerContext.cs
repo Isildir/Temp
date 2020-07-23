@@ -8,8 +8,10 @@ namespace EngineerProject.API.Entities
     {
         public EngineerContext(DbContextOptions<EngineerContext> options) : base(options)
         {
+#if Release
             if (Database.GetPendingMigrations().Any())
                 Database.Migrate();
+#endif
         }
 
         public DbSet<File> Files { get; set; }

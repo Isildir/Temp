@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authorization/authentication.service';
+import { UserService } from 'src/app/services/data-services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: UserService
     ) {
       if (!this.authenticationService.currentUserValue) {
         this.router.navigate(['/login']);

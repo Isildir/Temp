@@ -1,7 +1,7 @@
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { MatInputModule } from '@angular/material/input';
-import { JwtInterceptor } from './services/authorization/jwt-interceptor.service';
-import { ErrorInterceptor } from './services/authorization/error-interceptor.service';
+import { JwtInterceptor } from './services/utility/jwt-interceptor.service';
+import { ErrorInterceptor } from './services/utility/error-interceptor.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';

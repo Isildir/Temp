@@ -28,7 +28,7 @@ namespace EngineerProject.API.Utility
             {
                 smtpClient.Send(mailMessage);
             }
-            catch (Exception)
+            catch (Exception e)
             {
             }
         }
@@ -43,7 +43,7 @@ namespace EngineerProject.API.Utility
 
         private SmtpClient ConfigureSmtpClient() => new SmtpClient
         {
-            Port = 25,
+            Port = 587,
             Host = appSettings.SmtpServerAddress,
             EnableSsl = true,
             UseDefaultCredentials = false,

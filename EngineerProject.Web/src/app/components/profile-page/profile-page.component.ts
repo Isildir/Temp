@@ -1,4 +1,4 @@
-import { AuthenticationService } from 'src/app/services/authorization/authentication.service';
+import { UserService } from 'src/app/services/data-services/user.service';
 import { UserProfileData } from './../../models/UserProfileData';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,7 +17,7 @@ export class ProfilePageComponent implements OnInit {
   public errors: string[];
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private authenticationService: UserService,
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private staticValues: StaticValuesService) { }

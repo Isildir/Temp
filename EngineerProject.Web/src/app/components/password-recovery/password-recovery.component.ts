@@ -1,4 +1,4 @@
-import { AuthenticationService } from 'src/app/services/authorization/authentication.service';
+import { UserService } from 'src/app/services/data-services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
@@ -22,7 +22,7 @@ public errors: string[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private authenticationService: AuthenticationService,
+    private authenticationService: UserService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private staticValues: StaticValuesService,
@@ -41,8 +41,7 @@ public errors: string[];
     );
 
     this.passwordRecoveryForm = this.formBuilder.group({
-      login: ['', Validators.required],
-      email: ['', Validators.required],
+      identifier: ['', Validators.required],
       password: ['', Validators.required],
       confirmedPassword: ['', Validators.required]
     });
@@ -51,8 +50,7 @@ public errors: string[];
   onSubmit() {
     this.errors = [];
 
-    const login = this.passwordRecoveryForm.controls.login.value;
-    const email = this.passwordRecoveryForm.controls.email.value;
+    const identifier = this.passwordRecoveryForm.controls.identifier.value;
     const password = this.passwordRecoveryForm.controls.password.value;
     const confirmedPassword = this.passwordRecoveryForm.controls.confirmedPassword.value;
 
@@ -70,7 +68,7 @@ public errors: string[];
       return;
     }
 
-    this.authenticationService.usePasswordRecovery(login, email, password, this.recoveryCode)
+    this.authenticationService.usePasswordRecovery(identifier, password, this.recoveryCode)
     .subscribe(
       () => {
         this.router.navigate(['/login']);

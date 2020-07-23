@@ -1,8 +1,8 @@
+import { UserProfileData } from './models/UserProfileData';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from './services/authorization/authentication.service';
-import { User } from './models/User';
+import { UserService } from './services/data-services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,11 @@ import { User } from './models/User';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentUser: User;
+  currentUser: UserProfileData;
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: UserService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }

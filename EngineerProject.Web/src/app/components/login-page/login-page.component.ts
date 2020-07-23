@@ -1,8 +1,9 @@
+import { LoginMode } from './../../models/LoginMode.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AuthenticationService } from '../../services/authorization/authentication.service';
+import { UserService } from '../../services/data-services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -11,98 +12,91 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
-
+  public LoginMode = LoginMode;
   public loginForm: FormGroup;
   public loading = false;
   public returnUrl: string;
-  public loginMode = true;
-  public registerMode = false;
-  public recoveryMode = false;
+  public loginMode = LoginMode.Login;
 
-    constructor(
-      private formBuilder: FormBuilder,
-      private route: ActivatedRoute,
-      private router: Router,
-      private authenticationService: AuthenticationService,
-      private snackBar: MatSnackBar
-      ) {
-        if (this.authenticationService.currentUserValue) {
-          /*if (this.authenticationService.currentUserValue.IsAdmin) {
-            this.router.navigate(['/clients']);
-          } else {
-            this.router.navigate(['/files']);
-          }*/
-        }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: UserService,
+    private snackBar: MatSnackBar
+    ) {
+      if (this.authenticationService.currentUserValue) {
+        this.router.navigate(['/groupsMenu']);
       }
-
-    ngOnInit() {
-      this.loginForm = this.formBuilder.group({
-        login: ['', Validators.required],
-        password: [''],
-        confirmedPassword: ['']
-      });
-
-      this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
 
-    onPasswordRecoveryMode() {
-      this.recoveryMode = !this.recoveryMode;
-      this.loginMode = !this.recoveryMode;
-    }
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      identifier: [''],
+      login: [''],
+      email: [''],
+      password: [''],
+      confirmedPassword: ['']
+    });
 
-    onRegisterModeChange() {
-      this.registerMode = !this.registerMode;
-      this.loginMode = !this.registerMode;
-    }
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+  }
 
-    resetModes() {
-      this.loginMode = true;
-      this.recoveryMode = false;
-      this.registerMode = false;
-    }
+  onPasswordRecoveryMode() {
+    this.loginMode = LoginMode.Recovery;
+  }
 
-    onSubmit() {
-      if (this.loginForm.invalid) {
-        return;
-      }
+  onRegisterModeChange() {
+    this.loginMode = LoginMode.Register;
+  }
 
-      const userName = this.loginForm.controls.login.value;
+  onReturnModeChange() {
+    this.loginMode = LoginMode.Login;
+  }
 
-      if (this.recoveryMode) {
-        this.authenticationService.sendPasswordRecovery(userName)
-        .subscribe(() => {
-          this.resetModes();
-          this.snackBar.open('Email z nowym hasłem został wysłany', 'Ok', { duration: 5000 });
+  onSubmit() {
+    const identifier = this.loginForm.controls.identifier.value;
+    const login = this.loginForm.controls.login.value;
+    const email = this.loginForm.controls.email.value;
+    const password = this.loginForm.controls.password.value;
+    const confirmedPassword = this.loginForm.controls.confirmedPassword.value;
+
+console.log("sadasd");
+
+    switch (this.loginMode) {
+      case LoginMode.Recovery:
+        console.log("sadasdasdasdasd");
+        this.authenticationService.sendPasswordRecovery(identifier)
+          .subscribe(() => {
+            this.onReturnModeChange();
+            this.snackBar.open('Email z nowym hasłem został wysłany', 'Ok', { duration: 5000 });
           },
           error => this.snackBar.open(error, 'Ok', { duration: 30000 }));
-      } else if (this.registerMode) {
-        const password = this.loginForm.controls.password.value;
-        const confirmedPassword = this.loginForm.controls.confirmedPassword.value;
-
+        break;
+      case LoginMode.Register:
         if (password !== confirmedPassword) {
           this.snackBar.open('Podane hasła różnią się', 'Ok', { duration: 10000 });
-          return;
+          break;
         }
 
-        this.authenticationService.register(userName, password)
-        .subscribe(() => {
-          this.resetModes();
-          this.snackBar.open('Rejestracja się powiodła, zaloguj się', 'Ok', { duration: 5000 });
+        this.authenticationService.register(login, email, password)
+          .subscribe(() => {
+            this.onReturnModeChange();
+            this.snackBar.open('Rejestracja się powiodła, zaloguj się', 'Ok', { duration: 5000 });
           },
           error => this.snackBar.open(error, 'Ok', { duration: 30000 }));
-      } else if (this.loginMode) {
-        const password = this.loginForm.controls.password.value;
-
-        this.authenticationService.login(userName, password)
-        .pipe(first())
-        .subscribe(
-            () => {
-              this.router.navigate([this.returnUrl]);
-            },
-            error => {
-              this.snackBar.open(error.error, 'Ok', { duration: 30000 });
-              this.loading = false;
-            });
-      }
+        break;
+      case LoginMode.Login:
+        this.authenticationService.login(identifier, password)
+          .pipe(first())
+          .subscribe(() => {
+            this.router.navigate([this.returnUrl]);
+          },
+          error => {
+            this.snackBar.open(error.error, 'Ok', { duration: 30000 });
+            this.loading = false;
+          });
+        break;
     }
+  }
 }

@@ -30,6 +30,9 @@ namespace EngineerProject.API.Controllers
             var userId = ClaimsReader.GetUserId(Request);
             var group = context.Groups.SingleOrDefault(a => a.Id == groupId);
 
+            if (group == null)
+                return NotFound();
+
             var connection = new UserGroup
             {
                 UserId = userId,
@@ -74,11 +77,11 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
+            if (!CheckAdminPriviliges(userId, data.GroupId))
+                return BadRequest();
+
             var targetId = context.Users.SingleOrDefault(a => a.Login.Equals(data.UserIdentifier) || a.Email.Equals(data.UserIdentifier)).Id;
             var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
-
-            if (!context.UserGroups.Any(a => a.GroupId == data.GroupId && a.UserId == userId && a.Relation == GroupRelation.Owner))
-                return BadRequest();
 
             var connection = new UserGroup
             {
@@ -106,12 +109,11 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            var targetId = context.Users.SingleOrDefault(a => a.Id == data.UserId).Id;
-            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
-
-            if (!context.UserGroups.Any(a => a.GroupId == data.GroupId && a.UserId == userId && a.Relation == GroupRelation.Owner))
+            if (!CheckAdminPriviliges(userId, data.GroupId))
                 return BadRequest();
 
+            var targetId = context.Users.SingleOrDefault(a => a.Id == data.UserId).Id;
+            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
             var connection = context.UserGroups.SingleOrDefault(a => a.UserId == targetId && a.GroupId == data.GroupId);
 
             connection.Relation = GroupRelation.Rejected;
@@ -133,12 +135,11 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            var targetId = context.Users.SingleOrDefault(a => a.Id == data.UserId).Id;
-            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
-
-            if (!context.UserGroups.Any(a => a.GroupId == data.GroupId && a.UserId == userId && a.Relation == GroupRelation.Owner))
+            if (!CheckAdminPriviliges(userId, data.GroupId))
                 return BadRequest();
 
+            var targetId = context.Users.SingleOrDefault(a => a.Id == data.UserId).Id;
+            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
             var connection = context.UserGroups.SingleOrDefault(a => a.UserId == targetId && a.GroupId == data.GroupId);
 
             connection.Relation = data.Accepted ? GroupRelation.User : GroupRelation.Rejected;
@@ -162,13 +163,62 @@ namespace EngineerProject.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] GroupCreateDto data)
         {
+            if (string.IsNullOrEmpty(data.Name))
+                return BadRequest();
+
+            var group = new Group
+            {
+                IsPrivate = data.IsPrivate,
+                Name = data.Name,
+                Description = data.Description
+            };
+
             var userId = ClaimsReader.GetUserId(Request);
+
+            var connection = new UserGroup
+            {
+                UserId = userId,
+                Group = group,
+                Relation = GroupRelation.Owner
+            };
+
+            context.Groups.Add(group);
+            context.UserGroups.Add(connection);
+
+            try
+            {
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
             var userId = ClaimsReader.GetUserId(Request);
+
+            if (CheckAdminPriviliges(userId, id))
+                return BadRequest();
+
+            var group = context.Groups.SingleOrDefault(a => a.Id == id);
+
+            context.Groups.Remove(group);
+
+            try
+            {
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost]
@@ -176,7 +226,20 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            return Ok(new GroupDetailsDto());
+            if (!CheckAdminPriviliges(userId, id))
+                return BadRequest();
+
+            var group = context.Groups.SingleOrDefault(a => a.Id == id);
+
+            var result = new GroupDetailsDto
+            {
+                Id = group.Id,
+                Name = group.Name,
+                Description = group.Description,
+                IsPrivate = group.IsPrivate
+            };
+
+            return Ok(result);
         }
 
         [HttpGet]
@@ -195,6 +258,8 @@ namespace EngineerProject.API.Controllers
 
             return Ok(result);
         }
+
+        private bool CheckAdminPriviliges(int userId, int groupId) => context.UserGroups.Any(a => a.GroupId == groupId && a.UserId == userId && a.Relation == GroupRelation.Owner);
 
         #endregion CRUD
     }

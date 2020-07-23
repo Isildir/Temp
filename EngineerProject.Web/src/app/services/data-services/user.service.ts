@@ -1,35 +1,34 @@
-import { UserProfileData } from './../../models/UserProfileData';
+import { UserProfileData } from '../../models/UserProfileData';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../../models/User';
 
 @Injectable({ providedIn: 'root' })
-export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+export class UserService {
+    private currentUserSubject: BehaviorSubject<UserProfileData>;
+    public currentUser: Observable<UserProfileData>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<UserProfileData>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
+    public get currentUserValue(): UserProfileData {
         return this.currentUserSubject.value;
     }
 
-    login(email: string, password: string) {
+    login(identifier: string, password: string) {
         const url = `${environment.apiUrl}users/authenticate`;
-        const options = { headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}) };
 
-        return this.http.post<any>(url, { email, password, grant_type: 'password' }, options)
+        return this.http.post<any>(url, { identifier, password, grant_type: 'password' })
         .pipe(map(user => {
-            const newUser = new User();
+            const newUser = new UserProfileData();
 
-            newUser.Email = user.email;
+            newUser.Login = user.login;
+            newUser.UseNotifications = user.useNotifications;
             newUser.Token = user.access_token;
 
             localStorage.setItem('currentUser', JSON.stringify(newUser));
@@ -44,11 +43,10 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
     }
 
-    register(email: string, password: string) {
+    register(login: string, email: string, password: string) {
         const url = `${environment.apiUrl}users/register`;
-        const options = { headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}) };
 
-        return this.http.post<any>(url, { email, password }, options);
+        return this.http.post<any>(url, { login, email, password });
     }
 
   getProfile() {
@@ -60,25 +58,19 @@ export class AuthenticationService {
   changeEmailReceiving() {
     const url = `${environment.apiUrl}users/ChangeEmailReceiving`;
 
-    const options = { headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}) };
-
-    return this.http.post<any>(url, {} , options);
+    return this.http.post<any>(url, {});
   }
 
   changePassword(oldPassword: string, newPassword: string) {
     const url = `${environment.apiUrl}users/ChangePassword`;
 
-    const options = { headers: new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'}) };
-
-    return this.http.post<any>(url, { oldPassword, password: newPassword }, options);
+    return this.http.post<any>(url, { oldPassword, password: newPassword });
   }
 
-  sendPasswordRecovery(userLogin: string) {
+  sendPasswordRecovery(identifier: string) {
     const url = `${environment.apiUrl}users/SendPasswordRecovery`;
 
-    const options = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
-
-    return this.http.post<any>(url, JSON.stringify(userLogin), options);
+    return this.http.post<any>(url, JSON.stringify(identifier));
   }
 
   checkPasswordRecovery(code: string) {
@@ -89,11 +81,9 @@ export class AuthenticationService {
     return this.http.post<any>(url,  JSON.stringify(code), options);
   }
 
-  usePasswordRecovery(login: string, email: string, password: string, code: string) {
+  usePasswordRecovery(identifier: string, password: string, code: string) {
     const url = `${environment.apiUrl}users/UsePasswordRecovery`;
 
-    const options = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
-
-    return this.http.post<any>(url, { login, code, email, password}, options);
+    return this.http.post<any>(url, { identifier, code, password});
   }
 }
