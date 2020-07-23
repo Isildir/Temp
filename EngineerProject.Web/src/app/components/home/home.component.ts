@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
     ) {
       if (!this.authenticationService.currentUserValue) {
         this.router.navigate(['/login']);
+      } else {
+        this.router.navigate(['/groups']);
       }
     }
 

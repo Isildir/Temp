@@ -1,7 +1,8 @@
 <!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
-    <a class="nav-item nav-link profile-button" routerLink="/profile">{{ currentUser.Email }}</a>
+    <a class="nav-item nav-link profile-button" routerLink="/profile">{{ currentUser.login }}</a>
+    <a class="nav-item nav-link profile-button" routerLink="/groups">Grupy</a>
     <a class="nav-item nav-link" (click)="logout()">Wyloguj</a>
   </div>
 </nav>

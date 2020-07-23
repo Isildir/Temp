@@ -34,7 +34,9 @@ namespace EngineerProject.API.Controllers
             if (string.IsNullOrEmpty(userDto.Identifier) || string.IsNullOrEmpty(userDto.Password))
                 return BadRequest();
 
-            var user = context.Users.SingleOrDefault(x => x.Email.Equals(userDto.Identifier) || x.Login.Equals(userDto.Identifier));
+            userDto.Identifier = userDto.Identifier.ToLower();
+
+            var user = context.Users.FirstOrDefault(x => x.Email.ToLower().Equals(userDto.Identifier) || x.Login.ToLower().Equals(userDto.Identifier));
 
             if (user == null)
                 return NotFound();
@@ -66,7 +68,30 @@ namespace EngineerProject.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new { login = user.Login, access_token = tokenString, useNotifications = user.ReceiveNotifications });
+            return Ok(new { login = user.Login, access_token = tokenString });
+        }
+
+        [HttpPost, Authorize]
+        public IActionResult ChangeNotificationSettings()
+        {
+            var userId = ClaimsReader.GetUserId(Request.HttpContext.Request);
+            var user = context.Users.SingleOrDefault(a => a.Id == userId);
+
+            if (user == null)
+                return NotFound();
+
+            user.ReceiveNotifications = !user.ReceiveNotifications;
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
 
         [HttpPost, Authorize]

@@ -1,4 +1,4 @@
-import { LoginMode } from './../../models/LoginMode.enum';
+import { LoginMode } from '../../models/LoginMode.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,11 +7,11 @@ import { UserService } from '../../services/data-services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginComponent implements OnInit {
   public LoginMode = LoginMode;
   public loginForm: FormGroup;
   public loading = false;
@@ -61,11 +61,8 @@ export class LoginPageComponent implements OnInit {
     const password = this.loginForm.controls.password.value;
     const confirmedPassword = this.loginForm.controls.confirmedPassword.value;
 
-console.log("sadasd");
-
     switch (this.loginMode) {
       case LoginMode.Recovery:
-        console.log("sadasdasdasdasd");
         this.authenticationService.sendPasswordRecovery(identifier)
           .subscribe(() => {
             this.onReturnModeChange();
@@ -88,7 +85,6 @@ console.log("sadasd");
         break;
       case LoginMode.Login:
         this.authenticationService.login(identifier, password)
-          .pipe(first())
           .subscribe(() => {
             this.router.navigate([this.returnUrl]);
           },

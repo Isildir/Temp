@@ -20,17 +20,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { HomeComponent } from './components/home-page/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       HomeComponent,
-      LoginPageComponent,
-      ProfilePageComponent,
+      LoginComponent,
+      ProfileComponent,
       PasswordRecoveryComponent
    ],
    imports: [

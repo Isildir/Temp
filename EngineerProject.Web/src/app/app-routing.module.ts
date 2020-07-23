@@ -1,16 +1,18 @@
+import { GroupsComponent } from './components/groups/groups.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginPageComponent } from './components/login-page/login-page.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/utility/auth-guard.service';
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './components/home-page/home.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginPageComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'groups', component: GroupsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
   { path: 'recovery/:code', component: PasswordRecoveryComponent },
 
   { path: '**', redirectTo: '' }

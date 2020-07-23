@@ -1,4 +1,4 @@
-import { UserProfileData } from './models/UserProfileData';
+import { UserData } from './models/UserData';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -10,17 +10,17 @@ import { UserService } from './services/data-services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentUser: UserProfileData;
+  currentUser: UserData;
 
   constructor(
     private router: Router,
-    private authenticationService: UserService
+    private userService: UserService
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.userService.currentUser.subscribe(data => this.currentUser = data);
   }
 
   logout() {
-    this.authenticationService.logout();
+    this.userService.logout();
     this.router.navigate(['/login']);
   }
 }

@@ -1,23 +1,22 @@
 import { UserService } from 'src/app/services/data-services/user.service';
-import { UserProfileData } from './../../models/UserProfileData';
+import { UserProfileData } from '../../models/UserProfileData';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { StaticValuesService } from 'src/app/services/sharedData/static-values.service';
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['../../shared-styles/shared-styles-forms.css', '../../shared-styles/shared-styles.css', './profile-page.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['../../shared-styles/shared-styles-forms.css', '../../shared-styles/shared-styles.css', './profile.component.css']
 })
-export class ProfilePageComponent implements OnInit {
-
+export class ProfileComponent implements OnInit {
   public userData: UserProfileData;
   public passwordChangeForm: FormGroup;
   public errors: string[];
 
   constructor(
-    private authenticationService: UserService,
+    private userService: UserService,
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private staticValues: StaticValuesService) { }
@@ -29,11 +28,12 @@ export class ProfilePageComponent implements OnInit {
       confirmedPassword: ['', Validators.required]
     });
 
-    this.authenticationService.getProfile().subscribe(data => this.userData = data);
+    this.userService.getProfile().subscribe(data => this.userData = data);
   }
 
-  changeEmailReceiving() {
-    this.authenticationService.changeEmailReceiving().subscribe();
+  changeNotificationSettings() {
+    this.userService.changeNotificationSettings()
+      .subscribe(() => this.userData.receiveNotifications = !this.userData.receiveNotifications);
   }
 
   onPasswordChange() {
@@ -55,9 +55,8 @@ export class ProfilePageComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.changePassword(oldPassword, password)
-    .subscribe(
-      data => {
+    this.userService.changePassword(oldPassword, password)
+    .subscribe(() => {
         this.passwordChangeForm.reset();
         this.snackBar.open('Hasło zostało zmienione', 'Ok', { duration: 5000 });
       },

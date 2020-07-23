@@ -27,8 +27,8 @@
   <div class="profile-settings">
     <h3 class="profile-settings__header">Pozostałe ustawienia</h3>
     <div class="profile-settings__row">
-      <p>Chce otrzymywać wiadomości e-mail</p>
-      <mat-checkbox [checked]="userData.UseNotifications" (click)="changeEmailReceiving()"></mat-checkbox>
+      <p>Chce otrzymywać powiadomienia na adres e-mail</p>
+      <mat-checkbox [checked]="userData?.receiveNotifications" (click)="changeNotificationSettings()"></mat-checkbox>
     </div>
   </div>
 </div>
