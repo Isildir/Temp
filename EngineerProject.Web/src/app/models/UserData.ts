@@ -1,4 +1,4 @@
-export class UserData {
+export interface UserData {
     login: string;
     token: string;
 }

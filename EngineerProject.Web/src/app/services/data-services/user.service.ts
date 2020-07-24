@@ -26,10 +26,10 @@ export class UserService {
 
       return this.http.post<any>(url, { identifier, password })
       .pipe(map(user => {
-          const newUser = new UserData();
-
-          newUser.login = user.login;
-          newUser.token = user.access_token;
+          const newUser = {
+            login: user.login,
+            token: user.access_token
+          };
 
           localStorage.setItem('currentUser', JSON.stringify(newUser));
           this.currentUserSubject.next(newUser);

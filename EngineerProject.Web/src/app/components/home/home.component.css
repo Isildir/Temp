@@ -1,0 +1,22 @@
+.group-select {
+    display: flex;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.example-form {
+    width: 90%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .group-tile-wrapper {
+      display: flex;
+      justify-content: space-evenly;
+  }
+
+  .group-tile {
+      margin: 20px;
+  }

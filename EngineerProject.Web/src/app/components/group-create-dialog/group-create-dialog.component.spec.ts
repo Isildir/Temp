@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { GroupsComponent } from './groups.component';
+import { GroupCreateDialogComponent } from './group-create-dialog.component';
 
-describe('GroupsComponent', () => {
-  let component: GroupsComponent;
-  let fixture: ComponentFixture<GroupsComponent>;
+describe('GroupCreateDialogComponent', () => {
+  let component: GroupCreateDialogComponent;
+  let fixture: ComponentFixture<GroupCreateDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupsComponent ]
+      declarations: [ GroupCreateDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupsComponent);
+    fixture = TestBed.createComponent(GroupCreateDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

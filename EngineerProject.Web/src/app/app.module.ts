@@ -1,3 +1,4 @@
+import { GroupTileComponent } from './components/group-tile/group-tile.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { MatInputModule } from '@angular/material/input';
 import { JwtInterceptor } from './services/utility/jwt-interceptor.service';
@@ -14,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +33,8 @@ import { ProfileComponent } from './components/profile/profile.component';
       HomeComponent,
       LoginComponent,
       ProfileComponent,
-      PasswordRecoveryComponent
+      PasswordRecoveryComponent,
+      GroupTileComponent
    ],
    imports: [
       HttpClientModule,
@@ -51,7 +54,8 @@ import { ProfileComponent } from './components/profile/profile.component';
       MatFormFieldModule,
       MatDatepickerModule,
       MatInputModule,
-      MatNativeDateModule
+      MatNativeDateModule,
+      MatAutocompleteModule
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

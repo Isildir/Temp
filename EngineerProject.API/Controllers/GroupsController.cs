@@ -69,7 +69,7 @@ namespace EngineerProject.API.Controllers
                     Name = a.Group.Name
                 }).ToList();
 
-            return Ok(new List<GroupGridDto>());
+            return Ok(result);
         }
 
         [HttpPost]
@@ -243,11 +243,13 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(QueryDto query)
+        public IActionResult Get([FromQuery] QueryDto query)
         {
+            var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
+
             var result = context.Groups
                 .OrderBy(a => a.Id)
-                .Where(a => a.Name.Contains(query.Contains))
+                .Where(a => a.Name.ToLower().Contains(formattedFilter))
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)
                 .Select(a => new GroupGridDto
