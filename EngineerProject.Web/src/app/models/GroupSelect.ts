@@ -1,4 +1,4 @@
-export interface Group {
+export interface GroupSelect {
     id: number;
     name: string;
 }

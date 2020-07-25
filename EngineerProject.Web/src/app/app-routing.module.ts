@@ -1,3 +1,4 @@
+import { GroupComponent } from './components/group/group.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -10,6 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'group/:id', component: GroupComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'recovery/:code', component: PasswordRecoveryComponent },
 

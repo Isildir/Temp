@@ -59,14 +59,14 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            var result = context.Users
-                .Include(a => a.Groups).ThenInclude(a => a.Group)
-                .FirstOrDefault(a => a.Id == userId)
-                .Groups
-                .Select(a => new GroupGridDto
+            var result = context.UserGroups
+                .Include(a => a.Group)
+                .Where(a => a.UserId == userId)
+                .Select(a => new GroupTileDto
                 {
-                    Id = a.Id,
-                    Name = a.Group.Name
+                    Id = a.Group.Id,
+                    Name = a.Group.Name,
+                    State = (byte)a.Relation
                 }).ToList();
 
             return Ok(result);
@@ -245,14 +245,15 @@ namespace EngineerProject.API.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] QueryDto query)
         {
+            var userId = ClaimsReader.GetUserId(Request);
             var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
 
             var result = context.Groups
                 .OrderBy(a => a.Id)
-                .Where(a => a.Name.ToLower().Contains(formattedFilter))
+                .Where(a => a.Name.ToLower().Contains(formattedFilter) && !a.Users.Any(b => b.UserId == userId))
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)
-                .Select(a => new GroupGridDto
+                .Select(a => new GroupTileDto
                 {
                     Id = a.Id,
                     Name = a.Name

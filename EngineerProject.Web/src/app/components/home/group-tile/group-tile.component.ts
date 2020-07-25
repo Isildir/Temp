@@ -1,4 +1,4 @@
-import { GroupTile } from './../../models/GroupTile';
+import { GroupTile } from './../../../models/GroupTile';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

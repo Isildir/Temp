@@ -1,4 +1,6 @@
-import { GroupTileComponent } from './components/group-tile/group-tile.component';
+import { GroupComponent } from './components/group/group.component';
+import { GroupCreateDialogComponent } from './components/home/group-create-dialog/group-create-dialog.component';
+import { GroupTileComponent } from './components/home/group-tile/group-tile.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { MatInputModule } from '@angular/material/input';
 import { JwtInterceptor } from './services/utility/jwt-interceptor.service';
@@ -34,7 +36,9 @@ import { ProfileComponent } from './components/profile/profile.component';
       LoginComponent,
       ProfileComponent,
       PasswordRecoveryComponent,
-      GroupTileComponent
+      GroupTileComponent,
+      GroupCreateDialogComponent,
+      GroupComponent
    ],
    imports: [
       HttpClientModule,

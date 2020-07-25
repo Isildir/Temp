@@ -2,7 +2,6 @@ import { LoginMode } from '../../models/LoginMode.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { UserService } from '../../services/data-services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -89,7 +88,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate([this.returnUrl]);
           },
           error => {
-            this.snackBar.open(error.error, 'Ok', { duration: 30000 });
+            this.snackBar.open(error, 'Ok', { duration: 30000 });
             this.loading = false;
           });
         break;

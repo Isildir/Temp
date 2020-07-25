@@ -1,23 +1,14 @@
+import { GroupSelect } from './../../models/GroupSelect';
+import { GroupCreateDialogComponent } from './group-create-dialog/group-create-dialog.component';
 import { HomeService } from './../../services/data-services/home.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/data-services/user.service';
 import { FormControl } from '@angular/forms';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map, startWith, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Group } from 'src/app/models/Group';
+import { Observable } from 'rxjs';
+import { startWith, debounceTime, switchMap } from 'rxjs/operators';
 
-//import { ClientAddDialogComponent } from './client-add-dialog/client-add-dialog.component';
-import { ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-//import { ClientsDataService } from 'src/app/services/data/clients-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import { AuthenticationService } from 'src/app/services/authorization/authentication.service';
-//import { ClientsDataSource } from 'src/app/utility/ClientsDataSource';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { merge } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { GroupTile } from 'src/app/models/GroupTile';
 
 @Component({
@@ -28,13 +19,17 @@ import { GroupTile } from 'src/app/models/GroupTile';
 
 export class HomeComponent implements OnInit {
   public stateCtrl = new FormControl();
-  public filteredGroups: Observable<Group[]>;
-  public userGroups: GroupTile[];
+  public filteredGroups: Observable<GroupSelect[]>;
+  public participantGroups: GroupTile[];
+  public invitedGroups: GroupTile[];
+  public awaitingGroups: GroupTile[];
+  public rejectedGroups: GroupTile[];
 
   constructor(
     private router: Router,
     private homeService: HomeService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
     ) {
       this.filteredGroups = this.stateCtrl.valueChanges
         .pipe(
@@ -43,23 +38,32 @@ export class HomeComponent implements OnInit {
           switchMap(filter => this.homeService.getGroups(filter || ''))
         );
 
-      this.homeService.getUserGroups().subscribe(data => this.userGroups = data);
+      this.reloadGroupTiles();
     }
 
   ngOnInit() {
   }
 
+  reloadGroupTiles() {
+    this.homeService.getUserGroups().subscribe(data => {
+      this.participantGroups = data.filter(a => a.state === 1 || a.state === 2);
+      this.invitedGroups = data.filter(a => a.state === 3);
+      this.awaitingGroups = data.filter(a => a.state === 4);
+      this.rejectedGroups = data.filter(a => a.state === 5);
+    });
+  }
+
   onGroupSelect(id: number) {
-    console.log("lel");
+    this.router.navigate([`/groups/${id}`]);
   }
 
   openClientCreationDialog() {
-    /*const dialogRef = this.dialog.open(ClientAddDialogComponent);
+    const dialogRef = this.dialog.open(GroupCreateDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.loadPage();
-        this.snackBar.open('Dostawca został dodany', 'Ok', { duration: 5000 });
+        this.reloadGroupTiles();
+        this.snackBar.open(result, 'Ok', { duration: 5000 });
       }
-    });*/
+    });
   }
 }
