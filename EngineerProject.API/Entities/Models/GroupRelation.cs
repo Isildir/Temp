@@ -5,7 +5,6 @@
         Owner = 1,
         User = 2,
         Invited = 3,
-        Requesting = 4,
-        Rejected = 5
+        Requesting = 4
     }
 }

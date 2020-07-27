@@ -7,9 +7,7 @@
 //    {
 //        private readonly int id;
 
-//        public CharacterPage(int id)
-//        {
-//            this.id = id;
+// public CharacterPage(int id) { this.id = id;
 
 //            NavigationPage.SetHasNavigationBar(this, false);
 //            InitializeComponent();

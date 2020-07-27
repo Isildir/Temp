@@ -1,12 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EngineerProject.Mobile.Utility;
 using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using EngineerProject.Mobile.Views;
-using EngineerProject.Mobile.Utility;
 
 namespace EngineerProject.Mobile.Services
 {
@@ -82,8 +75,6 @@ namespace EngineerProject.Mobile.Services
             return null;
         }
 
-
-
         public static async Task<CharacterCreationProfessionDto> GetProfessionData(int id)
         {
             HttpClientHandler httpClientHandler = new HttpClientHandler()
@@ -117,7 +108,6 @@ namespace EngineerProject.Mobile.Services
 
             return null;
         }
-
 
         public static async Task<List<ShortProfessionDto>> GetAvailableProfessions(Race race)
         {

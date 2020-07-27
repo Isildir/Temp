@@ -1,13 +1,11 @@
-﻿using System;
+﻿using EngineerProject.Mobile.ViewModels;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using EngineerProject.Mobile.Services;
-using EngineerProject.Mobile.ViewModels;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views
 {
-
     public partial class ProfilePage : ContentPage
     {
         public ProfilePage()

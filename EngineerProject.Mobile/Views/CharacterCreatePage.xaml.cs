@@ -4,16 +4,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EngineerProject.Mobile.Services;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views
 {
     public partial class CharacterCreatePage : ContentPage
     {
-        public ObservableCollection<string> Races { get; set; } = new ObservableCollection<string>();
-        public ObservableCollection<string> AvailableProfessions { get; set; } = new ObservableCollection<string>();
-
         public CharacterCreatePage()
         {
             InitializeComponent();
@@ -22,6 +18,14 @@ namespace EngineerProject.Mobile.Views
             professionPicker.ItemsSource = AvailableProfessions;
 
             LoadData();
+        }
+
+        public ObservableCollection<string> AvailableProfessions { get; set; } = new ObservableCollection<string>();
+
+        public ObservableCollection<string> Races { get; set; } = new ObservableCollection<string>();
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
         }
 
         private async Task LoadData()
@@ -33,6 +37,21 @@ namespace EngineerProject.Mobile.Views
         }
 
         //private List<ShortProfessionDto> professions = new List<ShortProfessionDto>();
+
+        private async void ProfessionPickerIndexChanged(object sender, EventArgs e)
+        {/*
+            if (professionPicker.SelectedIndex == -1)
+                return;
+
+            var selectedProfessionId = professions[professionPicker.SelectedIndex].Id;
+
+            selectedProfessionData = await CharacterService.GetProfessionData(selectedProfessionId);
+
+            createButton.IsEnabled = true;
+
+            UpdateLabelValue(professionSkillsSet, selectedProfessionData.SkillsSet.Select(a => a.Name), "Profession skills");
+            UpdateLabelValue(professionAbilitiesSet, selectedProfessionData.AbilitiesSet.Select(a => a.Name), "Profession abilities");*/
+        }
 
         private async void RacePickerIndexChanged(object sender, EventArgs e)
         {/*
@@ -67,26 +86,6 @@ namespace EngineerProject.Mobile.Views
             }
             else
                 raceSkillsSet.IsVisible = false;
-        }
-
-        private async void ProfessionPickerIndexChanged(object sender, EventArgs e)
-        {/*
-            if (professionPicker.SelectedIndex == -1)
-                return;
-
-            var selectedProfessionId = professions[professionPicker.SelectedIndex].Id;
-
-            selectedProfessionData = await CharacterService.GetProfessionData(selectedProfessionId);
-
-            createButton.IsEnabled = true;
-
-            UpdateLabelValue(professionSkillsSet, selectedProfessionData.SkillsSet.Select(a => a.Name), "Profession skills");
-            UpdateLabelValue(professionAbilitiesSet, selectedProfessionData.AbilitiesSet.Select(a => a.Name), "Profession abilities");*/
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-
         }
     }
 }

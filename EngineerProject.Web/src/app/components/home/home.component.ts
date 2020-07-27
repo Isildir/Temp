@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   public participantGroups: GroupTile[];
   public invitedGroups: GroupTile[];
   public awaitingGroups: GroupTile[];
-  public rejectedGroups: GroupTile[];
 
   constructor(
     private router: Router,
@@ -46,15 +45,27 @@ export class HomeComponent implements OnInit {
 
   reloadGroupTiles() {
     this.homeService.getUserGroups().subscribe(data => {
-      this.participantGroups = data.filter(a => a.state === 1 || a.state === 2);
-      this.invitedGroups = data.filter(a => a.state === 3);
-      this.awaitingGroups = data.filter(a => a.state === 4);
-      this.rejectedGroups = data.filter(a => a.state === 5);
+      this.participantGroups = data.participant;
+      this.invitedGroups = data.invited;
+      this.awaitingGroups = data.waiting;
     });
   }
 
   onGroupSelect(id: number) {
-    this.router.navigate([`/groups/${id}`]);
+    this.router.navigate([`/group/${id}`]);
+  }
+
+  joinGroup(id: number) {
+    this.homeService.askForInvite(id).subscribe(() => {
+      this.reloadGroupTiles();
+      this.stateCtrl.reset();
+    });
+  }
+
+  resolveGroupInvite(id: number, value: boolean) {
+    this.homeService.resolveGroupInvite(id, value).subscribe(() => {
+      this.reloadGroupTiles();
+    });
   }
 
   openClientCreationDialog() {

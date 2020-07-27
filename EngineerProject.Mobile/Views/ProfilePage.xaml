@@ -4,7 +4,7 @@
         <StackLayout Margin="10,10,10,10">
             <Label Text="Main app content goes here" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
             <Button Text="New character" Clicked="OnNewCharacterButtonClicked" />
-            <ListView x:Name="CharactersView" ItemTapped="OnCharacterSelect" >
+            <ListView x:Name="CharactersView" ItemTapped="OnCharacterSelect">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding DisplayName}" />

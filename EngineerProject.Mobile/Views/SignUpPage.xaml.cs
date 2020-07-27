@@ -1,6 +1,5 @@
-﻿using System;
-using System.Linq;
-using EngineerProject.Mobile.Services;
+﻿using EngineerProject.Mobile.Services;
+using System;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views

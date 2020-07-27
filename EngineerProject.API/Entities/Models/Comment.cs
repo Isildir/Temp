@@ -17,12 +17,12 @@ namespace EngineerProject.API.Entities.Models
         [Key]
         public int Id { get; set; }
 
+        public Post Post { get; set; }
+
+        public int PostId { get; set; }
+
         public User User { get; set; }
 
         public int UserId { get; set; }
-
-        public Post UserPost { get; set; }
-
-        public int UserPostId { get; set; }
     }
 }

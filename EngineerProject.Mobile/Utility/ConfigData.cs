@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EngineerProject.Mobile.Utility
+﻿namespace EngineerProject.Mobile.Utility
 {
     public static class ConfigData
     {

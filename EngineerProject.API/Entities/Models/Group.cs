@@ -9,6 +9,8 @@ namespace EngineerProject.API.Entities.Models
 
         public string Description { get; set; }
 
+        public List<File> Files { get; set; }
+
         [Key]
         public int Id { get; set; }
 
@@ -16,6 +18,8 @@ namespace EngineerProject.API.Entities.Models
 
         [Required, StringLength(100)]
         public string Name { get; set; }
+
+        public List<Post> Posts { get; set; }
 
         public List<UserGroup> Users { get; set; }
     }

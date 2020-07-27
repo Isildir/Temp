@@ -11,6 +11,8 @@ namespace EngineerProject.API.Entities.Models
         [Required, StringLength(100)]
         public string Email { get; set; }
 
+        public List<File> Files { get; set; }
+
         public List<UserGroup> Groups { get; set; }
 
         [Key]
@@ -26,6 +28,8 @@ namespace EngineerProject.API.Entities.Models
 
         [Required]
         public byte[] PasswordSalt { get; set; }
+
+        public List<Post> Posts { get; set; }
 
         public bool ReceiveNotifications { get; set; }
 

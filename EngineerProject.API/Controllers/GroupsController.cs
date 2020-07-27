@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EngineerProject.API.Controllers
@@ -25,10 +24,10 @@ namespace EngineerProject.API.Controllers
         #region Interactions
 
         [HttpPost]
-        public IActionResult AskForInvite(int groupId)
+        public IActionResult AskForInvite([FromBody] GroupInviteDto data)
         {
             var userId = ClaimsReader.GetUserId(Request);
-            var group = context.Groups.SingleOrDefault(a => a.Id == groupId);
+            var group = context.Groups.SingleOrDefault(a => a.Id == data.Id);
 
             if (group == null)
                 return NotFound();
@@ -59,15 +58,24 @@ namespace EngineerProject.API.Controllers
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            var result = context.UserGroups
+            var values = context.UserGroups
                 .Include(a => a.Group)
                 .Where(a => a.UserId == userId)
-                .Select(a => new GroupTileDto
+                .Select(a => new
                 {
-                    Id = a.Group.Id,
-                    Name = a.Group.Name,
-                    State = (byte)a.Relation
+                    a.Relation,
+                    Value = new GroupTileDto
+                    {
+                        Id = a.GroupId,
+                        Name = a.Group.Name
+                    }
                 }).ToList();
+
+            var result = new UserGroupsWrapperDto();
+
+            result.Participant.AddRange(values.Where(a => a.Relation == GroupRelation.Owner || a.Relation == GroupRelation.User).Select(a => a.Value));
+            result.Invited.AddRange(values.Where(a => a.Relation == GroupRelation.Invited).Select(a => a.Value));
+            result.Waiting.AddRange(values.Where(a => a.Relation == GroupRelation.Requesting).Select(a => a.Value));
 
             return Ok(result);
         }
@@ -112,11 +120,9 @@ namespace EngineerProject.API.Controllers
             if (!CheckAdminPriviliges(userId, data.GroupId))
                 return BadRequest();
 
-            var targetId = context.Users.SingleOrDefault(a => a.Id == data.UserId).Id;
-            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
-            var connection = context.UserGroups.SingleOrDefault(a => a.UserId == targetId && a.GroupId == data.GroupId);
+            var connection = context.UserGroups.SingleOrDefault(a => a.UserId == userId && a.GroupId == data.GroupId);
 
-            connection.Relation = GroupRelation.Rejected;
+            context.UserGroups.Remove(connection);
 
             try
             {
@@ -142,7 +148,33 @@ namespace EngineerProject.API.Controllers
             var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
             var connection = context.UserGroups.SingleOrDefault(a => a.UserId == targetId && a.GroupId == data.GroupId);
 
-            connection.Relation = data.Accepted ? GroupRelation.User : GroupRelation.Rejected;
+            if (data.Accepted)
+                connection.Relation = GroupRelation.User;
+            else
+                context.UserGroups.Remove(connection);
+
+            try
+            {
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ResolveGroupInvite([FromBody] GroupInviteResolveDto data)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+            var connection = context.UserGroups.SingleOrDefault(a => a.UserId == userId && a.GroupId == data.Id);
+
+            if (data.Value)
+                connection.Relation = GroupRelation.User;
+            else
+                context.UserGroups.Remove(connection);
 
             try
             {
@@ -197,7 +229,7 @@ namespace EngineerProject.API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             var userId = ClaimsReader.GetUserId(Request);
@@ -221,14 +253,10 @@ namespace EngineerProject.API.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Details(int id)
+        [HttpGet]
+        public IActionResult Details([FromQuery] int id)
         {
             var userId = ClaimsReader.GetUserId(Request);
-
-            if (!CheckAdminPriviliges(userId, id))
-                return BadRequest();
-
             var group = context.Groups.SingleOrDefault(a => a.Id == id);
 
             var result = new GroupDetailsDto
@@ -236,7 +264,8 @@ namespace EngineerProject.API.Controllers
                 Id = group.Id,
                 Name = group.Name,
                 Description = group.Description,
-                IsPrivate = group.IsPrivate
+                IsPrivate = group.IsPrivate,
+                IsOwner = CheckAdminPriviliges(userId, id)
             };
 
             return Ok(result);

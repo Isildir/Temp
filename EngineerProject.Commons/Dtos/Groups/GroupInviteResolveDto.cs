@@ -1,9 +1,9 @@
 ﻿namespace EngineerProject.Commons.Dtos.Groups
 {
-    public class GroupTileDto
+    public class GroupInviteResolveDto
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public bool Value { get; set; }
     }
 }

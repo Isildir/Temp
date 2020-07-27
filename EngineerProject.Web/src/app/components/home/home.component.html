@@ -1,5 +1,5 @@
-<div>
-    <div>
+<div style="display: flex;">
+    <div style="width: 80%">
         <div class="group-select">
             <form class="example-form">
                 <mat-form-field class="example-full-width">
@@ -12,31 +12,37 @@
                         <mat-option *ngFor="let state of filteredGroups | async" [value]="state.name">
                             <span>{{state.name}}</span> |
                             <small>Population: {{state.population}}</small>
+                            <button (click)="joinGroup(state.id)">Dołącz</button>
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
             </form>
             <div>
                 <button (click)="openClientCreationDialog()">
-                Dodaj dostawcę
+                Dodaj grupę
                 </button>
             </div>
         </div>
         <div class="group-tile-wrapper">
             <div *ngFor="let group of participantGroups" class="group-tile">
-                <app-group-tile [data]="group" (click)="onGroupSelect(group.Id)"></app-group-tile>
+                <app-group-tile [data]="group" (click)="onGroupSelect(group.id)"></app-group-tile>
             </div>
         </div>
     </div>
-    <div>     
+    <div style="border-style: double; float: right; width: 20%;">     
         <div *ngFor="let group of awaitingGroups">
-            <p>{{ group }}</p>
+            <p>{{ group.id }}</p>
+            <p>{{ group.name }}</p>
         </div>
-        <div *ngFor="let group of awaitingGroups">
-            <p>{{ group }}</p>
-        </div>
-        <div *ngFor="let group of rejectedGroups">
-            <p>{{ group }}</p>
+        <div *ngFor="let group of invitedGroups">
+            <p>{{ group.id }}</p>
+            <p>{{ group.name }}</p>
+            <button (click)="resolveGroupInvite(group.id, true)">
+            Przyjmij
+            </button>
+            <button (click)="resolveGroupInvite(group.id, false)">
+            Odrzuć
+            </button>
         </div>
     </div>
 </div>

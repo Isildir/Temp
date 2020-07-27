@@ -1,3 +1,4 @@
+import { HomeGroupWrapper } from './../../models/HomeGroupWrapper';
 import { GroupSelect } from './../../models/GroupSelect';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -16,7 +17,7 @@ export class HomeService {
   getUserGroups() {
     const url = `${environment.apiUrl}groups/GetUserGroups`;
 
-    return this.http.get<GroupTile[]>(url);
+    return this.http.get<HomeGroupWrapper>(url);
   }
 
   getGroups(filter: string) {
@@ -29,5 +30,17 @@ export class HomeService {
     const url = `${environment.apiUrl}groups/Create`;
 
     return this.http.post<any>(url, { name, description, isPrivate });
+  }
+
+  askForInvite(id: number) {
+    const url = `${environment.apiUrl}groups/AskForInvite`;
+
+    return this.http.post<any>(url, { id });
+  }
+
+  resolveGroupInvite(id: number, value: boolean) {
+    const url = `${environment.apiUrl}groups/ResolveGroupInvite`;
+
+    return this.http.post<any>(url, { id, value });
   }
 }
