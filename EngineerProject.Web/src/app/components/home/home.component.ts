@@ -1,4 +1,3 @@
-import { GroupSelect } from './../../models/GroupSelect';
 import { GroupCreateDialogComponent } from './group-create-dialog/group-create-dialog.component';
 import { HomeService } from './../../services/data-services/home.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,7 +18,7 @@ import { GroupTile } from 'src/app/models/GroupTile';
 
 export class HomeComponent implements OnInit {
   public stateCtrl = new FormControl();
-  public filteredGroups: Observable<GroupSelect[]>;
+  public filteredGroups: Observable<GroupTile[]>;
   public participantGroups: GroupTile[];
   public invitedGroups: GroupTile[];
   public awaitingGroups: GroupTile[];

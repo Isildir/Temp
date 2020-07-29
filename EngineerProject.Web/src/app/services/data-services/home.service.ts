@@ -1,5 +1,4 @@
 import { HomeGroupWrapper } from './../../models/HomeGroupWrapper';
-import { GroupSelect } from './../../models/GroupSelect';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -23,7 +22,7 @@ export class HomeService {
   getGroups(filter: string) {
     const url = `${environment.apiUrl}groups/Get?pageSize=5&page=1&filter=${filter}`;
 
-    return this.http.get<GroupSelect[]>(url);
+    return this.http.get<GroupTile[]>(url);
   }
 
   createGroup(name: string, description: string, isPrivate: boolean) {

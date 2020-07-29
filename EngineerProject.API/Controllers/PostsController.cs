@@ -104,12 +104,12 @@ namespace EngineerProject.API.Controllers
                     IsOwner = a.UserId == userId,
                     Comments = a.Comments.Select(b => new CommentDto
                     {
-                        Id = a.Id,
-                        DateAdded = a.DateAdded,
-                        Content = a.Content,
-                        Edited = a.Edited,
-                        EditDate = a.EditDate,
-                        IsOwner = a.UserId == userId,
+                        Id = b.Id,
+                        DateAdded = b.DateAdded,
+                        Content = b.Content,
+                        Edited = b.Edited,
+                        EditDate = b.EditDate,
+                        IsOwner = b.UserId == userId,
                     }).ToList()
                 }).ToList();
 

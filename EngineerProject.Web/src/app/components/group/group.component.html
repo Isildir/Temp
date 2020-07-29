@@ -1,3 +1,35 @@
 <p>
   group works!
 </p>
+<div>
+  {{ details?.isOwner }}
+  {{ details?.isPrivate }}
+  {{ details?.id }}
+  {{ details?.name }}
+  {{ details?.description }}
+  <div *ngIf="details?.isOwner">
+    <button (click)="openDetailsDialog()">Popup ze szczegółami</button>
+  </div>
+</div>
+<div>
+  <div>
+    <form [formGroup]="postForm">
+        <fieldset>  
+            <div>
+                <label>Tytuł:</label>
+                <input name="title" formControlName="title" type="text">
+            </div>
+            <div>
+              <label>Treść:</label>
+              <input name="content" formControlName="content" type="text">
+          </div>  
+        </fieldset>
+        <button type="submit" [disabled]="!postForm.valid" (click)="addPost()">
+                Dodaj
+        </button>
+      </form>
+    </div>
+  <div *ngFor="let post of posts">
+      <app-post-tile [data]="post" (reloadPosts)="reloadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
+  </div>
+</div>

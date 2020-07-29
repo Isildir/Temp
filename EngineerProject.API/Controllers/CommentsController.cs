@@ -22,7 +22,7 @@ namespace EngineerProject.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CommentCreateDto data)
         {
-            if (string.IsNullOrEmpty(data.Title) || string.IsNullOrEmpty(data.Content))
+            if (string.IsNullOrEmpty(data.Content))
                 return BadRequest();
 
             var userId = ClaimsReader.GetUserId(Request);
@@ -48,7 +48,7 @@ namespace EngineerProject.API.Controllers
             {
                 context.SaveChanges();
 
-                return Ok();
+                return Ok(new { comment.Id, comment.Content, comment.DateAdded, IsOwner = true });
             }
             catch (Exception)
             {

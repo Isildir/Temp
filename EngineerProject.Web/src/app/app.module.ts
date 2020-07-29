@@ -1,3 +1,5 @@
+import { GroupDetailsDialogComponent } from './components/group/group-details-dialog/group-details-dialog.component';
+import { PostTileComponent } from './components/group/post-tile/post-tile.component';
 import { GroupComponent } from './components/group/group.component';
 import { GroupCreateDialogComponent } from './components/home/group-create-dialog/group-create-dialog.component';
 import { GroupTileComponent } from './components/home/group-tile/group-tile.component';
@@ -38,7 +40,9 @@ import { ProfileComponent } from './components/profile/profile.component';
       PasswordRecoveryComponent,
       GroupTileComponent,
       GroupCreateDialogComponent,
-      GroupComponent
+      GroupComponent,
+      PostTileComponent,
+      GroupDetailsDialogComponent
    ],
    imports: [
       HttpClientModule,

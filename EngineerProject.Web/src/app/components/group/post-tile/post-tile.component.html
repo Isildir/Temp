@@ -1,0 +1,32 @@
+<div>
+  <div>
+    <p>{{ data.title }}</p>
+    <p>{{ data.content }}</p>
+    <p>{{ data.dateAdded | date:'short' }}</p>
+    <p>{{ data.editDate | date:'short' }}</p>
+    <p>{{ data.id }}</p>
+    <button *ngIf="data.isOwner" (click)="deletePost()">Usuń post</button>
+  </div>
+  <div *ngFor="let comment of data.comments">
+    <p>---------------------------------------</p>
+    <p>{{ comment.title }}</p>
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.dateAdded | date:'short' }}</p>
+    <p>{{ comment.editDate | date:'short' }}</p>
+    <p>{{ comment.id }}</p>
+    <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)">Usuń komentarz</button>
+  </div>
+  <div>
+    <form [formGroup]="commentForm">
+        <fieldset>  
+            <div>
+              <label>Treść:</label>
+              <input name="content" formControlName="content" type="text">
+          </div>  
+        </fieldset>
+        <button type="submit" [disabled]="!commentForm.valid" (click)="addComment()">
+                Dodaj
+        </button>
+      </form>
+  </div>
+</div>
