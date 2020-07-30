@@ -1,3 +1,18 @@
-<p>
-  group-details-dialog works!
-</p>
+<div>
+  <p>{{ data?.name }}</p>
+  <p>{{ data?.description }}</p>
+  <p>{{ data?.isPrivate }}</p>
+  <div>
+    <form [formGroup]="inviteForm">
+      <label>Identyfikator:</label>
+      <input name="identifier" formControlName="identifier" type="text">
+      <button type="submit" (click)="inviteUser()">Zaproś</button>
+    </form>
+  </div>
+  <div *ngFor="let candidate of data?.candidates">
+    <p>{{ candidate.userId }}</p>
+    <p>{{ candidate.userLogin }}</p>
+    <button (click)="acceptCandidate(candidate.userId)">Akceptuj</button>
+    <button (click)="rejectCandidate(candidate.userId)">Odrzuć</button>
+  </div>
+</div>

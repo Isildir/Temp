@@ -78,33 +78,5 @@ namespace EngineerProject.API.Controllers
                 return BadRequest();
             }
         }
-
-        [HttpPost]
-        public IActionResult Modify([FromBody] CommentModifyDto data)
-        {
-            if (string.IsNullOrEmpty(data.Title) || string.IsNullOrEmpty(data.Content))
-                return BadRequest();
-
-            var userId = ClaimsReader.GetUserId(Request);
-            var comment = context.Comments.FirstOrDefault(a => a.Id == data.Id && a.UserId == userId);
-
-            if (comment == null)
-                return NotFound();
-
-            comment.Edited = true;
-            comment.EditDate = DateTime.UtcNow;
-            comment.Content = data.Content;
-
-            try
-            {
-                context.SaveChanges();
-
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
     }
 }

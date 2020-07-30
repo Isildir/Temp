@@ -98,7 +98,6 @@ namespace EngineerProject.API.Controllers
                     Title = a.Title,
                     DateAdded = a.DateAdded,
                     Content = a.Content,
-                    Edited = a.Edited,
                     Pinned = a.Pinned,
                     EditDate = a.EditDate,
                     IsOwner = a.UserId == userId,
@@ -107,8 +106,6 @@ namespace EngineerProject.API.Controllers
                         Id = b.Id,
                         DateAdded = b.DateAdded,
                         Content = b.Content,
-                        Edited = b.Edited,
-                        EditDate = b.EditDate,
                         IsOwner = b.UserId == userId,
                     }).ToList()
                 }).ToList();
@@ -116,19 +113,18 @@ namespace EngineerProject.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public IActionResult Modify([FromBody] PostModifyDto data)
+        [HttpPut]
+        public IActionResult Modify([FromQuery] int id, [FromBody] PostModifyDto data)
         {
             if (string.IsNullOrEmpty(data.Title) || string.IsNullOrEmpty(data.Content))
                 return BadRequest();
 
             var userId = ClaimsReader.GetUserId(Request);
-            var post = context.Posts.FirstOrDefault(a => a.Id == data.Id && a.UserId == userId);
+            var post = context.Posts.FirstOrDefault(a => a.Id == id && a.UserId == userId);
 
             if (post == null)
                 return NotFound();
 
-            post.Edited = true;
             post.EditDate = DateTime.UtcNow;
             post.Content = data.Content;
             post.Title = data.Title;
@@ -137,7 +133,7 @@ namespace EngineerProject.API.Controllers
             {
                 context.SaveChanges();
 
-                return Ok();
+                return Ok(new { post.EditDate });
             }
             catch (Exception)
             {

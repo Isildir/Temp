@@ -1,18 +1,26 @@
 <div>
   <div>
-    <p>{{ data.title }}</p>
-    <p>{{ data.content }}</p>
+    <p>{{ data.id }}</p>
     <p>{{ data.dateAdded | date:'short' }}</p>
     <p>{{ data.editDate | date:'short' }}</p>
-    <p>{{ data.id }}</p>
+    <form [formGroup]="modifyPostForm">
+      <fieldset>  
+        <p *ngIf="!isModified">{{ data.title }}</p>
+        <input *ngIf="isModified" name="title" formControlName="title" type="text">
+        <p *ngIf="!isModified">{{ data.content }}</p>
+        <input *ngIf="isModified" name="content" formControlName="content" type="text" >
+      </fieldset>
+      <button *ngIf="isModified" (click)="resetPostValues()">Anuluj</button>
+      <button *ngIf="isModified" type="submit" [disabled]="!modifyPostForm.valid" (click)="modifyPost()">Zatwierdź</button>
+    </form>
     <button *ngIf="data.isOwner" (click)="deletePost()">Usuń post</button>
+    <button *ngIf="data.isOwner && !isModified" (click)="setModifyFlag()">Edytuj</button>
   </div>
   <div *ngFor="let comment of data.comments">
     <p>---------------------------------------</p>
     <p>{{ comment.title }}</p>
     <p>{{ comment.content }}</p>
     <p>{{ comment.dateAdded | date:'short' }}</p>
-    <p>{{ comment.editDate | date:'short' }}</p>
     <p>{{ comment.id }}</p>
     <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)">Usuń komentarz</button>
   </div>

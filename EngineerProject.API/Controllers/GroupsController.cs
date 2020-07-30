@@ -6,7 +6,9 @@ using EngineerProject.Commons.Dtos.Querying;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NLog.Targets;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EngineerProject.API.Controllers
@@ -89,7 +91,10 @@ namespace EngineerProject.API.Controllers
                 return BadRequest();
 
             var targetId = context.Users.SingleOrDefault(a => a.Login.Equals(data.UserIdentifier) || a.Email.Equals(data.UserIdentifier)).Id;
-            var group = context.Groups.SingleOrDefault(a => a.Id == data.GroupId);
+            var group = context.Groups.Include(a => a.Users).SingleOrDefault(a => a.Id == data.GroupId);
+
+            if (group.Users.Any(a => a.UserId == targetId))
+                return BadRequest($"Relacja pomiędzy tą grupą oraz użytkownikiem z identyfikatorem {data.UserIdentifier} już istnieje");
 
             var connection = new UserGroup
             {
@@ -272,6 +277,36 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpGet]
+        public IActionResult GetAdminGroupDetails([FromQuery] int id)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+
+            if (!CheckAdminPriviliges(userId, id))
+                return BadRequest();
+
+            var group = context.Groups
+                .Include(a => a.Users)
+                .ThenInclude(a => a.User)
+                .FirstOrDefault(a => a.Id == id);
+
+            var result = new GroupAdminDetailsDto
+            {
+                Name = group.Name,
+                Description = group.Description,
+                IsPrivate = group.IsPrivate,
+                Candidates = group.Users
+                .Where(a => a.Relation == GroupRelation.Requesting)
+                .Select(a => new GroupCandidateDto 
+                { 
+                    UserId = a.UserId, 
+                    UserLogin = a.User.Login 
+                }).ToList()
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet]
         public IActionResult Get([FromQuery] QueryDto query)
         {
             var userId = ClaimsReader.GetUserId(Request);
@@ -279,7 +314,7 @@ namespace EngineerProject.API.Controllers
 
             var result = context.Groups
                 .OrderBy(a => a.Id)
-                .Where(a => a.Name.ToLower().Contains(formattedFilter) && !a.Users.Any(b => b.UserId == userId))
+                .Where(a => !a.IsPrivate && a.Name.ToLower().Contains(formattedFilter) && !a.Users.Any(b => b.UserId == userId))
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)
                 .Select(a => new GroupTileDto

@@ -14,6 +14,8 @@ export class PostTileComponent implements OnInit {
   @Output() parentSnackBar: EventEmitter<string> = new EventEmitter();
 
   public commentForm: FormGroup;
+  public modifyPostForm: FormGroup;
+  public isModified = false;
 
   constructor(
     private groupService: GroupService,
@@ -22,6 +24,11 @@ export class PostTileComponent implements OnInit {
   ngOnInit() {
     this.commentForm = this.formBuilder.group({
       content: ['', new RequiredValidator()]
+    });
+
+    this.modifyPostForm = this.formBuilder.group({
+      title: [this.data.title, new RequiredValidator()],
+      content: [this.data.content, new RequiredValidator()]
     });
   }
 
@@ -32,6 +39,30 @@ export class PostTileComponent implements OnInit {
       .subscribe(
         data => this.data.comments.push(data),
         () => this.parentSnackBar.emit('Wystąpił błąd'));
+  }
+
+  setModifyFlag() {
+    this.isModified = true;
+  }
+
+  resetPostValues() {
+    this.isModified = false;
+    this.modifyPostForm.controls.title.setValue(this.data.title);
+    this.modifyPostForm.controls.content.setValue(this.data.content);
+  }
+
+  modifyPost() {
+    const title = this.modifyPostForm.controls.title.value;
+    const content = this.modifyPostForm.controls.content.value;
+
+    this.groupService.modifyPost(this.data.id, title, content)
+      .subscribe(response => {
+        this.data.title = title;
+        this.data.content = content;
+        this.data.editDate = response.editDate;
+        this.resetPostValues();
+      },
+      () => this.parentSnackBar.emit('Wystąpił błąd'));
   }
 
   deleteComment(id: number) {

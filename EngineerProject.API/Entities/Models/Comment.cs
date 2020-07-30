@@ -10,10 +10,6 @@ namespace EngineerProject.API.Entities.Models
 
         public DateTime DateAdded { get; set; }
 
-        public DateTime? EditDate { get; set; }
-
-        public bool? Edited { get; set; }
-
         [Key]
         public int Id { get; set; }
 
