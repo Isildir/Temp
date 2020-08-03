@@ -1,3 +1,4 @@
+import { FilesManagerComponent } from './components/files-manager/files-manager.component';
 import { GroupDetailsDialogComponent } from './components/group/group-details-dialog/group-details-dialog.component';
 import { PostTileComponent } from './components/group/post-tile/post-tile.component';
 import { GroupComponent } from './components/group/group.component';
@@ -21,6 +22,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,7 +47,8 @@ import { ProfileComponent } from './components/profile/profile.component';
       GroupCreateDialogComponent,
       GroupComponent,
       PostTileComponent,
-      GroupDetailsDialogComponent
+      GroupDetailsDialogComponent,
+      FilesManagerComponent
    ],
    imports: [
       HttpClientModule,
@@ -63,7 +69,17 @@ import { ProfileComponent } from './components/profile/profile.component';
       MatDatepickerModule,
       MatInputModule,
       MatNativeDateModule,
-      MatAutocompleteModule
+      MatAutocompleteModule,
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatToolbarModule,
+      MatIconModule
+   ],
+   exports: [
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatToolbarModule,
+      MatIconModule
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

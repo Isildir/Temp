@@ -14,6 +14,7 @@ import { FormGroup, FormBuilder, Validators, RequiredValidator } from '@angular/
 export class GroupDetailsDialogComponent implements OnInit {
   public data: GroupAdminDetails;
   public inviteForm: FormGroup;
+  public settingsForm: FormGroup;
 
   private groupId: number;
 
@@ -30,7 +31,19 @@ export class GroupDetailsDialogComponent implements OnInit {
       identifier: ['', new RequiredValidator()]
     });
 
-    this.groupService.getAdminGroupDetails(this.groupId).subscribe(data => this.data = data);
+    this.groupService.getAdminGroupDetails(this.groupId).subscribe(data => {
+      this.data = data;
+
+      this.settingsForm = this.formBuilder.group({
+        name: [data.name, new RequiredValidator()],
+        description: [data.description, new RequiredValidator()],
+        isPrivate: [data.isPrivate]
+      });
+    });
+  }
+
+  public changeSettings() {
+    console.log(this.settingsForm);
   }
 
   public acceptCandidate(id: number) {

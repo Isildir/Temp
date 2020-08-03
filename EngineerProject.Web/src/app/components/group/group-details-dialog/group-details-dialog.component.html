@@ -3,6 +3,14 @@
   <p>{{ data?.description }}</p>
   <p>{{ data?.isPrivate }}</p>
   <div>
+    <form [formGroup]="settingsForm">
+      <input name="name" formControlName="name" type="text">
+      <input name="description" formControlName="description" type="text">
+      <input name="isPrivate" formControlName="isPrivate" type="checkbox">
+      <button type="submit" (click)="changeSettings()">Zapisz</button>
+    </form>
+  </div>
+  <div>
     <form [formGroup]="inviteForm">
       <label>Identyfikator:</label>
       <input name="identifier" formControlName="identifier" type="text">
