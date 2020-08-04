@@ -30,11 +30,11 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FileDto>>> GetFiles([FromQuery] int id)
+        public async Task<ActionResult<IEnumerable<FileDto>>> GetFiles([FromQuery] int groupId)
         {
             var userId = ClaimsReader.GetUserId(Request);
 
-            var records = await context.Set<DBFile>().Include(a => a.User).Where(a => a.GroupId == id).ToListAsync();
+            var records = await context.Set<DBFile>().Include(a => a.User).Where(a => a.GroupId == groupId).ToListAsync();
 
             return Ok(records.Select(a => new FileDto
             {
@@ -85,7 +85,7 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile([FromQuery] int id, [FromBody] IFormFile file)
+        public async Task<IActionResult> UploadFile([FromQuery] int groupId, IFormFile file)
         {
             var size = file?.Length;
             var sizeInMB = (size / 1024f) / 1024f;
@@ -102,7 +102,7 @@ namespace EngineerProject.API.Controllers
 
             var userId = ClaimsReader.GetUserId(Request);
 
-            var groupRecord = await context.Set<Group>().Include(a => a.Users).FirstOrDefaultAsync(a => a.Id == id);
+            var groupRecord = await context.Set<Group>().Include(a => a.Users).FirstOrDefaultAsync(a => a.Id == groupId);
             var userRecord = await context.Set<User>().FindAsync(userId);
 
             if (groupRecord == null || userRecord == null)

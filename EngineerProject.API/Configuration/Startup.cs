@@ -32,11 +32,8 @@ namespace EngineerProject.API.Configuration
                 app.UseDeveloperExceptionPage();
 
             app.UseCors();
-
             app.UseAuthentication();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

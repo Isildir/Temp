@@ -3,6 +3,7 @@ import { GetFile } from './../../models/GetFile';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CustomHttpParams } from '../utility/customHttpParams';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ constructor(private httpClient: HttpClient) { }
 
     const url = `${environment.apiUrl}files/UploadFile?groupId=${groupId}`;
 
-    return this.httpClient.post<NewFile>(url, formData);
+    return this.httpClient.post<NewFile>(url, formData, { params: new CustomHttpParams(true) });
   }
 
   getFiles(groupId: number) {

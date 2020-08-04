@@ -3,6 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 
 import { UserService } from '../data-services/user.service';
+import { CustomHttpParams } from './customHttpParams';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -12,12 +13,14 @@ export class JwtInterceptor implements HttpInterceptor {
         // add authorization header with jwt token if available
         const currentUser = this.authenticationService.currentUserValue;
 
-        if (!request.headers.has('Content-Type')) {
-            request = request.clone({
-                setHeaders: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                }
-            });
+        if (!(request.params instanceof CustomHttpParams && (request.params as CustomHttpParams).passHeaderCheck)) {
+            if (!request.headers.has('Content-Type')) {
+                request = request.clone({
+                    setHeaders: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    }
+                });
+            }
         }
 
         if (currentUser && currentUser.token) {
