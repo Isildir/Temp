@@ -1,3 +1,5 @@
+import { ErrorComponent } from './components/error/error.component';
+import { ChatComponent } from './components/group/chat/chat.component';
 import { FilesManagerComponent } from './components/files-manager/files-manager.component';
 import { GroupDetailsDialogComponent } from './components/group/group-details-dialog/group-details-dialog.component';
 import { PostTileComponent } from './components/group/post-tile/post-tile.component';
@@ -48,7 +50,9 @@ import { ProfileComponent } from './components/profile/profile.component';
       GroupComponent,
       PostTileComponent,
       GroupDetailsDialogComponent,
-      FilesManagerComponent
+      FilesManagerComponent,
+      ChatComponent,
+      ErrorComponent
    ],
    imports: [
       HttpClientModule,

@@ -47,8 +47,8 @@ namespace EngineerProject.API.Configuration
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(a => a.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200")));
-            services.AddControllers();
             services.AddSignalR();
+            services.AddControllers();
 
             services.AddDbContext<EngineerContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("EngineerContext")));
@@ -73,6 +73,7 @@ namespace EngineerProject.API.Configuration
                         var dbContext = context.HttpContext.RequestServices.GetRequiredService<EngineerContext>();
                         var userId = int.Parse(context.Principal.Identity.Name);
                         var user = dbContext.Users.FirstOrDefault(a => a.Id == userId);
+
                         if (user == null)
                             context.Fail("Unauthorized");
 

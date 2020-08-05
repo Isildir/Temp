@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,18 +7,24 @@ using System.Threading.Tasks;
 
 namespace EngineerProject.API.SignalR
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         private readonly Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
+        public async Task SendMessage(string content)
+        {
+            await Clients.All.SendAsync("appendMessage", content);
+        }
+
         public override Task OnConnectedAsync()
         {
             var connectionId = Context.ConnectionId;
-
+            
             var httpContext = Context.GetHttpContext();
-            var characterId = httpContext.Request.Query["characterId"];
+            var groupId = httpContext.Request.Query["groupId"];
 
-            if (int.TryParse(characterId, out int value))
+            if (int.TryParse(groupId, out int value))
                 dictionary.Add(connectionId, value);
 
             return base.OnConnectedAsync();
@@ -32,13 +39,13 @@ namespace EngineerProject.API.SignalR
 
             return base.OnDisconnectedAsync(exception);
         }
-
+        /*
         public async Task SendMessage(int characterId, string message)
         {
             if (GetReceivers(characterId, out IClientProxy clients))
                 await clients.SendAsync("sendMessage", message);
         }
-
+        */
         private bool GetReceivers(int id, out IClientProxy clientProxy)
         {
             var connectionsIds = dictionary.Where(a => a.Value == id).Select(a => a.Key);

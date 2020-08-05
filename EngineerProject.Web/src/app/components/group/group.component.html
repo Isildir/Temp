@@ -1,12 +1,9 @@
-<p>
-  group works!
-</p>
 <div>
-  {{ details?.isOwner }}
-  {{ details?.isPrivate }}
-  {{ details?.id }}
-  {{ details?.name }}
-  {{ details?.description }}
+  {{ details.isOwner }}
+  {{ details.isPrivate }}
+  {{ details.id }}
+  {{ details.name }}
+  {{ details.description }}
   <div *ngIf="details?.isOwner">
     <button (click)="openDetailsDialog()">Popup ze szczegółami</button>
   </div>
@@ -29,10 +26,11 @@
         </button>
       </form>
     </div>
-	  <div class="group-main-page-right-menu__files">
-		<app-files-manager [groupId]="details.id" (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
-	  </div>
+    <div class="group-main-page-right-menu__files">
+    <app-files-manager [groupId]="details?.id" (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
+    </div>
   <div *ngFor="let post of posts">
       <app-post-tile [data]="post" (reloadPosts)="reloadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
   </div>
+  <app-chat></app-chat>
 </div>

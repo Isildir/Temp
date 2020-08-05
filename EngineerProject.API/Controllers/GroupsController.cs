@@ -1,10 +1,12 @@
 ﻿using EngineerProject.API.Entities;
 using EngineerProject.API.Entities.Models;
+using EngineerProject.API.SignalR;
 using EngineerProject.API.Utility;
 using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Commons.Dtos.Querying;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NLog.Targets;
 using System;
@@ -17,10 +19,12 @@ namespace EngineerProject.API.Controllers
     public class GroupsController : Controller
     {
         private readonly EngineerContext context;
+        private IHubContext<ChatHub> chatHub;
 
-        public GroupsController(EngineerContext context)
+        public GroupsController(EngineerContext context, IHubContext<ChatHub> chatHub)
         {
             this.context = context;
+            this.chatHub = chatHub;
         }
 
         #region Interactions

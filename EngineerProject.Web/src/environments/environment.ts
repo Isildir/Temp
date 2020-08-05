@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8000/api/'
+  apiUrl: 'http://localhost:12345/api/',
+  signalRUrl: 'http://localhost:12345/chatHub'
 };
 
 /*
