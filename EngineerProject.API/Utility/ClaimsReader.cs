@@ -17,5 +17,15 @@ namespace EngineerProject.API.Utility
 
             return int.Parse(claim);
         }
+
+        public static int GetUserId(ClaimsPrincipal principal)
+        {
+            if (!(principal?.Identity is ClaimsIdentity identity))
+                return 0;
+
+            var claim = identity.Claims.FirstOrDefault(a => a.Type.Equals(ClaimTypes.Name)).Value;
+
+            return int.Parse(claim);
+        }
     }
 }

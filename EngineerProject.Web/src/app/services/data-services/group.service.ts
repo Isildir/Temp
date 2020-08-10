@@ -1,3 +1,4 @@
+import { Message } from './../../models/Message';
 import { Post } from './../../models/Post';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -70,5 +71,11 @@ export class GroupService {
     const url = `${environment.apiUrl}groups/InviteUser`;
 
     return this.httpClient.post<any>(url, { groupId, userIdentifier });
+  }
+
+  loadComments(groupId: number) {
+    const url = `${environment.apiUrl}messages/Get?groupId=${groupId}&page=1&pageSize=10`;
+
+    return this.httpClient.get<Message[]>(url);
   }
 }

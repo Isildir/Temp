@@ -1,8 +1,9 @@
+import { ChatComponent } from './chat/chat.component';
 import { GroupDetails } from 'src/app/models/GroupDetails';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GroupService } from './../../services/data-services/group.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Post } from 'src/app/models/Post';
 import { MatDialog } from '@angular/material/dialog';
 import { RequiredValidator, FormBuilder, FormGroup } from '@angular/forms';
@@ -14,17 +15,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css']
 })
-export class GroupComponent implements OnInit {
-//  private groupId: BehaviorSubject<number>;
-//  this.groupId = new BehaviorSubject<number>(undefined);
-//  this.groupId.subscribe(value => this.loadData(value));
-//  this.groupId.next(params.id));
-
+export class GroupComponent implements OnInit, AfterViewInit {
   public details: GroupDetails;
   public posts: Post[];
   public postForm: FormGroup;
 
   private groupId: number;
+
+  @ViewChild(ChatComponent) chat: ChatComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +43,10 @@ export class GroupComponent implements OnInit {
       this.reloadPosts();
       this.loadGroupDetails();
     });
+  }
+
+  ngAfterViewInit() {
+    this.chat.setComponentData(this.groupId);
   }
 
   loadGroupDetails() {

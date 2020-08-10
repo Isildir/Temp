@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EngineerProject.API.Entities;
+using EngineerProject.API.Entities.Models;
+using EngineerProject.API.Utility;
+using EngineerProject.Commons.Dtos.Groups;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +17,50 @@ namespace EngineerProject.API.SignalR
     {
         private readonly Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
+        private readonly IServiceProvider provider;
+
+        public ChatHub(IServiceProvider provider)
+        {
+            this.provider = provider;
+        }
+
         public async Task SendMessage(string content)
         {
-            await Clients.All.SendAsync("appendMessage", content);
+            var currentDate = DateTime.UtcNow;
+            var groupId = dictionary[Context.ConnectionId];
+            var userId = ClaimsReader.GetUserId(Context.User);
+
+            using var scope = provider.CreateScope();
+            var dbContext = scope.ServiceProvider.GetService<EngineerContext>();
+
+            var message = new Message
+            {
+                GroupId = groupId,
+                SenderId = userId,
+                Content = content,
+                DateAdded = currentDate
+            };
+
+            dbContext.Messages.Add(message);
+
+            try
+            {
+                dbContext.SaveChanges();
+
+                var response = new MessageDto
+                {
+                    Content = content,
+                    DateAdded = DateTime.UtcNow,
+                    Owner = dbContext.Users.Find(userId).Login
+                };
+
+                if (GetReceivers(groupId, out IClientProxy clients))
+                    await clients.SendAsync("appendMessage", response);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public override Task OnConnectedAsync()
@@ -39,13 +85,7 @@ namespace EngineerProject.API.SignalR
 
             return base.OnDisconnectedAsync(exception);
         }
-        /*
-        public async Task SendMessage(int characterId, string message)
-        {
-            if (GetReceivers(characterId, out IClientProxy clients))
-                await clients.SendAsync("sendMessage", message);
-        }
-        */
+
         private bool GetReceivers(int id, out IClientProxy clientProxy)
         {
             var connectionsIds = dictionary.Where(a => a.Value == id).Select(a => a.Key);

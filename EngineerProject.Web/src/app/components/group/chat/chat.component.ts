@@ -1,5 +1,8 @@
+import { Message } from './../../../models/Message';
+import { GroupService } from './../../../services/data-services/group.service';
 import { SignalRService } from './../../../services/data-services/signalR.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -7,18 +10,30 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  @Input() groupId: number;
+  public messages = [] as Message[];
+  public messageForm: FormGroup;
 
-  public messages = [] as string[];
-
-  constructor(public signalRService: SignalRService) { }
+  constructor(
+    public signalRService: SignalRService,
+    private groupService: GroupService,
+    private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
-    this.signalRService.startConnection(this.groupId);
+    this.messageForm = this.formBuilder.group({
+      content: ['', new RequiredValidator()]
+    });
+  }
+
+  public setComponentData(groupId: number) {
+    this.groupService.loadComments(groupId).subscribe(data => this.messages = data);
+    this.signalRService.startConnection(groupId);
     this.signalRService.messageListener.subscribe(data => this.messages.push(data));
   }
 
   public onSendMessage() {
-    this.signalRService.sendMessage('asdasdasd');
+    const content = this.messageForm.controls.content.value;
+
+    this.signalRService.sendMessage(content);
   }
 }

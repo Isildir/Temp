@@ -27,7 +27,7 @@
       </form>
     </div>
     <div class="group-main-page-right-menu__files">
-    <app-files-manager [groupId]="details?.id" (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
+    <app-files-manager #chat (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
     </div>
   <div *ngFor="let post of posts">
       <app-post-tile [data]="post" (reloadPosts)="reloadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>

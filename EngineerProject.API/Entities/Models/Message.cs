@@ -10,6 +10,10 @@ namespace EngineerProject.API.Entities.Models
 
         public DateTime DateAdded { get; set; }
 
+        public Group Group { get; set; }
+
+        public int GroupId { get; set; }
+
         [Key]
         public int Id { get; set; }
 
