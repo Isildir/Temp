@@ -16,7 +16,7 @@ namespace EngineerProject.Mobile.Views
         {
             errorMessage.IsVisible = false;
 
-            var singupResult = await UserService.Register(usernameEntry.Text, passwordEntry.Text);
+            var singupResult = await new UserService().Register(usernameEntry.Text, usernameEntry.Text, passwordEntry.Text);
 
             if (!singupResult.IsSuccessful)
             {

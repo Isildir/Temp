@@ -16,12 +16,12 @@ namespace EngineerProject.Mobile.Views
         {
             errorMessage.IsVisible = false;
 
-            var loginResult = await UserService.Login(usernameEntry.Text, passwordEntry.Text);
+            var loginResult = await new UserService().Login(usernameEntry.Text, passwordEntry.Text);
 
             if (loginResult.IsSuccessful)
             {
                 App.IsUserLoggedIn = true;
-                App.Token = loginResult.Token;
+                App.Token = loginResult.Data;
 
                 Navigation.InsertPageBefore(new MainPage(), this);
                 await Navigation.PopAsync();
