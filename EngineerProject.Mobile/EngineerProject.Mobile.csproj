@@ -16,20 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CharacterCreatePage.xaml.cs">
-      <DependentUpon>CharacterCreatePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\CharacterPage.xaml.cs">
-      <DependentUpon>CharacterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ProfilePage.xaml.cs">
-      <DependentUpon>ProfilePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\SignUpPage.xaml.cs">
-      <DependentUpon>SignUpPage.xaml</DependentUpon>
+    <Compile Update="Views\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

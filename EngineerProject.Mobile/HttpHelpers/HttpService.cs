@@ -12,18 +12,20 @@ namespace EngineerProject.Mobile.Services
     public class HttpService
     {
         internal RequestError error;
+        internal CancellationToken cancellationToken;
 
         private readonly HttpClient httpClient;
 
         public HttpService()
         {
-            httpClient = new HttpClient() { BaseAddress = new Uri(ApplicationConfigurationData.Url) };
+            cancellationToken = new CancellationToken();
+            httpClient = new HttpClient() { BaseAddress = new Uri(ConfigurationData.Url) };
 
-            if (!string.IsNullOrEmpty(App.Token))
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token);
+            if (!string.IsNullOrEmpty(ConfigurationData.Token))
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ConfigurationData.Token);
         }
 
-        public async Task<bool> DeleteAsync(string url, CancellationToken cancellationToken)
+        public async Task<bool> DeleteAsync(string url)
         {
             try
             {
@@ -44,7 +46,7 @@ namespace EngineerProject.Mobile.Services
             return false;
         }
 
-        public async Task<ResponseType> GetAsync<ResponseType>(string url, CancellationToken cancellationToken) where ResponseType : class
+        public async Task<ResponseType> GetAsync<ResponseType>(string url) where ResponseType : class
         {
             try
             {
@@ -65,7 +67,7 @@ namespace EngineerProject.Mobile.Services
             return null;
         }
 
-        public async Task<ResponseType> PutAsync<ResponseType>(string url, object data, CancellationToken cancellationToken) where ResponseType : class
+        public async Task<ResponseType> PutAsync<ResponseType>(string url, object data) where ResponseType : class
         {
             var serializedData = JsonConvert.SerializeObject(data);
 
@@ -90,7 +92,7 @@ namespace EngineerProject.Mobile.Services
             return null;
         }
 
-        public async Task<bool> PutAsync(string url, object data, CancellationToken cancellationToken)
+        public async Task<bool> PutAsync(string url, object data)
         {
             var serializedData = JsonConvert.SerializeObject(data);
 
@@ -115,7 +117,7 @@ namespace EngineerProject.Mobile.Services
             return false;
         }
 
-        public async Task<bool> PostAsync(string url, object data, CancellationToken cancellationToken)
+        public async Task<bool> PostAsync(string url, object data)
         {
             var serializedData = JsonConvert.SerializeObject(data);
 
@@ -140,7 +142,7 @@ namespace EngineerProject.Mobile.Services
             return false;
         }
 
-        public async Task<ResponseType> PostAsync<ResponseType>(string url, object data, CancellationToken cancellationToken) where ResponseType : class
+        public async Task<ResponseType> PostAsync<ResponseType>(string url, object data) where ResponseType : class
         {
             var serializedData = JsonConvert.SerializeObject(data);
 

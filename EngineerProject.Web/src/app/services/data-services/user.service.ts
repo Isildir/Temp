@@ -28,7 +28,7 @@ export class UserService {
       .pipe(map(user => {
           const newUser = {
             login: user.login,
-            token: user.access_token
+            token: user.token
           };
 
           localStorage.setItem('currentUser', JSON.stringify(newUser));

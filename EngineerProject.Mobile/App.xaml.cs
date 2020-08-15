@@ -1,4 +1,5 @@
-﻿using EngineerProject.Mobile.Views;
+﻿using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile
@@ -7,26 +8,10 @@ namespace EngineerProject.Mobile
     {
         public App()
         {
-            if (!IsUserLoggedIn)
+            if (!ConfigurationData.IsUserLoggedIn)
                 MainPage = new NavigationPage(new LoginPage());
             else
-                MainPage = new NavigationPage(new MainPage());
-        }
-
-        public static bool IsUserLoggedIn { get; internal set; }
-
-        public static string Token { get; internal set; }
-
-        protected override void OnResume()
-        {
-        }
-
-        protected override void OnSleep()
-        {
-        }
-
-        protected override void OnStart()
-        {
+                MainPage = new NavigationPage(new HomePage());
         }
     }
 }

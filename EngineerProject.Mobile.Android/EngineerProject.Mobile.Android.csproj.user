@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>pixel_2_nougat_7_1_-_api_25</SelectedDevice>
     <DefaultDevice>pixel_2_nougat_7_1_-_api_25</DefaultDevice>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

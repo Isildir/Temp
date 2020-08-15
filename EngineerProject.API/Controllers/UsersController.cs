@@ -68,7 +68,7 @@ namespace EngineerProject.API.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new { login = user.Login, access_token = tokenString });
+            return Ok(new { login = user.Login, token = tokenString });
         }
 
         [HttpPost, Authorize]

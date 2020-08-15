@@ -3,18 +3,17 @@ using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class HomePage : ContentPage
     {
-        public MainPage()
+        public HomePage()
         {
-            NavigationPage.SetHasNavigationBar(this, false);
             InitializeComponent();
         }
 
         private async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
-            App.IsUserLoggedIn = false;
-            App.Token = null;
+            //App.IsUserLoggedIn = false;
+            //App.Token = null;
 
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
@@ -26,7 +25,7 @@ namespace EngineerProject.Mobile.Views
 
         private async void OnProfileButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProfilePage());
+            //await Navigation.PushAsync(new ProfilePage());
         }
     }
 }

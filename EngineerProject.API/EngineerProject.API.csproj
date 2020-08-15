@@ -25,8 +25,4 @@
     <ProjectReference Include="..\EngineerProject.Commons\EngineerProject.Commons.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>
