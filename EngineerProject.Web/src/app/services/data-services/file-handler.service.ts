@@ -22,7 +22,7 @@ constructor(private httpClient: HttpClient) { }
   }
 
   getFiles(groupId: number) {
-    const url = `${environment.apiUrl}files/GetFiles?groupId=${groupId}`;
+    const url = `${environment.apiUrl}files/GetFiles?groupId=${groupId}&pageSize=5&page=1&filter=''`;
 
     return this.httpClient.get<GetFile[]>(url);
   }

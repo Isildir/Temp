@@ -23,7 +23,7 @@ namespace EngineerProject.Mobile.Services
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", App.Token);
         }
 
-        public async Task<ResponseType> DeleteAsync<ResponseType>(string url, CancellationToken cancellationToken) where ResponseType : class
+        public async Task<bool> DeleteAsync(string url, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace EngineerProject.Mobile.Services
                 var responseData = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<ResponseType>(responseData);
+                    return true;
                 else
                     error = JsonConvert.DeserializeObject<RequestError>(responseData);
             }
@@ -41,7 +41,7 @@ namespace EngineerProject.Mobile.Services
                 error = new RequestError { Message = e.Message };
             }
 
-            return null;
+            return false;
         }
 
         public async Task<ResponseType> GetAsync<ResponseType>(string url, CancellationToken cancellationToken) where ResponseType : class
@@ -88,6 +88,31 @@ namespace EngineerProject.Mobile.Services
             }
 
             return null;
+        }
+
+        public async Task<bool> PutAsync(string url, object data, CancellationToken cancellationToken)
+        {
+            var serializedData = JsonConvert.SerializeObject(data);
+
+            var requestBody = new StringContent(serializedData, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await httpClient.PutAsync(url, requestBody, cancellationToken);
+
+                var responseData = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
+            }
+            catch (Exception e)
+            {
+                error = new RequestError { Message = e.Message };
+            }
+
+            return false;
         }
 
         public async Task<bool> PostAsync(string url, object data, CancellationToken cancellationToken)

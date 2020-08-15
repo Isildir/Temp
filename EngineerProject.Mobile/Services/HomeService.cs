@@ -69,8 +69,7 @@ namespace EngineerProject.Mobile.Services
 
             return result;
         }
-
-
+        
         public async Task<RequestResponse> ResolveGroupInvite(int id, bool value)
         {
             var result = new RequestResponse();

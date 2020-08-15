@@ -1,22 +1,29 @@
-﻿namespace EngineerProject.Mobile.Services
+﻿using EngineerProject.Commons.Dtos.Groups;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace EngineerProject.Mobile.Services
 {
     public class FileService : BaseService
-    {/*
-        getFiles(groupId: number)
+    {
+        public async Task<DataRequestResponse<List<FileDto>>> GetFiles(int groupId, int page, int pageSize)
         {
-            const url = `${ environment.apiUrl}
-            files / GetFiles ? groupId =${ groupId}`;
+            var result = new DataRequestResponse<List<FileDto>>();
 
-            return this.httpClient.get<GetFile[]>(url);
+            var response = await client.GetAsync<List<FileDto>>($"Files/GetFiles?groupId={groupId}&page={page}&pageSize={pageSize}&filter=''", new CancellationToken());
+
+            if (response != null)
+            {
+                result.IsSuccessful = true;
+                result.Data = response;
+            }
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
         }
 
-        getFile(groupId: number)
-        {
-            const url = `${ environment.apiUrl}
-            files / GetFiles ? groupId =${ groupId}`;
-
-            return this.httpClient.get<GetFile[]>(url);
-        }
-        */
+        //TODO DownloadFile
     }
 }

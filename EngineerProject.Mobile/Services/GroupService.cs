@@ -1,13 +1,17 @@
-﻿namespace EngineerProject.Mobile.Services
+﻿using EngineerProject.Commons.Dtos.Groups;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace EngineerProject.Mobile.Services
 {
     public class GroupService : BaseService
     {
-        /*
-        public async Task<DataRequestResponse<UserGroupsWrapperDto>> GetUserGroups()
+        public async Task<DataRequestResponse<List<PostDto>>> GetPosts(int groupId, int page, int pageSize)
         {
-            var result = new DataRequestResponse<UserGroupsWrapperDto>();
+            var result = new DataRequestResponse<List<PostDto>>();
 
-            var response = await client.GetAsync<UserGroupsWrapperDto>($"Groups/GetUserGroups", new CancellationToken());
+            var response = await client.GetAsync<List<PostDto>>($"Posts/Get?groupId={groupId}&page={page}&pageSize={pageSize}", new CancellationToken());
 
             if (response != null)
             {
@@ -19,95 +23,154 @@
 
             return result;
         }
-                getPosts(id: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    posts / get ? groupId =${ id}
-                    &page = 1 & pageSize = 10`;
 
-                    return this.httpClient.get<Post[]>(url);
-                }
+        public async Task<DataRequestResponse<GroupDetailsDto>> GetDetails(int groupId)
+        {
+            var result = new DataRequestResponse<GroupDetailsDto>();
 
-                getDetails(id: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    groups / Details ? id =${ id}`;
+            var response = await client.GetAsync<GroupDetailsDto>($"Groups/Details?id={groupId}", new CancellationToken());
 
-                    return this.httpClient.get<GroupDetails>(url);
-                }
+            if (response != null)
+            {
+                result.IsSuccessful = true;
+                result.Data = response;
+            }
+            else
+                result.ErrorMessage = client.error.Message;
 
-                addPost(groupId: number, title: string, content: string)
-                {
-                    const url = `${ environment.apiUrl}
-                    posts / Create`;
+            return result;
+        }
 
-                    return this.httpClient.post<any>(url, { groupId, title, content });
-                }
+        public async Task<DataRequestResponse<GroupAdminDetailsDto>> GetAdminGroupDetails(int groupId)
+        {
+            var result = new DataRequestResponse<GroupAdminDetailsDto>();
 
-                deletePost(id: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    posts / Delete ? id =${ id}`;
+            var response = await client.GetAsync<GroupAdminDetailsDto>($"Groups/GetAdminGroupDetails?id={groupId}", new CancellationToken());
 
-                    return this.httpClient.delete<any>(url);
-                }
+            if (response != null)
+            {
+                result.IsSuccessful = true;
+                result.Data = response;
+            }
+            else
+                result.ErrorMessage = client.error.Message;
 
-                deleteComment(id: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    comments / Delete ? id =${ id}`;
+            return result;
+        }
 
-                    return this.httpClient.delete<any>(url);
-                }
+        public async Task<DataRequestResponse<List<MessageDto>>> LoadComments(int groupId, int page, int pageSize)
+        {
+            var result = new DataRequestResponse<List<MessageDto>>();
 
-                addComment(id: number, content: string)
-                {
-                    const url = `${ environment.apiUrl}
-                    comments / Create`;
+            var response = await client.GetAsync<List<MessageDto>>($"Messages/Get?groupId={groupId}&page={page}&pageSize={pageSize}", new CancellationToken());
 
-                    return this.httpClient.post<any>(url, { postId: id, content });
-                }
+            if (response != null)
+            {
+                result.IsSuccessful = true;
+                result.Data = response;
+            }
+            else
+                result.ErrorMessage = client.error.Message;
 
-                modifyPost(postId: number, title: string, content: string)
-                {
-                    const url = `${ environment.apiUrl}
-                    posts / Modify ? id =${ postId}`;
+            return result;
+        }
 
-                    return this.httpClient.put<any>(url, { title, content });
-                }
+        public async Task<RequestResponse> AddPost(int groupId, string title, string content)
+        {
+            var result = new RequestResponse();
 
-                getAdminGroupDetails(groupId: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    groups / GetAdminGroupDetails ? id =${ groupId}`;
+            var response = await client.PostAsync($"Posts/Create", new { groupId, title, content }, new CancellationToken());
 
-                    return this.httpClient.get<GroupAdminDetails>(url);
-                }
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
 
-                resolveApplication(groupId: number, userId: number, accepted: boolean)
-                {
-                    const url = `${ environment.apiUrl}
-                    groups / ResolveApplication`;
+            return result;
+        }
 
-                    return this.httpClient.post<any>(url, { groupId, userId, accepted });
-                }
+        public async Task<RequestResponse> AddComment(int postId, string content)
+        {
+            var result = new RequestResponse();
 
-                inviteUser(groupId: number, userIdentifier: string)
-                {
-                    const url = `${ environment.apiUrl}
-                    groups / InviteUser`;
+            var response = await client.PostAsync($"Comments/Create", new { postId, content }, new CancellationToken());
 
-                    return this.httpClient.post<any>(url, { groupId, userIdentifier });
-                }
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
 
-                loadComments(groupId: number)
-                {
-                    const url = `${ environment.apiUrl}
-                    messages / Get ? groupId =${ groupId}
-                    &page = 1 & pageSize = 10`;
+            return result;
+        }
 
-                    return this.httpClient.get<Message[]>(url);
-                }
-                */
+        public async Task<RequestResponse> ResolveApplication(int groupId, int userId, bool accepted)
+        {
+            var result = new RequestResponse();
+
+            var response = await client.PostAsync($"Groups/ResolveApplication", new { groupId, userId, accepted }, new CancellationToken());
+
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
+        }
+
+        public async Task<RequestResponse> InviteUser(int groupId, string userIdentifier)
+        {
+            var result = new RequestResponse();
+
+            var response = await client.PostAsync($"Groups/InviteUser", new { groupId, userIdentifier }, new CancellationToken());
+
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
+        }
+
+        public async Task<RequestResponse> ModifyPost(int postId, string title, string content)
+        {
+            var result = new RequestResponse();
+
+            var response = await client.PutAsync($"Posts/Modify?id={postId}", new { title, content }, new CancellationToken());
+
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
+        }
+
+        public async Task<RequestResponse> DeletePost(int postId)
+        {
+            var result = new RequestResponse();
+
+            var response = await client.DeleteAsync($"Posts/Delete?id={postId}", new CancellationToken());
+
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
+        }
+
+        public async Task<RequestResponse> DeleteComment(int commentId)
+        {
+            var result = new RequestResponse();
+
+            var response = await client.DeleteAsync($"Comments/Delete?id={commentId}", new CancellationToken());
+
+            if (response)
+                result.IsSuccessful = true;
+            else
+                result.ErrorMessage = client.error.Message;
+
+            return result;
+        }
     }
 }
