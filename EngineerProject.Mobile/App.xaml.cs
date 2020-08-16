@@ -1,5 +1,6 @@
 ﻿using EngineerProject.Mobile.Utility;
 using EngineerProject.Mobile.Views;
+using EngineerProject.Mobile.Views.Home;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile

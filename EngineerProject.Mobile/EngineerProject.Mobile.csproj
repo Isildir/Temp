@@ -16,8 +16,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\HomePage.xaml.cs">
+    <Compile Update="Views\Home\Create.xaml.cs">
+      <DependentUpon>Create.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home\Invites.xaml.cs">
+      <DependentUpon>Invites.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home\Search.xaml.cs">
+      <DependentUpon>Search.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\GroupPage.xaml.cs">
+      <DependentUpon>GroupPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>

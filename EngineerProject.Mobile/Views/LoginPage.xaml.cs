@@ -1,5 +1,6 @@
 ﻿using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
