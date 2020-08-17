@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage Title="Create" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Create.GroupCreatePage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Margin="10,10,10,10">
+            <Entry x:Name="Name" Placeholder="Nazwa grupy"></Entry>
+            <Entry x:Name="Description" Placeholder="Opis"></Entry>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Czy grupa jest prywatna?" HorizontalOptions="StartAndExpand"></Label>
+                <CheckBox x:Name="IsPrivate" HorizontalOptions="End"></CheckBox>
+            </StackLayout>
+            <Button Clicked="OnSubmit" Text="Utwórz"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

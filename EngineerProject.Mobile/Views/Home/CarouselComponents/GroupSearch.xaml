@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage Title="Home" xmlns="http://xamarin.com/schemas/2014/forms" x:Name="SearchBar" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.CarouselComponents.GroupSearch">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Margin="10,10,10,10">
+            <Entry x:Name="SearchBarEntry" TextChanged="SearchBarTextChanged" Placeholder="Wpisz wyszukiwaną frazę"></Entry>
+            <ListView x:Name="GroupsList" ItemTapped="OnGroupSelect">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,44 +1,32 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Mobile.Services;
-using EngineerProject.Mobile.Views.Groups;
-using System;
-using System.Collections.ObjectModel;
+using EngineerProject.Mobile.Views.Home.CarouselComponents;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views.Home
 {
-    public partial class HomePage : ContentPage
+    public partial class HomePage : CarouselPage
     {
+        internal static UserGroupsWrapperDto UserData = new UserGroupsWrapperDto();
+
         public HomePage()
         {
             InitializeComponent();
 
-            GroupsView.ItemsSource = Groups;
+            HomeWrapper.Children.Add(new UserGroups());
+            HomeWrapper.Children.Add(new GroupSearch());
+            HomeWrapper.Children.Add(new GroupInvites());
         }
 
-        private ObservableCollection<GroupTileDto> Groups { get; set; } = new ObservableCollection<GroupTileDto>();
-
-        private async void OnLogoutButtonClicked(object sender, EventArgs e) => await this.OnLogout();
-
-        protected override async void OnAppearing()
+        internal static async Task ReloadUserData()
         {
-            Groups.Clear();
-
             var service = new HomeService();
 
             var userGroups = await service.GetUserGroups();
 
-            foreach (var value in userGroups.Data.Participant)
-                Groups.Add(value);
-
-            base.OnAppearing();
-        }
-
-        private async void OnGroupSelect(object sender, ItemTappedEventArgs e)
-        {
-            var t = e.Item as GroupTileDto;
-
-            await Navigation.PushAsync(new GroupPage(t.Id));
+            if (userGroups.IsSuccessful)
+                UserData = userGroups.Data;
         }
     }
 }

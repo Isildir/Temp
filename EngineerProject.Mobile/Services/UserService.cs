@@ -1,15 +1,29 @@
 ﻿using EngineerProject.Commons.Dtos;
-using Newtonsoft.Json;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EngineerProject.Mobile.Services
 {
     public class UserService : BaseService
     {
-        private class LoginRequestResponse
+        public async Task<RequestResponse> ChangeNotificationSettings()
         {
-            public string Token { get; set; }
+            var response = await client.PostAsync($"Users/ChangeNotificationSettings", null);
+
+            return MapResponse(response);
+        }
+
+        public async Task<RequestResponse> ChangePassword(string oldPassword, string password)
+        {
+            var response = await client.PostAsync($"Users/ChangePassword", new { oldPassword, password });
+
+            return MapResponse(response);
+        }
+
+        public async Task<DataRequestResponse<UserProfileDto>> GetProfile()
+        {
+            var response = await client.GetAsync<UserProfileDto>($"Users/GetProfile");
+
+            return MapResponse(response);
         }
 
         public async Task<DataRequestResponse<string>> Login(string userName, string password)
@@ -26,32 +40,16 @@ namespace EngineerProject.Mobile.Services
             return MapResponse(response);
         }
 
-        public async Task<DataRequestResponse<UserProfileDto>> GetProfile()
-        {
-            var response = await client.GetAsync<UserProfileDto>($"Users/GetProfile");
-
-            return MapResponse(response);
-        }
-
-        public async Task<RequestResponse> ChangeNotificationSettings()
-        {
-            var response = await client.PostAsync($"Users/ChangeNotificationSettings", null);
-
-            return MapResponse(response);
-        }
-
-        public async Task<RequestResponse> ChangePassword(string oldPassword, string password)
-        {
-            var response = await client.PostAsync($"Users/ChangePassword", new { oldPassword, password });
-
-            return MapResponse(response);
-        }
-
         public async Task<RequestResponse> SendPasswordRecovery(string identifier)
         {
             var response = await client.PostAsync($"Users/SendPasswordRecovery", identifier);
 
             return MapResponse(response);
+        }
+
+        private class LoginRequestResponse
+        {
+            public string Token { get; set; }
         }
     }
 }

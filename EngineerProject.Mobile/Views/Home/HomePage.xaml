@@ -1,15 +1,3 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.HomePage">
-    <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
-            <Label Text="Twoje grupy" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-            <ListView x:Name="GroupsView" ItemTapped="OnGroupSelect">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>
-</ContentPage>
+<CarouselPage Title="Home" xmlns="http://xamarin.com/schemas/2014/forms" x:Name="HomeWrapper" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.HomePage">
+</CarouselPage>

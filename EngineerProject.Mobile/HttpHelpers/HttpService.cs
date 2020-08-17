@@ -11,9 +11,8 @@ namespace EngineerProject.Mobile.Services
 {
     public class HttpService
     {
-        internal RequestError error;
         internal CancellationToken cancellationToken;
-
+        internal RequestError error;
         private readonly HttpClient httpClient;
 
         public HttpService()
@@ -36,7 +35,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
+                    HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -57,7 +56,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<ResponseType>(responseData);
                 else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
+                    HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -65,56 +64,6 @@ namespace EngineerProject.Mobile.Services
             }
 
             return null;
-        }
-
-        public async Task<ResponseType> PutAsync<ResponseType>(string url, object data) where ResponseType : class
-        {
-            var serializedData = JsonConvert.SerializeObject(data);
-
-            var requestBody = new StringContent(serializedData, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await httpClient.PutAsync(url, requestBody, cancellationToken);
-
-                var responseData = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                    return JsonConvert.DeserializeObject<ResponseType>(responseData);
-                else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
-            }
-            catch (Exception e)
-            {
-                error = new RequestError { Message = e.Message };
-            }
-
-            return null;
-        }
-
-        public async Task<bool> PutAsync(string url, object data)
-        {
-            var serializedData = JsonConvert.SerializeObject(data);
-
-            var requestBody = new StringContent(serializedData, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await httpClient.PutAsync(url, requestBody, cancellationToken);
-
-                var responseData = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
-                    return true;
-                else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
-            }
-            catch (Exception e)
-            {
-                error = new RequestError { Message = e.Message };
-            }
-
-            return false;
         }
 
         public async Task<bool> PostAsync(string url, object data)
@@ -132,7 +81,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
+                    HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -157,7 +106,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<ResponseType>(responseData);
                 else
-                    error = JsonConvert.DeserializeObject<RequestError>(responseData);
+                    HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -165,6 +114,68 @@ namespace EngineerProject.Mobile.Services
             }
 
             return null;
+        }
+
+        public async Task<ResponseType> PutAsync<ResponseType>(string url, object data) where ResponseType : class
+        {
+            var serializedData = JsonConvert.SerializeObject(data);
+
+            var requestBody = new StringContent(serializedData, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await httpClient.PutAsync(url, requestBody, cancellationToken);
+
+                var responseData = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                    return JsonConvert.DeserializeObject<ResponseType>(responseData);
+                else
+                    HandleErrorMessage(response, responseData);
+            }
+            catch (Exception e)
+            {
+                error = new RequestError { Message = e.Message };
+            }
+
+            return null;
+        }
+
+        public async Task<bool> PutAsync(string url, object data)
+        {
+            var serializedData = JsonConvert.SerializeObject(data);
+
+            var requestBody = new StringContent(serializedData, Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await httpClient.PutAsync(url, requestBody, cancellationToken);
+
+                var responseData = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                    return true;
+                else
+                    HandleErrorMessage(response, responseData);
+            }
+            catch (Exception e)
+            {
+                error = new RequestError { Message = e.Message };
+            }
+
+            return false;
+        }
+
+        private async Task HandleErrorMessage(HttpResponseMessage responseMessage, string responseData)
+        {
+            if (responseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                App.LogoutUser();
+
+                return;
+            }
+
+            error = JsonConvert.DeserializeObject<RequestError>(responseData);
         }
     }
 }

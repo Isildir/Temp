@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.LoginPage" >
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage Title="Login" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.LoginPage">
     <ContentPage.Resources>
         <StyleSheet Source="/Assets/styles.css" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Margin="10,10,10,10" x:Name="gridLayout">
+        <Grid Margin="10,10,10,10" x:Name="GridLayout">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

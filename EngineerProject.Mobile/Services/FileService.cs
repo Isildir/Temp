@@ -1,6 +1,5 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EngineerProject.Mobile.Services

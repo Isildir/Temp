@@ -16,14 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Home\Create.xaml.cs">
+    <Compile Update="Views\Home\CarouselComponents\GroupSearch.xaml.cs">
+      <DependentUpon>GroupSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home\CarouselComponents\GroupInvites.xaml.cs">
+      <DependentUpon>GroupInvites.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Home\CarouselComponents\UserGroups.xaml.cs">
+      <DependentUpon>UserGroups.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Home\Create\Create.xaml.cs">
       <DependentUpon>Create.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Home\Invites.xaml.cs">
-      <DependentUpon>Invites.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\Home\Search.xaml.cs">
-      <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -34,5 +38,12 @@
     <Compile Update="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Home\CarouselComponents\UserGroups.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

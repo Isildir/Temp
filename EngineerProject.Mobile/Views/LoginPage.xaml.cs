@@ -10,11 +10,17 @@ namespace EngineerProject.Mobile.Views
 {
     public partial class LoginPage : ContentPage
     {
-        private enum FormState : byte
+        private readonly Dictionary<ElementType, View> preparedElements = new Dictionary<ElementType, View>();
+
+        private FormState currentFormState = FormState.Login;
+
+        public LoginPage()
         {
-            Login = 1,
-            Register = 2,
-            PasswordRecovery = 3
+            NavigationPage.SetHasNavigationBar(this, false);
+
+            PrepareGridElements();
+            InitializeComponent();
+            UpdateGridShape();
         }
 
         private enum ElementType : byte
@@ -31,80 +37,52 @@ namespace EngineerProject.Mobile.Views
             ErrorLabel = 10
         }
 
-        private FormState currentFormState = FormState.Login;
-        private readonly Dictionary<ElementType, View> preparedElements = new Dictionary<ElementType, View>();
-
-        private void PrepareGridElements()
+        private enum FormState : byte
         {
-            var secondaryButtonStyles = new List<string> { "style-test" };
-
-            var loginLabel = new Label { Text = "Logowanie", StyleClass = secondaryButtonStyles };
-            var registerLabel = new Label { Text = "Rejestracja", StyleClass = secondaryButtonStyles };
-            var recoveryLabel = new Label { Text = "Przypomnienie hasła", StyleClass = secondaryButtonStyles };
-
-            var loginGesture = new TapGestureRecognizer();
-            var registerGesture = new TapGestureRecognizer();
-            var recoveryGesture = new TapGestureRecognizer();
-
-            loginGesture.Tapped += OnLoginButtonClicked;
-            registerGesture.Tapped += OnRegisterButtonClicked;
-            recoveryGesture.Tapped += OnPasswordRecoveryButtonClicked;
-
-            loginLabel.GestureRecognizers.Add(loginGesture);
-            registerLabel.GestureRecognizers.Add(registerGesture);
-            recoveryLabel.GestureRecognizers.Add(recoveryGesture);
-
-            preparedElements.Add(ElementType.Identifier, new Entry { Placeholder = "identyfikator" });
-            preparedElements.Add(ElementType.Login, new Entry { Placeholder = "login" });
-            preparedElements.Add(ElementType.Email, new Entry { Placeholder = "email" });
-            preparedElements.Add(ElementType.Password, new Entry { Placeholder = "hasło", IsPassword = true });
-            preparedElements.Add(ElementType.ConfirmedPassword, new Entry { Placeholder = "powtórz hasło", IsPassword = true });
-            preparedElements.Add(ElementType.LoginLabel, loginLabel);
-            preparedElements.Add(ElementType.RegisterLabel, registerLabel);
-            preparedElements.Add(ElementType.RecoveryLabel, recoveryLabel);
-            preparedElements.Add(ElementType.SubmitButton, new Button { Text = "Zatwierdź" });
-            preparedElements.Add(ElementType.ErrorLabel, new Label());
-
-            ((Button)preparedElements[ElementType.SubmitButton]).Clicked += OnSubmitButtonClicked;
-        }
-
-        public LoginPage()
-        {
-            NavigationPage.SetHasNavigationBar(this, false);
-
-            PrepareGridElements();
-            InitializeComponent();
-            UpdateGridShape();
+            Login = 1,
+            Register = 2,
+            PasswordRecovery = 3
         }
 
         private void AppendLoginControls(ref int rowIndex)
         {
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
 
-            gridLayout.Children.Add(preparedElements[ElementType.Identifier], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.Password], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.RegisterLabel], 0, rowIndex);
-            gridLayout.Children.Add(preparedElements[ElementType.RecoveryLabel], 1, rowIndex);
+            GridLayout.Children.Add(preparedElements[ElementType.Identifier], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.Password], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.RegisterLabel], 0, rowIndex);
+            GridLayout.Children.Add(preparedElements[ElementType.RecoveryLabel], 1, rowIndex);
 
             Grid.SetColumnSpan(preparedElements[ElementType.Identifier], 2);
             Grid.SetColumnSpan(preparedElements[ElementType.Password], 2);
         }
 
+        private void AppendRecoveryControls(ref int rowIndex)
+        {
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
+
+            GridLayout.Children.Add(preparedElements[ElementType.Identifier], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.LoginLabel], 0, rowIndex);
+
+            Grid.SetColumnSpan(preparedElements[ElementType.Identifier], 2);
+        }
+
         private void AppendRegisterControls(ref int rowIndex)
         {
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
 
-            gridLayout.Children.Add(preparedElements[ElementType.Login], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.Email], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.Password], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.ConfirmedPassword], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.LoginLabel], 0, rowIndex);
+            GridLayout.Children.Add(preparedElements[ElementType.Login], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.Email], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.Password], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.ConfirmedPassword], 0, rowIndex++);
+            GridLayout.Children.Add(preparedElements[ElementType.LoginLabel], 0, rowIndex);
 
             Grid.SetColumnSpan(preparedElements[ElementType.Login], 2);
             Grid.SetColumnSpan(preparedElements[ElementType.Email], 2);
@@ -112,86 +90,25 @@ namespace EngineerProject.Mobile.Views
             Grid.SetColumnSpan(preparedElements[ElementType.ConfirmedPassword], 2);
         }
 
-        private void AppendRecoveryControls(ref int rowIndex)
+        private async Task<string> HandleLogging()
         {
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 20 });
+            var identifier = ((Entry)preparedElements[ElementType.Identifier]).Text;
+            var password = ((Entry)preparedElements[ElementType.Password]).Text;
 
-            gridLayout.Children.Add(preparedElements[ElementType.Identifier], 0, rowIndex++);
-            gridLayout.Children.Add(preparedElements[ElementType.LoginLabel], 0, rowIndex);
+            var request = await new UserService().Login(identifier, password);
 
-            Grid.SetColumnSpan(preparedElements[ElementType.Identifier], 2);
-        }
-
-        private void UpdateGridShape()
-        {
-            gridLayout.Children.Clear();
-            gridLayout.RowDefinitions.Clear();
-
-            var rowIndex = 0;
-
-            switch (currentFormState)
+            if (request.IsSuccessful)
             {
-                case FormState.Login:
-                    AppendLoginControls(ref rowIndex);
-                    break;
-                case FormState.Register:
-                    AppendRegisterControls(ref rowIndex);
-                    break;
-                case FormState.PasswordRecovery:
-                    AppendRecoveryControls(ref rowIndex);
-                    break;
+                ConfigurationData.IsUserLoggedIn = true;
+                ConfigurationData.Token = request.Data;
+
+                Application.Current.Properties["token"] = request.Data;
+
+                Navigation.InsertPageBefore(new HomePage(), this);
+                await Navigation.PopAsync();
             }
 
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
-
-            gridLayout.Children.Add(preparedElements[ElementType.SubmitButton], 1, ++rowIndex);
-            gridLayout.Children.Add(preparedElements[ElementType.ErrorLabel], 0, ++rowIndex);
-            Grid.SetColumnSpan(preparedElements[ElementType.ErrorLabel], 2);
-
-            gridLayout.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
-        }
-
-        private void OnRegisterButtonClicked(object sender, EventArgs e)
-        {
-            currentFormState = FormState.Register;
-            UpdateGridShape();
-        }
-        private void OnPasswordRecoveryButtonClicked(object sender, EventArgs e)
-        {
-            currentFormState = FormState.PasswordRecovery;
-            UpdateGridShape();
-        }
-        private void OnLoginButtonClicked(object sender, EventArgs e)
-        {
-            currentFormState = FormState.Login;
-            UpdateGridShape();
-        }
-        private async void OnSubmitButtonClicked(object sender, EventArgs e)
-        {
-            preparedElements[ElementType.ErrorLabel].IsVisible = false;
-
-            string errorMessage = null;
-
-            switch (currentFormState)
-            {
-                case FormState.Login:
-                    errorMessage = await HandleLogging();
-                    break;
-                case FormState.Register:
-                    errorMessage = await HandleRegistering();
-                    break;
-                case FormState.PasswordRecovery:
-                    errorMessage = await HandlePasswordRecovery();
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                ((Label)preparedElements[ElementType.ErrorLabel]).Text = errorMessage;
-                preparedElements[ElementType.ErrorLabel].IsVisible = true;
-            }
+            return request.ErrorMessage;
         }
 
         private async Task<string> HandlePasswordRecovery()
@@ -235,23 +152,116 @@ namespace EngineerProject.Mobile.Views
             return request.ErrorMessage;
         }
 
-        private async Task<string> HandleLogging()
+        private void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            var identifier = ((Entry)preparedElements[ElementType.Identifier]).Text;
-            var password = ((Entry)preparedElements[ElementType.Password]).Text;
+            currentFormState = FormState.Login;
+            UpdateGridShape();
+        }
 
-            var request = await new UserService().Login(identifier, password);
+        private void OnPasswordRecoveryButtonClicked(object sender, EventArgs e)
+        {
+            currentFormState = FormState.PasswordRecovery;
+            UpdateGridShape();
+        }
 
-            if (request.IsSuccessful)
+        private void OnRegisterButtonClicked(object sender, EventArgs e)
+        {
+            currentFormState = FormState.Register;
+            UpdateGridShape();
+        }
+
+        private async void OnSubmitButtonClicked(object sender, EventArgs e)
+        {
+            preparedElements[ElementType.ErrorLabel].IsVisible = false;
+
+            string errorMessage = null;
+
+            switch (currentFormState)
             {
-                ConfigurationData.IsUserLoggedIn = true;
-                ConfigurationData.Token = request.Data;
+                case FormState.Login:
+                    errorMessage = await HandleLogging();
+                    break;
 
-                Navigation.InsertPageBefore(new HomePage(), this);
-                await Navigation.PopAsync();
+                case FormState.Register:
+                    errorMessage = await HandleRegistering();
+                    break;
+
+                case FormState.PasswordRecovery:
+                    errorMessage = await HandlePasswordRecovery();
+                    break;
             }
 
-            return request.ErrorMessage;
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                ((Label)preparedElements[ElementType.ErrorLabel]).Text = errorMessage;
+                preparedElements[ElementType.ErrorLabel].IsVisible = true;
+            }
+        }
+
+        private void PrepareGridElements()
+        {
+            var secondaryButtonStyles = new List<string> { "style-test" };
+
+            var loginLabel = new Label { Text = "Logowanie", StyleClass = secondaryButtonStyles };
+            var registerLabel = new Label { Text = "Rejestracja", StyleClass = secondaryButtonStyles };
+            var recoveryLabel = new Label { Text = "Przypomnienie hasła", StyleClass = secondaryButtonStyles };
+
+            var loginGesture = new TapGestureRecognizer();
+            var registerGesture = new TapGestureRecognizer();
+            var recoveryGesture = new TapGestureRecognizer();
+
+            loginGesture.Tapped += OnLoginButtonClicked;
+            registerGesture.Tapped += OnRegisterButtonClicked;
+            recoveryGesture.Tapped += OnPasswordRecoveryButtonClicked;
+
+            loginLabel.GestureRecognizers.Add(loginGesture);
+            registerLabel.GestureRecognizers.Add(registerGesture);
+            recoveryLabel.GestureRecognizers.Add(recoveryGesture);
+
+            preparedElements.Add(ElementType.Identifier, new Entry { Placeholder = "identyfikator" });
+            preparedElements.Add(ElementType.Login, new Entry { Placeholder = "login" });
+            preparedElements.Add(ElementType.Email, new Entry { Placeholder = "email" });
+            preparedElements.Add(ElementType.Password, new Entry { Placeholder = "hasło", IsPassword = true });
+            preparedElements.Add(ElementType.ConfirmedPassword, new Entry { Placeholder = "powtórz hasło", IsPassword = true });
+            preparedElements.Add(ElementType.LoginLabel, loginLabel);
+            preparedElements.Add(ElementType.RegisterLabel, registerLabel);
+            preparedElements.Add(ElementType.RecoveryLabel, recoveryLabel);
+            preparedElements.Add(ElementType.SubmitButton, new Button { Text = "Zatwierdź" });
+            preparedElements.Add(ElementType.ErrorLabel, new Label());
+
+            ((Button)preparedElements[ElementType.SubmitButton]).Clicked += OnSubmitButtonClicked;
+        }
+
+        private void UpdateGridShape()
+        {
+            GridLayout.Children.Clear();
+            GridLayout.RowDefinitions.Clear();
+
+            var rowIndex = 0;
+
+            switch (currentFormState)
+            {
+                case FormState.Login:
+                    AppendLoginControls(ref rowIndex);
+                    break;
+
+                case FormState.Register:
+                    AppendRegisterControls(ref rowIndex);
+                    break;
+
+                case FormState.PasswordRecovery:
+                    AppendRecoveryControls(ref rowIndex);
+                    break;
+            }
+
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = 50 });
+
+            GridLayout.Children.Add(preparedElements[ElementType.SubmitButton], 1, ++rowIndex);
+            GridLayout.Children.Add(preparedElements[ElementType.ErrorLabel], 0, ++rowIndex);
+            Grid.SetColumnSpan(preparedElements[ElementType.ErrorLabel], 2);
+
+            GridLayout.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
         }
     }
 }
