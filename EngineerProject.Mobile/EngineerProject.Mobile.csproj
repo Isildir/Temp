@@ -16,6 +16,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Group\Components\Post.xaml.cs">
+      <DependentUpon>Post.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\FilesPage.xaml.cs">
+      <DependentUpon>FilesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\PostsPage.xaml.cs">
+      <DependentUpon>PostsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Pages\PostCreatePage.xaml.cs">
+      <DependentUpon>PostCreatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Pages\AdminDetailsPage.xaml.cs">
+      <DependentUpon>AdminDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Pages\UserDetailsPage.xaml.cs">
+      <DependentUpon>UserDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Home\CarouselComponents\GroupSearch.xaml.cs">
       <DependentUpon>GroupSearch.xaml</DependentUpon>
     </Compile>

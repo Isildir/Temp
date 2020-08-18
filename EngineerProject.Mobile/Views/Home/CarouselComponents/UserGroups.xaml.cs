@@ -1,5 +1,6 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
-using EngineerProject.Mobile.Views.Groups;
+using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views.Group;
 using EngineerProject.Mobile.Views.Home.Pages;
 using System;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
 
             foreach (var group in HomePage.UserData.Participant)
                 Groups.Add(group);
-            
+
             base.OnAppearing();
         }
 

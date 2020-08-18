@@ -1,8 +1,8 @@
-﻿using EngineerProject.Mobile.Utility;
+﻿using EngineerProject.Mobile.Views;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Home
+namespace EngineerProject.Mobile.Utility
 {
     public static class NavigationHelpers
     {
