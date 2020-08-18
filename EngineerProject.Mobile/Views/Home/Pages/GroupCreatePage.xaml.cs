@@ -2,7 +2,7 @@
 using System;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Home.Create
+namespace EngineerProject.Mobile.Views.Home.Pages
 {
     public partial class GroupCreatePage : ContentPage
     {
@@ -11,9 +11,9 @@ namespace EngineerProject.Mobile.Views.Home.Create
             InitializeComponent();
         }
 
-        private void OnLogout(object sender, EventArgs e) => App.LogoutUser();
+        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
 
-        private async void OnSubmit(object sender, System.EventArgs e)
+        private async void OnSubmit(object sender, EventArgs e)
         {
             var requestResult = await new HomeService().Create(Name.Text, Description.Text, IsPrivate.IsChecked);
 

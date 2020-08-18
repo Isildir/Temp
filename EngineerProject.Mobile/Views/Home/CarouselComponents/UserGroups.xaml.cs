@@ -1,6 +1,6 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Mobile.Views.Groups;
-using EngineerProject.Mobile.Views.Home.Create;
+using EngineerProject.Mobile.Views.Home.Pages;
 using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
@@ -26,7 +26,7 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
 
             foreach (var group in HomePage.UserData.Participant)
                 Groups.Add(group);
-
+            
             base.OnAppearing();
         }
 
@@ -39,6 +39,6 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
             await Navigation.PushAsync(new GroupPage(t.Id));
         }
 
-        private void OnLogout(object sender, EventArgs e) => App.LogoutUser();
+        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
     }
 }

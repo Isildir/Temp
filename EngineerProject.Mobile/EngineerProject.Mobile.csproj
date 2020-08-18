@@ -26,8 +26,8 @@
       <DependentUpon>UserGroups.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Home\Create\Create.xaml.cs">
-      <DependentUpon>Create.xaml</DependentUpon>
+    <Compile Update="Views\Home\Pages\GroupCreatePage.xaml.cs">
+      <DependentUpon>GroupCreatePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>

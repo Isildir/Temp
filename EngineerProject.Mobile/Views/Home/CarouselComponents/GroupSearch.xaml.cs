@@ -41,7 +41,7 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
             GroupsList.SelectedItem = null;
         }
 
-        private void OnLogout(object sender, EventArgs e) => App.LogoutUser();
+        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
 
         private async void ReloadAvailableGroups()
         {

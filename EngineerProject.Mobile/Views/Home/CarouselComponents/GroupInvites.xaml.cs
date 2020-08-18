@@ -51,7 +51,7 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
             await ResolveInvite(data, true);
         }
 
-        private void OnLogout(object sender, EventArgs e) => App.LogoutUser();
+        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
 
         private async Task ResolveInvite(GroupTileDto data, bool value)
         {

@@ -1,4 +1,5 @@
 ﻿using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views.Home;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -6,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Services
 {
@@ -35,7 +37,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -56,7 +58,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<ResponseType>(responseData);
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -81,7 +83,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -106,7 +108,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<ResponseType>(responseData);
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -131,7 +133,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return JsonConvert.DeserializeObject<ResponseType>(responseData);
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -156,7 +158,7 @@ namespace EngineerProject.Mobile.Services
                 if (response.IsSuccessStatusCode)
                     return true;
                 else
-                    HandleErrorMessage(response, responseData);
+                    await HandleErrorMessage(response, responseData);
             }
             catch (Exception e)
             {
@@ -170,7 +172,7 @@ namespace EngineerProject.Mobile.Services
         {
             if (responseMessage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                App.LogoutUser();
+                await NavigationHelpers.LogoutUser();
 
                 return;
             }

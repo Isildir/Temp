@@ -102,7 +102,7 @@ namespace EngineerProject.Mobile.Views
                 ConfigurationData.IsUserLoggedIn = true;
                 ConfigurationData.Token = request.Data;
 
-                Application.Current.Properties["token"] = request.Data;
+                ApplicationPropertiesHandler.AddProperty("token", request.Data);
 
                 Navigation.InsertPageBefore(new HomePage(), this);
                 await Navigation.PopAsync();
