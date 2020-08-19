@@ -8,6 +8,8 @@ namespace EngineerProject.Mobile.Views.Group.Components
 {
     public partial class PostsPage : ContentPage
     {
+        private const int pageSize = 10;
+        private bool dataEndReached = false;
         private int pagesLoaded = 0;
 
         public PostsPage()
@@ -21,7 +23,7 @@ namespace EngineerProject.Mobile.Views.Group.Components
         {
             var service = new GroupService();
 
-            var requestResult = await service.GetPosts(GroupPage.GroupId, pagesLoaded + 1, 10);
+            var requestResult = await service.GetPosts(GroupPage.GroupId, pagesLoaded + 1, pageSize);
 
             if (requestResult.IsSuccessful && requestResult.Data.Any())
             {
@@ -30,9 +32,33 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
                 pagesLoaded++;
             }
+            else
+                dataEndReached = true;
         }
 
         private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
+
+        private async void OnPostCreateSubmit(object sender, EventArgs e)
+        {
+            var title = Title.Text;
+            var description = Description.Text;
+
+            var service = new GroupService();
+
+            var requestResult = await service.AddPost(GroupPage.GroupId, title, description);
+
+            if (requestResult.IsSuccessful)
+            {
+                Title.Text = string.Empty;
+                Description.Text = string.Empty;
+
+                pagesLoaded = 0;
+
+                Posts.Children.Clear();
+
+                LoadPosts();
+            }
+        }
 
         private void OnScrollEndReached(object sender, ScrolledEventArgs e)
         {
@@ -41,7 +67,7 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
             var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
 
-            if (scrollingSpace > e.ScrollY)
+            if (scrollingSpace > e.ScrollY || dataEndReached)
                 return;
 
             LoadPosts();

@@ -48,7 +48,17 @@ namespace EngineerProject.API.Controllers
             {
                 context.SaveChanges();
 
-                return Ok(new { comment.Id, comment.Content, comment.DateAdded, IsOwner = true });
+                var user = context.Users.FirstOrDefault(a => a.Id == userId);
+
+                var result = new CommentDto
+                {
+                    Id = comment.Id,
+                    Content = comment.Content,
+                    DateAdded = comment.DateAdded,
+                    Owner = user.Login
+                };
+
+                return Ok(result);
             }
             catch (Exception)
             {

@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using NLog.Targets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace EngineerProject.API.Controllers
@@ -70,18 +68,33 @@ namespace EngineerProject.API.Controllers
                 .Select(a => new
                 {
                     a.Relation,
-                    Value = new GroupTileDto
+                    Value = new
                     {
-                        Id = a.GroupId,
-                        Name = a.Group.Name
+                        a.GroupId,
+                        a.Group.Name
                     }
                 }).ToList();
 
             var result = new UserGroupsWrapperDto();
 
-            result.Participant.AddRange(values.Where(a => a.Relation == GroupRelation.Owner || a.Relation == GroupRelation.User).Select(a => a.Value));
-            result.Invited.AddRange(values.Where(a => a.Relation == GroupRelation.Invited).Select(a => a.Value));
-            result.Waiting.AddRange(values.Where(a => a.Relation == GroupRelation.Requesting).Select(a => a.Value));
+            result.Participant.AddRange(values.Where(a => a.Relation == GroupRelation.Owner || a.Relation == GroupRelation.User).Select(a => new UserGroupTileDto
+            {
+                Id = a.Value.GroupId,
+                Name = a.Value.Name,
+                IsOwner = a.Relation == GroupRelation.Owner
+            }));
+
+            result.Invited.AddRange(values.Where(a => a.Relation == GroupRelation.Invited).Select(a => new GroupTileDto
+            {
+                Id = a.Value.GroupId,
+                Name = a.Value.Name
+            }));
+
+            result.Waiting.AddRange(values.Where(a => a.Relation == GroupRelation.Requesting).Select(a => new GroupTileDto
+            {
+                Id = a.Value.GroupId,
+                Name = a.Value.Name
+            }));
 
             return Ok(result);
         }
@@ -281,6 +294,26 @@ namespace EngineerProject.API.Controllers
         }
 
         [HttpGet]
+        public IActionResult Get([FromQuery] QueryDto query)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+            var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
+
+            var result = context.Groups
+                .OrderBy(a => a.Id)
+                .Where(a => !a.IsPrivate && a.Name.ToLower().Contains(formattedFilter) && !a.Users.Any(b => b.UserId == userId))
+                .Skip(query.PageSize * (query.Page - 1))
+                .Take(query.PageSize)
+                .Select(a => new GroupTileDto
+                {
+                    Id = a.Id,
+                    Name = a.Name
+                }).ToList();
+
+            return Ok(result);
+        }
+
+        [HttpGet]
         public IActionResult GetAdminGroupDetails([FromQuery] int id)
         {
             var userId = ClaimsReader.GetUserId(Request);
@@ -300,32 +333,12 @@ namespace EngineerProject.API.Controllers
                 IsPrivate = group.IsPrivate,
                 Candidates = group.Users
                 .Where(a => a.Relation == GroupRelation.Requesting)
-                .Select(a => new GroupCandidateDto 
-                { 
-                    UserId = a.UserId, 
-                    UserLogin = a.User.Login 
+                .Select(a => new GroupCandidateDto
+                {
+                    UserId = a.UserId,
+                    UserLogin = a.User.Login
                 }).ToList()
             };
-
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public IActionResult Get([FromQuery] QueryDto query)
-        {
-            var userId = ClaimsReader.GetUserId(Request);
-            var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
-
-            var result = context.Groups
-                .OrderBy(a => a.Id)
-                .Where(a => !a.IsPrivate && a.Name.ToLower().Contains(formattedFilter) && !a.Users.Any(b => b.UserId == userId))
-                .Skip(query.PageSize * (query.Page - 1))
-                .Take(query.PageSize)
-                .Select(a => new GroupTileDto
-                {
-                    Id = a.Id,
-                    Name = a.Name
-                }).ToList();
 
             return Ok(result);
         }

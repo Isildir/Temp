@@ -1,8 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Components.Post">
-    <Label Text="aasdasd"></Label>
-    <Label Text="{Binding Data.Title}"></Label>
-    <Label Text="{Binding Data.DateAdded}"></Label>
-    <Label Text="{Binding Data.Content}"></Label>
-    <Label Text="{Binding Data.EditDate}" />
+    <Label x:Name="OldTitle" />
+    <Entry x:Name="NewPostTitle" IsVisible="false" />
+    <Label x:Name="OldContent" />
+    <Editor x:Name="NewPostContent" IsVisible="false" />
+    <StackLayout Orientation="Horizontal">
+        <Label Text="{Binding Owner}" HorizontalOptions="StartAndExpand" />
+        <Label Text="{Binding DateAdded}" HorizontalOptions="End" />
+    </StackLayout>
+    <StackLayout Orientation="Horizontal">
+        <Button Text="Edytuj" x:Name="EditButton" IsVisible="{Binding IsOwner}" Clicked="OnPostEdit" HorizontalOptions="EndAndExpand" />
+        <Button Text="Anuluj" x:Name="AbortButton" IsVisible="false" Clicked="OnEditionAbort" HorizontalOptions="EndAndExpand" />
+        <Button Text="Wyślij" x:Name="ConfirmButton" IsVisible="false" Clicked="OnEditionConfirm" HorizontalOptions="End" />
+    </StackLayout>
+    <StackLayout x:Name="CommentsList" Margin="10,10,10,10" />
+    <Editor x:Name="NewComment" Placeholder="Dodaj komentarz" />
+    <Button Text="Dodaj" Clicked="OnCommentAdded" HorizontalOptions="End" />
 </StackLayout>

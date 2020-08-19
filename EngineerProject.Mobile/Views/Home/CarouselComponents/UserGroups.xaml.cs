@@ -17,7 +17,7 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
             GroupsView.ItemsSource = Groups;
         }
 
-        private ObservableCollection<GroupTileDto> Groups { get; set; } = new ObservableCollection<GroupTileDto>();
+        private ObservableCollection<UserGroupTileDto> Groups { get; set; } = new ObservableCollection<UserGroupTileDto>();
 
         protected override async void OnAppearing()
         {
@@ -35,9 +35,9 @@ namespace EngineerProject.Mobile.Views.Home.CarouselComponents
 
         private async void OnGroupSelect(object sender, ItemTappedEventArgs e)
         {
-            var t = e.Item as GroupTileDto;
+            var groupData = e.Item as UserGroupTileDto;
 
-            await Navigation.PushAsync(new GroupPage(t.Id));
+            await Navigation.PushAsync(new GroupPage(groupData.Id, groupData.Name, groupData.IsOwner));
         }
 
         private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();

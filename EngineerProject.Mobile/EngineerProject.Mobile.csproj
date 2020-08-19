@@ -28,9 +28,6 @@
     <Compile Update="Views\Group\Components\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Group\Pages\PostCreatePage.xaml.cs">
-      <DependentUpon>PostCreatePage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\Group\Pages\AdminDetailsPage.xaml.cs">
       <DependentUpon>AdminDetailsPage.xaml</DependentUpon>
     </Compile>

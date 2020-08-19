@@ -6,9 +6,9 @@ namespace EngineerProject.Mobile.Services
 {
     public class GroupService : BaseService
     {
-        public async Task<RequestResponse> AddComment(int postId, string content)
+        public async Task<DataRequestResponse<CommentDto>> AddComment(int postId, string content)
         {
-            var response = await client.PostAsync($"Comments/Create", new { postId, content });
+            var response = await client.PostAsync<CommentDto>($"Comments/Create", new { postId, content });
 
             return MapResponse(response);
         }

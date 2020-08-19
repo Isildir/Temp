@@ -4,9 +4,13 @@
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView Scrolled="OnScrollEndReached">
+        <ScrollView Margin="10,10,10,10" Scrolled="OnScrollEndReached">
             <StackLayout x:Name="MainLayout">
-                <StackLayout x:Name="PostCreate"></StackLayout>
+                <StackLayout x:Name="PostCreate">
+                    <Entry x:Name="Title" Placeholder="Tytuł" />
+                    <Editor x:Name="Description" Placeholder="Wiadomość" />
+                    <Button Text="Wyślij" Clicked="OnPostCreateSubmit" />
+                </StackLayout>
                 <StackLayout x:Name="Posts"></StackLayout>
             </StackLayout>
         </ScrollView>

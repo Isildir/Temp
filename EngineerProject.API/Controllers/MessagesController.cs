@@ -5,7 +5,6 @@ using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Commons.Dtos.Querying;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 
 namespace EngineerProject.API.Controllers
@@ -30,7 +29,7 @@ namespace EngineerProject.API.Controllers
 
             var result = context.Messages
                 .Where(a => a.GroupId == query.GroupId)
-                .OrderBy(a => a.DateAdded)
+                .OrderByDescending(a => a.DateAdded)
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)
                 .Select(a => new MessageDto

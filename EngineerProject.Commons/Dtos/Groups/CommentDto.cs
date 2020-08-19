@@ -11,5 +11,7 @@ namespace EngineerProject.Commons.Dtos.Groups
         public int Id { get; set; }
 
         public bool IsOwner { get; set; }
+
+        public string Owner { get; set; }
     }
 }

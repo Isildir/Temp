@@ -6,14 +6,14 @@ namespace EngineerProject.Commons.Dtos.Groups
     {
         public UserGroupsWrapperDto()
         {
-            Participant = new List<GroupTileDto>();
+            Participant = new List<UserGroupTileDto>();
             Invited = new List<GroupTileDto>();
             Waiting = new List<GroupTileDto>();
         }
 
         public List<GroupTileDto> Invited { get; set; }
 
-        public List<GroupTileDto> Participant { get; set; }
+        public List<UserGroupTileDto> Participant { get; set; }
 
         public List<GroupTileDto> Waiting { get; set; }
     }

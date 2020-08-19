@@ -88,7 +88,7 @@ namespace EngineerProject.API.Controllers
 
             var result = context.Posts
                 .Where(a => a.GroupId == query.GroupId)
-                .OrderBy(a => a.Pinned)
+                .OrderByDescending(a => a.DateAdded)
                 .ThenBy(a => a.DateAdded)
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)
@@ -98,15 +98,16 @@ namespace EngineerProject.API.Controllers
                     Title = a.Title,
                     DateAdded = a.DateAdded,
                     Content = a.Content,
-                    Pinned = a.Pinned,
                     EditDate = a.EditDate,
                     IsOwner = a.UserId == userId,
-                    Comments = a.Comments.Select(b => new CommentDto
+                    Owner = a.User.Login,
+                    Comments = a.Comments.OrderBy(b => b.DateAdded).Select(b => new CommentDto
                     {
                         Id = b.Id,
                         DateAdded = b.DateAdded,
                         Content = b.Content,
                         IsOwner = b.UserId == userId,
+                        Owner = b.User.Login
                     }).ToList()
                 }).ToList();
 
