@@ -214,6 +214,32 @@ namespace EngineerProject.API.Controllers
 
         #region CRUD
 
+        [HttpPut]
+        public IActionResult Modify([FromBody] GroupModifyDto data)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+
+            if(!context.UserGroups.Any(a => a.GroupId == data.Id && a.UserId == userId && a.Relation == GroupRelation.Owner))
+                return BadRequest();
+
+            var group = context.Groups.FirstOrDefault(a => a.Id == data.Id);
+
+            group.Name = data.Name;
+            group.Description = data.Description;
+            group.IsPrivate = data.IsPrivate;
+
+            try
+            {
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] GroupCreateDto data)
         {

@@ -1,7 +1,7 @@
 import { Message } from './../../../models/Message';
 import { GroupService } from './../../../services/data-services/group.service';
 import { SignalRService } from './../../../services/data-services/signalR.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ɵConsole } from '@angular/core';
 import { FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
 
 @Component({
@@ -35,5 +35,7 @@ export class ChatComponent implements OnInit {
     const content = this.messageForm.controls.content.value;
 
     this.signalRService.sendMessage(content);
+
+    this.messageForm.controls.content.reset();
   }
 }

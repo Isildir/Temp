@@ -57,9 +57,9 @@ namespace EngineerProject.API.SignalR
                 if (GetReceivers(groupId, out IClientProxy clients))
                     await clients.SendAsync("appendMessage", response);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                throw e;
             }
         }
 

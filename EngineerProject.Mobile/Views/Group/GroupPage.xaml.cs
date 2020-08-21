@@ -7,12 +7,14 @@ namespace EngineerProject.Mobile.Views.Group
     public partial class GroupPage : Xamarin.Forms.TabbedPage
     {
         public static int GroupId;
+        public static string GroupName;
 
         public GroupPage(int groupId, string groupName, bool isOwner)
         {
             On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             GroupId = groupId;
+            GroupName = groupName;
 
             InitializeComponent();
 
@@ -24,8 +26,6 @@ namespace EngineerProject.Mobile.Views.Group
 
             if (isOwner)
                 GroupWrapper.Children.Add(new AdminDetailsPage());
-            else
-                GroupWrapper.Children.Add(new UserDetailsPage());
         }
     }
 }

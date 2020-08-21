@@ -2,6 +2,7 @@
 using EngineerProject.Mobile.Utility;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views.Group.Components
@@ -15,11 +16,16 @@ namespace EngineerProject.Mobile.Views.Group.Components
         public PostsPage()
         {
             InitializeComponent();
-
-            LoadPosts();
         }
 
-        private async void LoadPosts()
+        protected async override void OnAppearing()
+        {
+            await LoadPosts();
+
+            base.OnAppearing();
+        }
+
+        private async Task LoadPosts()
         {
             var service = new GroupService();
 
@@ -60,7 +66,7 @@ namespace EngineerProject.Mobile.Views.Group.Components
             }
         }
 
-        private void OnScrollEndReached(object sender, ScrolledEventArgs e)
+        private async void OnScrollEndReached(object sender, ScrolledEventArgs e)
         {
             if (!(sender is ScrollView scrollView))
                 return;
@@ -70,7 +76,7 @@ namespace EngineerProject.Mobile.Views.Group.Components
             if (scrollingSpace > e.ScrollY || dataEndReached)
                 return;
 
-            LoadPosts();
+            await LoadPosts();
         }
     }
 }

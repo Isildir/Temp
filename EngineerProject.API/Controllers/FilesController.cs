@@ -40,7 +40,7 @@ namespace EngineerProject.API.Controllers
 
             var result = context.Set<DBFile>()
                 .Include(a => a.User)
-                .OrderBy(a => a.Id)
+                .OrderByDescending(a => a.DateAdded)
                 .Where(a => a.GroupId == query.GroupId)
                 .Skip(query.PageSize * (query.Page - 1))
                 .Take(query.PageSize)

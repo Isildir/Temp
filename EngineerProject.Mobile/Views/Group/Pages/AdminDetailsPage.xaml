@@ -1,10 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Ustawienia" xmlns="http://xamarin.com/schemas/2014/forms" x:Name="InvitesPage" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Pages.AdminDetailsPage">
+<ContentPage Title="Ustawienia" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Pages.AdminDetailsPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="10,10,10,10">
+            <StackLayout>
+                <Entry x:Name="InviteBar" />
+                <Button Text="Zaproś" Clicked="OnInvite" HorizontalOptions="End" />
+            </StackLayout>
+            <StackLayout>
+                <Entry x:Name="Name" />
+                <Editor x:Name="Description" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start"/>
+                    <CheckBox x:Name="Private" HorizontalOptions="StartAndExpand" />
+                </StackLayout>
+                <Button Text="Zapisz zmiany" Clicked="OnSubmitChanges" HorizontalOptions="End" />
+            </StackLayout>
+            <ListView x:Name="CandidatesList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
+                                <Button Text="Akceptuj" HorizontalOptions="End" Clicked="OnCandidateAccept" CommandParameter="{Binding .}"></Button>
+                                <Button Text="Odrzuć" HorizontalOptions="End" Clicked="OnCandidateReject" CommandParameter="{Binding .}"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
