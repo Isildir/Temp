@@ -5,11 +5,11 @@ using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Home.CarouselComponents
+namespace EngineerProject.Mobile.Views.Home.Pages
 {
-    public partial class GroupSearch : ContentPage
+    public partial class SearchPage : ContentPage
     {
-        public GroupSearch()
+        public SearchPage()
         {
             InitializeComponent();
 

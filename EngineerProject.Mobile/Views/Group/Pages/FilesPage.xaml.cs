@@ -1,18 +1,21 @@
-﻿using EngineerProject.Mobile.Services;
+﻿using EngineerProject.Commons.Dtos.Groups;
+using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views.Group.Components;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Group.Components
+namespace EngineerProject.Mobile.Views.Group.Pages
 {
     public partial class FilesPage : ContentPage
     {
         private const int pageSize = 12;
         private bool dataEndReached = false;
-        private int pagesLoaded = 0;
         private int elementsCount = 0;
+        private bool initialDataLoaded = false;
+        private int pagesLoaded = 0;
 
         public FilesPage()
         {
@@ -21,12 +24,15 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
         protected async override void OnAppearing()
         {
-            await LoadFiles();
+            if (!initialDataLoaded)
+            {
+                await LoadFiles();
+
+                initialDataLoaded = true;
+            }
 
             base.OnAppearing();
         }
-
-        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
 
         private async Task LoadFiles()
         {
@@ -38,16 +44,10 @@ namespace EngineerProject.Mobile.Views.Group.Components
             {
                 foreach (var file in requestResult.Data)
                 {
-                    var layout = new StackLayout();
-
-                    layout.Children.Add(new Image { Aspect = Aspect.AspectFit, Source = "icon.png" });
-                    layout.Children.Add(new Label { Text = file.FileName });
-                    layout.Children.Add(new Label { Text = file.Size });
-
                     if (elementsCount % 3 == 0)
                         Files.RowDefinitions.Insert(0, new RowDefinition());
 
-                    Files.Children.Add(layout, elementsCount % 3, elementsCount / 3);
+                    Files.Children.Add(new AppFile(file, OnFileClicked), elementsCount % 3, elementsCount / 3);
 
                     elementsCount++;
                 }
@@ -58,14 +58,30 @@ namespace EngineerProject.Mobile.Views.Group.Components
                 dataEndReached = true;
         }
 
+        private async void OnFileClicked(object sender, EventArgs e)
+        {
+            var file = (e as TappedEventArgs).Parameter as FileDto;
+
+            var answer = await DisplayAlert("Pobieranie pliku", $"Czy chcesz pobrać plik {file.FileName}?", "Tak", "Nie");
+
+            if (answer)
+            {
+                //TODO
+            }
+        }
+
+        private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
+
         private async void OnScrollEndReached(object sender, ScrolledEventArgs e)
         {
-            if (!(sender is ScrollView scrollView))
+            if (dataEndReached)
                 return;
+
+            var scrollView = sender as ScrollView;
 
             var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
 
-            if (scrollingSpace > e.ScrollY || dataEndReached)
+            if (scrollingSpace > e.ScrollY + 200)
                 return;
 
             await LoadFiles();

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage Title="Chat" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Pages.ChatPage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView x:Name="MessagesWrapper" VerticalOptions="StartAndExpand" Scrolled="OnScrollEndReached">
+                <StackLayout Margin="5" x:Name="Messages">
+                </StackLayout>
+            </ScrollView>
+            <Frame VerticalOptions="End">
+                <StackLayout>
+                    <Editor AutoSize="TextChanges" Placeholder="Tu wpisz swoją wiadomość..." x:Name="Message" />
+                    <controls:AppButton Text="Wyślij">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMessageSend" />
+                        </Frame.GestureRecognizers>
+                    </controls:AppButton>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

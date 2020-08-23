@@ -55,7 +55,8 @@ namespace EngineerProject.API.Controllers
                     Id = comment.Id,
                     Content = comment.Content,
                     DateAdded = comment.DateAdded,
-                    Owner = user.Login
+                    Owner = user.Login,
+                    IsOwner = true
                 };
 
                 return Ok(result);

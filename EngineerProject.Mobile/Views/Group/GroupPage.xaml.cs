@@ -1,5 +1,4 @@
-﻿using EngineerProject.Mobile.Views.Group.Components;
-using EngineerProject.Mobile.Views.Group.Pages;
+﻿using EngineerProject.Mobile.Views.Group.Pages;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace EngineerProject.Mobile.Views.Group

@@ -1,16 +1,15 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Mobile.Utility;
 using EngineerProject.Mobile.Views.Group;
-using EngineerProject.Mobile.Views.Home.Pages;
 using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Home.CarouselComponents
+namespace EngineerProject.Mobile.Views.Home.Pages
 {
-    public partial class UserGroups : ContentPage
+    public partial class UserGroupsPage : ContentPage
     {
-        public UserGroups()
+        public UserGroupsPage()
         {
             InitializeComponent();
 

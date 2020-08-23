@@ -6,11 +6,11 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Home.CarouselComponents
+namespace EngineerProject.Mobile.Views.Home.Pages
 {
-    public partial class GroupInvites : ContentPage
+    public partial class InvitesPage : ContentPage
     {
-        public GroupInvites()
+        public InvitesPage()
         {
             InitializeComponent();
 

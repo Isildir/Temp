@@ -1,16 +1,18 @@
 ﻿using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Utility;
+using EngineerProject.Mobile.Views.Group.Components;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Group.Components
+namespace EngineerProject.Mobile.Views.Group.Pages
 {
     public partial class PostsPage : ContentPage
     {
         private const int pageSize = 10;
         private bool dataEndReached = false;
+        private bool initialDataLoaded = false;
         private int pagesLoaded = 0;
 
         public PostsPage()
@@ -20,7 +22,12 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
         protected async override void OnAppearing()
         {
-            await LoadPosts();
+            if (!initialDataLoaded)
+            {
+                await LoadPosts();
+
+                initialDataLoaded = true;
+            }
 
             base.OnAppearing();
         }
@@ -62,18 +69,20 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
                 Posts.Children.Clear();
 
-                LoadPosts();
+                await LoadPosts();
             }
         }
 
         private async void OnScrollEndReached(object sender, ScrolledEventArgs e)
         {
-            if (!(sender is ScrollView scrollView))
+            if (dataEndReached)
                 return;
+
+            var scrollView = sender as ScrollView;
 
             var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
 
-            if (scrollingSpace > e.ScrollY || dataEndReached)
+            if (scrollingSpace > e.ScrollY + 200)
                 return;
 
             await LoadPosts();

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Frame BorderColor="Gray"
+       BackgroundColor="WhiteSmoke"
+       CornerRadius="5"
+       Padding="6"
+       xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="EngineerProject.Mobile.Views.Group.Components.Comment"
+       xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+    <StackLayout>
+        <Label x:Name="Content"
+               FontSize="Medium" />
+        <BoxView Color="LightGray"
+             HeightRequest="1"
+             HorizontalOptions="Fill" />
+        <StackLayout Orientation="Horizontal">
+            <Label x:Name="Owner"
+               FontSize="Small"
+                   HorizontalOptions="StartAndExpand" />
+            <Label x:Name="DateAdded"
+               FontSize="Small" HorizontalOptions="EndAndExpand" />
+            <controls:AppButton Text="Usuń" x:Name="CommentDeleteButton" HorizontalOptions="End" BackgroundColor="Transparent">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDelete" />
+                </Frame.GestureRecognizers>
+            </controls:AppButton>
+        </StackLayout>
+    </StackLayout>
+</Frame>

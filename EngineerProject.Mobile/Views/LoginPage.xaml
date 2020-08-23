@@ -4,7 +4,7 @@
         <StyleSheet Source="/Assets/styles.css" />
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid Margin="10,10,10,10" x:Name="GridLayout">
+        <Grid Margin="5" x:Name="GridLayout">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

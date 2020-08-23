@@ -4,7 +4,7 @@
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
+        <StackLayout Margin="5">
             <Entry x:Name="Name" Placeholder="Nazwa grupy"></Entry>
             <Entry x:Name="Description" Placeholder="Opis"></Entry>
             <StackLayout Orientation="Horizontal">

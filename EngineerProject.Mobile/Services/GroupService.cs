@@ -48,16 +48,16 @@ namespace EngineerProject.Mobile.Services
             return MapResponse(response);
         }
 
-        public async Task<DataRequestResponse<List<PostDto>>> GetPosts(int groupId, int page, int pageSize)
+        public async Task<DataRequestResponse<List<MessageDto>>> GetMessages(int groupId, int page, int pageSize)
         {
-            var response = await client.GetAsync<List<PostDto>>($"Posts/Get?groupId={groupId}&page={page}&pageSize={pageSize}");
+            var response = await client.GetAsync<List<MessageDto>>($"Messages/Get?groupId={groupId}&page={page}&pageSize={pageSize}");
 
             return MapResponse(response);
         }
 
-        public async Task<DataRequestResponse<List<MessageDto>>> GetMessages(int groupId, int page, int pageSize)
+        public async Task<DataRequestResponse<List<PostDto>>> GetPosts(int groupId, int page, int pageSize)
         {
-            var response = await client.GetAsync<List<MessageDto>>($"Messages/Get?groupId={groupId}&page={page}&pageSize={pageSize}");
+            var response = await client.GetAsync<List<PostDto>>($"Posts/Get?groupId={groupId}&page={page}&pageSize={pageSize}");
 
             return MapResponse(response);
         }
@@ -76,16 +76,16 @@ namespace EngineerProject.Mobile.Services
             return MapResponse(response);
         }
 
-        public async Task<RequestResponse> ModifyPost(int postId, string title, string content)
+        public async Task<RequestResponse> ModifyGroup(int groupId, string name, string description, bool isPrivate)
         {
-            var response = await client.PutAsync($"Posts/Modify?id={postId}", new { title, content });
+            var response = await client.PutAsync($"Groups/Modify", new { id = groupId, name, description, isPrivate });
 
             return MapResponse(response);
         }
 
-        public async Task<RequestResponse> ModifyGroup(int groupId, string name, string description, bool isPrivate)
+        public async Task<RequestResponse> ModifyPost(int postId, string title, string content)
         {
-            var response = await client.PutAsync($"Groups/Modify", new { id = groupId, name, description, isPrivate });
+            var response = await client.PutAsync($"Posts/Modify?id={postId}", new { title, content });
 
             return MapResponse(response);
         }

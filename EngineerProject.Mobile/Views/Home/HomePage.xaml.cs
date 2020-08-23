@@ -1,22 +1,24 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
 using EngineerProject.Mobile.Services;
-using EngineerProject.Mobile.Views.Home.CarouselComponents;
+using EngineerProject.Mobile.Views.Home.Pages;
 using System.Threading.Tasks;
-using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace EngineerProject.Mobile.Views.Home
 {
-    public partial class HomePage : CarouselPage
+    public partial class HomePage : Xamarin.Forms.TabbedPage
     {
         internal static UserGroupsWrapperDto UserData = new UserGroupsWrapperDto();
 
         public HomePage()
         {
+            On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+
             InitializeComponent();
 
-            HomeWrapper.Children.Add(new UserGroups());
-            HomeWrapper.Children.Add(new GroupSearch());
-            HomeWrapper.Children.Add(new GroupInvites());
+            HomeWrapper.Children.Add(new UserGroupsPage());
+            HomeWrapper.Children.Add(new SearchPage());
+            HomeWrapper.Children.Add(new InvitesPage());
         }
 
         internal static async Task ReloadUserData()

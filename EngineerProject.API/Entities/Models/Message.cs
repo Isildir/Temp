@@ -5,7 +5,7 @@ namespace EngineerProject.API.Entities.Models
 {
     public class Message
     {
-        [Required, StringLength(100)]
+        [Required]
         public string Content { get; set; }
 
         public DateTime DateAdded { get; set; }

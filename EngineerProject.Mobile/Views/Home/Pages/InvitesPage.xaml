@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" x:Name="InvitesPage" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.CarouselComponents.GroupInvites">
+<ContentPage Title="Zaproszenia" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.InvitesPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
+        <StackLayout Margin="5">
             <Label Text="Zaproszenia"></Label>
             <ListView x:Name="InvitesList">
                 <ListView.ItemTemplate>

@@ -17,29 +17,41 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\Group\Components\AppButton.xaml.cs">
+      <DependentUpon>AppButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\AppFile.xaml.cs">
+      <DependentUpon>AppFile.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\Comment.xaml.cs">
+      <DependentUpon>Comment.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Group\Components\Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Group\Components\Post.xaml.cs">
       <DependentUpon>Post.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Group\Components\FilesPage.xaml.cs">
+    <Compile Update="Views\Group\Pages\FilesPage.xaml.cs">
       <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Group\Components\PostsPage.xaml.cs">
+    <Compile Update="Views\Group\Pages\PostsPage.xaml.cs">
       <DependentUpon>PostsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Group\Components\ChatPage.xaml.cs">
+    <Compile Update="Views\Group\Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Group\Pages\AdminDetailsPage.xaml.cs">
       <DependentUpon>AdminDetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Home\CarouselComponents\GroupSearch.xaml.cs">
-      <DependentUpon>GroupSearch.xaml</DependentUpon>
+    <Compile Update="Views\Home\Pages\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Home\CarouselComponents\GroupInvites.xaml.cs">
-      <DependentUpon>GroupInvites.xaml</DependentUpon>
+    <Compile Update="Views\Home\Pages\InvitesPage.xaml.cs">
+      <DependentUpon>InvitesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Home\CarouselComponents\UserGroups.xaml.cs">
-      <DependentUpon>UserGroups.xaml</DependentUpon>
+    <Compile Update="Views\Home\Pages\UserGroupsPage.xaml.cs">
+      <DependentUpon>UserGroupsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Home\Pages\GroupCreatePage.xaml.cs">
@@ -57,7 +69,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\Home\CarouselComponents\UserGroups.xaml">
+    <EmbeddedResource Update="Views\Home\Pages\UserGroupsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

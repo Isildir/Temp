@@ -4,7 +4,7 @@
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
+        <StackLayout Margin="5">
             <StackLayout>
                 <Entry x:Name="InviteBar" />
                 <Button Text="Zaproś" Clicked="OnInvite" HorizontalOptions="End" />
@@ -13,7 +13,7 @@
                 <Entry x:Name="Name" />
                 <Editor x:Name="Description" />
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start"/>
+                    <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start" />
                     <CheckBox x:Name="Private" HorizontalOptions="StartAndExpand" />
                 </StackLayout>
                 <Button Text="Zapisz zmiany" Clicked="OnSubmitChanges" HorizontalOptions="End" />

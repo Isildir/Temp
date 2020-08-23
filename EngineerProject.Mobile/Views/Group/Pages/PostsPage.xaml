@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage Title="Posty" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Pages.PostsPage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView Scrolled="OnScrollEndReached">
+            <StackLayout x:Name="MainLayout">
+                <Frame Padding="10">
+                    <StackLayout x:Name="PostCreate">
+                        <Entry x:Name="Title" Placeholder="Tytuł" />
+                        <Editor x:Name="Description" Placeholder="Wiadomość" AutoSize="TextChanges" />
+                        <controls:AppButton Text="Dodaj post">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPostCreateSubmit" />
+                            </Frame.GestureRecognizers>
+                        </controls:AppButton>
+                    </StackLayout>
+                </Frame>
+                <StackLayout Margin="5" x:Name="Posts"></StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
