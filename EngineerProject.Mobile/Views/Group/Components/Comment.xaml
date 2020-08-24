@@ -1,28 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame 
+<Frame
        BackgroundColor="WhiteSmoke"
        CornerRadius="5"
        Padding="6"
        xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       x:Class="EngineerProject.Mobile.Views.Group.Components.Comment"
-       xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+       x:Class="EngineerProject.Mobile.Views.Group.Components.Comment">
     <AbsoluteLayout>
-    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-        <Label x:Name="Content"
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Label x:Name="Content"
                FontSize="Medium" />
-        <BoxView Color="LightGray"
+            <BoxView Color="LightGray"
              HeightRequest="1"
              HorizontalOptions="Fill" />
-        <StackLayout Orientation="Horizontal">
-            <Label x:Name="Owner"
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="Owner"
                FontSize="Small"
                    HorizontalOptions="StartAndExpand" />
                 <Label x:Name="DateAdded"
                FontSize="Small" HorizontalOptions="EndAndExpand" />
             </StackLayout>
-    </StackLayout>
-        <Image Source="trash.png" Aspect="AspectFit" x:Name="CommentDeleteIcon" AbsoluteLayout.LayoutBounds="1, 0.02, 20, 20" AbsoluteLayout.LayoutFlags="PositionProportional" >
+        </StackLayout>
+        <Image Source="trash.png" Aspect="AspectFit" x:Name="CommentDeleteIcon" AbsoluteLayout.LayoutBounds="1, 0.02, 20, 20" AbsoluteLayout.LayoutFlags="PositionProportional">
             <Image.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnDelete" />
             </Image.GestureRecognizers>

@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Tworzenie grupy" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.GroupCreatePage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+<ContentPage Title="Tworzenie grupy"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngineerProject.Mobile.Views.Home.Pages.GroupCreatePage"
+             xmlns:controls="clr-namespace:EngineerProject.Mobile.Components">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>

@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage Title="Login" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.LoginPage">
-    <ContentPage.Resources>
-        <StyleSheet Source="/Assets/styles.css" />
-    </ContentPage.Resources>
+<ContentPage Title="Login"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngineerProject.Mobile.Views.LoginPage">
     <ContentPage.Content>
-        <Grid Margin="5" x:Name="GridLayout">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-        </Grid>
+        <StackLayout VerticalOptions="Center" Padding="10">
+            <RelativeLayout>
+                <Frame RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.15}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.7}">
+                    <StackLayout x:Name="GridLayout" />
+                </Frame>
+            </RelativeLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

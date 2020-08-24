@@ -2,7 +2,6 @@
 using EngineerProject.Mobile.Utility;
 using EngineerProject.Mobile.Views.Group;
 using System;
-using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views.Home.Pages

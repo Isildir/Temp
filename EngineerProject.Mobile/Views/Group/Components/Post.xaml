@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame Padding="10" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Components.Post" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+<Frame Padding="10"
+       xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="EngineerProject.Mobile.Views.Group.Components.Post"
+       xmlns:controls="clr-namespace:EngineerProject.Mobile.Components">
     <StackLayout>
         <Label x:Name="OldContent" />
         <Editor x:Name="NewPostContent" IsVisible="false" />
@@ -30,7 +34,7 @@
         <StackLayout x:Name="CommentsList" Margin="0" Padding="0" />
         <AbsoluteLayout>
             <Entry Placeholder="Komentarz..." x:Name="NewComment" AbsoluteLayout.LayoutBounds="0, 0, 0.9, 1" AbsoluteLayout.LayoutFlags="All" />
-            <Image Source="send.png" Aspect="AspectFit" x:Name="CommentDeleteIcon" AbsoluteLayout.LayoutBounds="0.98, 0.42, 28, 28" AbsoluteLayout.LayoutFlags="PositionProportional" >
+            <Image Source="send.png" Aspect="AspectFit" x:Name="CommentDeleteIcon" AbsoluteLayout.LayoutBounds="0.98, 0.42, 28, 28" AbsoluteLayout.LayoutFlags="PositionProportional">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnCommentSubmit" />
                 </Image.GestureRecognizers>

@@ -2,7 +2,6 @@
 using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Utility;
 using System;
-using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
 namespace EngineerProject.Mobile.Views.Home.Pages
@@ -19,6 +18,18 @@ namespace EngineerProject.Mobile.Views.Home.Pages
             ReloadAvailableGroups();
 
             base.OnAppearing();
+        }
+
+        private void AddGroup(GroupTileDto data)
+        {
+            var label = new Label { Text = data.Name, FontSize = NamedSize.Medium.GetFormattedLabelFontSize() };
+            var gesture = new TapGestureRecognizer { CommandParameter = data };
+            var frame = new Frame { Content = label, BackgroundColor = Color.WhiteSmoke, Padding = 6, Margin = 2 };
+
+            gesture.Tapped += (sender, args) => OnGroupSelect(sender, args);
+            label.GestureRecognizers.Add(gesture);
+
+            FilteredGroups.Children.Add(frame);
         }
 
         private async void OnGroupSelect(object sender, EventArgs e)
@@ -46,18 +57,6 @@ namespace EngineerProject.Mobile.Views.Home.Pages
 
             foreach (var value in availableGroups.Data)
                 AddGroup(value);
-        }
-
-        private void AddGroup(GroupTileDto data)
-        {
-            var label = new Label { Text = data.Name, FontSize = NamedSize.Medium.GetFormattedLabelFontSize() };
-            var gesture = new TapGestureRecognizer { CommandParameter = data };
-            var frame = new Frame { Content = label, BackgroundColor = Color.WhiteSmoke, Padding = 6, Margin = 2 };
-
-            gesture.Tapped += (sender, args) => OnGroupSelect(sender, args);
-            label.GestureRecognizers.Add(gesture);
-
-            FilteredGroups.Children.Add(frame);
         }
 
         private void SearchBarTextChanged(object sender, TextChangedEventArgs e)

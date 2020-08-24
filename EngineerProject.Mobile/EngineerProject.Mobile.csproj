@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Group\Components\AppButton.xaml.cs">
+    <Compile Update="Components\AppButton.xaml.cs">
       <DependentUpon>AppButton.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Group\Components\AppFile.xaml.cs">

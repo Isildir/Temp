@@ -1,9 +1,8 @@
 ﻿using EngineerProject.Commons.Dtos.Groups;
+using EngineerProject.Mobile.Components;
 using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Utility;
-using EngineerProject.Mobile.Views.Group.Components;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -32,28 +31,7 @@ namespace EngineerProject.Mobile.Views.Home.Pages
             base.OnAppearing();
         }
 
-        private void AddInvitesElement(GroupTileDto data)
-        {
-            var layout = new StackLayout { Orientation = StackOrientation.Horizontal };
-            var label = new Label { Text = data.Name, HorizontalOptions = LayoutOptions.StartAndExpand, FontSize = NamedSize.Medium.GetFormattedLabelFontSize() };
-            var acceptButton = new AppButton { Text = "Zaakceptuj", HorizontalOptions = LayoutOptions.EndAndExpand, BackgroundColor = Color.Transparent };
-            var rejectButton = new AppButton { Text = "Odrzuć", BackgroundColor = Color.Transparent };
-            var acceptGesture = new TapGestureRecognizer { CommandParameter = data };
-            var rejectGesture = new TapGestureRecognizer { CommandParameter = data };
-            var frame = new Frame { Content = layout, BackgroundColor = Color.WhiteSmoke, Padding = 6, Margin = 2 };
-
-            acceptGesture.Tapped += (sender, args) => OnInviteAccept(sender, args);
-            rejectGesture.Tapped += (sender, args) => OnInviteReject(sender, args);
-
-            acceptButton.GestureRecognizers.Add(acceptGesture);
-            rejectButton.GestureRecognizers.Add(rejectGesture);
-
-            layout.Children.Add(label);
-            layout.Children.Add(acceptButton);
-            layout.Children.Add(rejectButton);
-
-            Invites.Children.Add(frame);
-        }
+        private void AddInvitesElement(GroupTileDto data) => Invites.Children.Add(ComponentsBuilder.BuildAcceptableFrame(data.Name, data, OnInviteAccept, OnInviteReject));
 
         private void AddPendingElement(GroupTileDto data)
         {

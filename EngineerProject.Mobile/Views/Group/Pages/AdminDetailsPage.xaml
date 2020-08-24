@@ -1,44 +1,39 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Ustawienia" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Group.Pages.AdminDetailsPage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
+<ContentPage Title="Ustawienia"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngineerProject.Mobile.Views.Group.Pages.AdminDetailsPage"
+             xmlns:controls="clr-namespace:EngineerProject.Mobile.Components">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Margin="5">
+        <ScrollView Margin="5">
             <StackLayout>
-                <Entry x:Name="InviteBar" Placeholder="Identyfikator użytkownika..." />
-                <controls:AppButton Text="Zaproś">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnInvite" />
-                    </Frame.GestureRecognizers>
-                </controls:AppButton>
-            </StackLayout>
-            <StackLayout>
-                <Entry x:Name="Name" />
-                <Editor x:Name="Description" AutoSize="TextChanges" />
-                <StackLayout Padding="5" Orientation="Horizontal">
-                    <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start" FontSize="Medium" />
-                    <CheckBox x:Name="IsPrivate" HorizontalOptions="StartAndExpand" />
+                <StackLayout>
+                    <Entry x:Name="InviteBar" Placeholder="Identyfikator użytkownika..." />
+                    <controls:AppButton Text="Zaproś">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnInvite" />
+                        </Frame.GestureRecognizers>
+                    </controls:AppButton>
                 </StackLayout>
-                <controls:AppButton Text="Zapisz zmiany">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnSubmitChanges" />
-                    </Frame.GestureRecognizers>
-                </controls:AppButton>
+                <StackLayout>
+                    <Entry x:Name="Name" />
+                    <Editor x:Name="Description" AutoSize="TextChanges" />
+                    <StackLayout Padding="5" Orientation="Horizontal">
+                        <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start" FontSize="Medium" />
+                        <CheckBox x:Name="IsPrivate" HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <controls:AppButton Text="Zapisz zmiany">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSubmitChanges" />
+                        </Frame.GestureRecognizers>
+                    </controls:AppButton>
+                </StackLayout>
+                <Label Text="Kandydaci" HorizontalOptions="Center" FontSize="Large" />
+                <StackLayout x:Name="Candidates" />
             </StackLayout>
-            <ListView x:Name="CandidatesList">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
-                                <Button Text="Akceptuj" HorizontalOptions="End" Clicked="OnCandidateAccept" CommandParameter="{Binding .}"></Button>
-                                <Button Text="Odrzuć" HorizontalOptions="End" Clicked="OnCandidateReject" CommandParameter="{Binding .}"></Button>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

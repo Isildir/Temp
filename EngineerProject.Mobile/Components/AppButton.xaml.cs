@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace EngineerProject.Mobile.Views.Group.Components
+namespace EngineerProject.Mobile.Components
 {
     public partial class AppButton : Frame
     {
