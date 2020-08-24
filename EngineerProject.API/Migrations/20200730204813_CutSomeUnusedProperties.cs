@@ -1,25 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace EngineerProject.API.Migrations
 {
     public partial class CutSomeUnusedProperties : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Edited",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "EditDate",
-                table: "Comments");
-
-            migrationBuilder.DropColumn(
-                name: "Edited",
-                table: "Comments");
-        }
-
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
@@ -39,6 +24,21 @@ namespace EngineerProject.API.Migrations
                 table: "Comments",
                 type: "bit",
                 nullable: true);
+        }
+
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "Edited",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "EditDate",
+                table: "Comments");
+
+            migrationBuilder.DropColumn(
+                name: "Edited",
+                table: "Comments");
         }
     }
 }

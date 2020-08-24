@@ -1,4 +1,6 @@
-﻿namespace EngineerProject.API.Entities.Models
+﻿using EngineerProject.API.Enums;
+
+namespace EngineerProject.API.Entities.Models
 {
     public class UserGroup
     {

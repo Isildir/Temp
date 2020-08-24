@@ -1,9 +1,9 @@
 ﻿using EngineerProject.API.Entities;
 using EngineerProject.API.Entities.Models;
+using EngineerProject.API.Enums;
 using EngineerProject.API.SignalR;
 using EngineerProject.API.Utility;
-using EngineerProject.Commons.Dtos.Groups;
-using EngineerProject.Commons.Dtos.Querying;
+using EngineerProject.Commons.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -142,7 +142,7 @@ namespace EngineerProject.API.Controllers
             if (!CheckAdminPriviliges(userId, data.GroupId))
                 return BadRequest();
 
-            var connection = context.UserGroups.SingleOrDefault(a => a.UserId == userId && a.GroupId == data.GroupId);
+            var connection = context.UserGroups.SingleOrDefault(a => a.UserId == data.UserId && a.GroupId == data.GroupId);
 
             context.UserGroups.Remove(connection);
 
@@ -213,32 +213,6 @@ namespace EngineerProject.API.Controllers
         #endregion Interactions
 
         #region CRUD
-
-        [HttpPut]
-        public IActionResult Modify([FromBody] GroupModifyDto data)
-        {
-            var userId = ClaimsReader.GetUserId(Request);
-
-            if(!context.UserGroups.Any(a => a.GroupId == data.Id && a.UserId == userId && a.Relation == GroupRelation.Owner))
-                return BadRequest();
-
-            var group = context.Groups.FirstOrDefault(a => a.Id == data.Id);
-
-            group.Name = data.Name;
-            group.Description = data.Description;
-            group.IsPrivate = data.IsPrivate;
-
-            try
-            {
-                context.SaveChanges();
-
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
 
         [HttpPost]
         public IActionResult Create([FromBody] GroupCreateDto data)
@@ -367,6 +341,32 @@ namespace EngineerProject.API.Controllers
             };
 
             return Ok(result);
+        }
+
+        [HttpPut]
+        public IActionResult Modify([FromBody] GroupModifyDto data)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+
+            if (!context.UserGroups.Any(a => a.GroupId == data.Id && a.UserId == userId && a.Relation == GroupRelation.Owner))
+                return BadRequest();
+
+            var group = context.Groups.FirstOrDefault(a => a.Id == data.Id);
+
+            group.Name = data.Name;
+            group.Description = data.Description;
+            group.IsPrivate = data.IsPrivate;
+
+            try
+            {
+                context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         private bool CheckAdminPriviliges(int userId, int groupId) => context.UserGroups.Any(a => a.GroupId == groupId && a.UserId == userId && a.Relation == GroupRelation.Owner);

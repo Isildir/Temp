@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EngineerProject.Commons.Dtos.Groups
+namespace EngineerProject.Commons.Dtos
 {
     public class GroupAdminDetailsDto
     {
@@ -9,12 +9,12 @@ namespace EngineerProject.Commons.Dtos.Groups
             Candidates = new List<GroupCandidateDto>();
         }
 
-        public string Name { get; set; }
+        public List<GroupCandidateDto> Candidates { get; set; }
 
         public string Description { get; set; }
 
         public bool IsPrivate { get; set; }
 
-        public List<GroupCandidateDto> Candidates { get; set; }
+        public string Name { get; set; }
     }
 }

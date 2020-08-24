@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EngineerProject.Commons.Dtos.Groups
+namespace EngineerProject.Commons.Dtos
 {
     public class UserGroupsWrapperDto
     {

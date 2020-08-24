@@ -1,7 +1,8 @@
 ﻿using EngineerProject.API.Entities;
 using EngineerProject.API.Entities.Models;
+using EngineerProject.API.Enums;
 using EngineerProject.API.Utility;
-using EngineerProject.Commons.Dtos.Groups;
+using EngineerProject.Commons.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

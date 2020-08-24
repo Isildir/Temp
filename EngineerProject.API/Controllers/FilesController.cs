@@ -1,8 +1,7 @@
 ﻿using EngineerProject.API.Entities;
 using EngineerProject.API.Entities.Models;
 using EngineerProject.API.Utility;
-using EngineerProject.Commons.Dtos.Groups;
-using EngineerProject.Commons.Dtos.Querying;
+using EngineerProject.Commons.Dtos;
 using HeyRed.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,8 +20,8 @@ namespace EngineerProject.API.Controllers
     [Authorize, ApiController, Route("api/[controller]/[action]")]
     public class FilesController : Controller
     {
-        private readonly EngineerContext context;
         private readonly AppSettings appSettings;
+        private readonly EngineerContext context;
 
         public FilesController(EngineerContext context, IOptions<AppSettings> appSettings)
         {
@@ -31,31 +30,6 @@ namespace EngineerProject.API.Controllers
         }
 
         //TODO DownloadFile
-
-        [HttpGet]
-        public ActionResult<IEnumerable<FileDto>> GetFiles([FromQuery] GroupQueryDto query)
-        {
-            var userId = ClaimsReader.GetUserId(Request);
-            var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
-
-            var result = context.Set<DBFile>()
-                .Include(a => a.User)
-                .OrderByDescending(a => a.DateAdded)
-                .Where(a => a.GroupId == query.GroupId)
-                .Skip(query.PageSize * (query.Page - 1))
-                .Take(query.PageSize)
-                .Select(a => new FileDto
-                {
-                    Id = a.Id,
-                    Owner = a.User.Login,
-                    DateAdded = a.DateAdded,
-                    FileName = a.FileName,
-                    IsOwner = a.UserId == userId,
-                    Size = a.Size
-                }).ToList();
-
-            return Ok(result);
-        }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteFile([FromQuery] int id)
@@ -92,6 +66,31 @@ namespace EngineerProject.API.Controllers
 
                 return BadRequest();
             }
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<FileDto>> GetFiles([FromQuery] GroupQueryDto query)
+        {
+            var userId = ClaimsReader.GetUserId(Request);
+            var formattedFilter = string.IsNullOrEmpty(query.Filter) ? string.Empty : query.Filter.ToLower();
+
+            var result = context.Set<DBFile>()
+                .Include(a => a.User)
+                .OrderByDescending(a => a.DateAdded)
+                .Where(a => a.GroupId == query.GroupId)
+                .Skip(query.PageSize * (query.Page - 1))
+                .Take(query.PageSize)
+                .Select(a => new FileDto
+                {
+                    Id = a.Id,
+                    Owner = a.User.Login,
+                    DateAdded = a.DateAdded,
+                    FileName = a.FileName,
+                    IsOwner = a.UserId == userId,
+                    Size = a.Size
+                }).ToList();
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -140,7 +139,7 @@ namespace EngineerProject.API.Controllers
                     User = userRecord,
                     Group = groupRecord,
                     Size = GetFileSizeAsString(size.Value),
-                    FileType = fileExtension.Equals(".pdf") || fileExtension.Equals(".docx") ? Entities.Models.FileType.Document : Entities.Models.FileType.Photo
+                    FileType = fileExtension.Equals(".pdf") || fileExtension.Equals(".docx") ? Enums.FileType.Document : Enums.FileType.Photo
                 };
 
                 context.Set<DBFile>().Add(dbFile);

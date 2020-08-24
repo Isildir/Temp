@@ -1,4 +1,4 @@
-﻿using EngineerProject.Commons.Dtos.Groups;
+﻿using EngineerProject.Commons.Dtos;
 using EngineerProject.Mobile.Services;
 using EngineerProject.Mobile.Views.Home.Pages;
 using System.Threading.Tasks;

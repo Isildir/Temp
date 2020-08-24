@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace EngineerProject.Commons.Dtos.Groups
+namespace EngineerProject.Commons.Dtos
 {
     public class MessageDto
     {
-        public string Owner { get; set; }
-
         public string Content { get; set; }
 
         public DateTime DateAdded { get; set; }
+
+        public string Owner { get; set; }
     }
 }

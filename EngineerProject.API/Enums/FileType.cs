@@ -1,4 +1,4 @@
-﻿namespace EngineerProject.API.Entities.Models
+﻿namespace EngineerProject.API.Enums
 {
     public enum FileType : byte
     {

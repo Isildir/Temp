@@ -1,7 +1,7 @@
 ﻿using EngineerProject.API.Entities;
 using EngineerProject.API.Entities.Models;
 using EngineerProject.API.Utility;
-using EngineerProject.Commons.Dtos.Groups;
+using EngineerProject.Commons.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +22,29 @@ namespace EngineerProject.API.SignalR
         public ChatHub(IServiceProvider provider)
         {
             this.provider = provider;
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            var connectionId = Context.ConnectionId;
+
+            var httpContext = Context.GetHttpContext();
+            var groupId = httpContext.Request.Query["groupId"];
+
+            if (int.TryParse(groupId, out int value))
+                dictionary.Add(connectionId, value);
+
+            return base.OnConnectedAsync();
+        }
+
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            var connectionId = Context.ConnectionId;
+
+            if (dictionary.ContainsKey(connectionId))
+                dictionary.Remove(connectionId);
+
+            return base.OnDisconnectedAsync(exception);
         }
 
         public async Task SendMessage(string content)
@@ -61,29 +84,6 @@ namespace EngineerProject.API.SignalR
             {
                 throw e;
             }
-        }
-
-        public override Task OnConnectedAsync()
-        {
-            var connectionId = Context.ConnectionId;
-            
-            var httpContext = Context.GetHttpContext();
-            var groupId = httpContext.Request.Query["groupId"];
-
-            if (int.TryParse(groupId, out int value))
-                dictionary.Add(connectionId, value);
-
-            return base.OnConnectedAsync();
-        }
-
-        public override Task OnDisconnectedAsync(Exception exception)
-        {
-            var connectionId = Context.ConnectionId;
-
-            if (dictionary.ContainsKey(connectionId))
-                dictionary.Remove(connectionId);
-
-            return base.OnDisconnectedAsync(exception);
         }
 
         private bool GetReceivers(int id, out IClientProxy clientProxy)

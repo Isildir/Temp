@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Chat" 
-             xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="EngineerProject.Mobile.Views.Group.Pages.ChatPage" 
+<ContentPage Title="Chat"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EngineerProject.Mobile.Views.Group.Pages.ChatPage"
              xmlns:controls="clr-namespace:EngineerProject.Mobile.Components">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />

@@ -1,10 +1,83 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace EngineerProject.API.Migrations
 {
     public partial class PostsDataAdded : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Comments_Posts_PostId",
+                table: "Comments");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Comments_Users_UserId",
+                table: "Comments");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Comments",
+                table: "Comments");
+
+            migrationBuilder.DropColumn(
+                name: "Content",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "DateAdded",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "EditDate",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "Edited",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "Pinned",
+                table: "Posts");
+
+            migrationBuilder.DropColumn(
+                name: "Title",
+                table: "Posts");
+
+            migrationBuilder.RenameTable(
+                name: "Comments",
+                newName: "Comment");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Comments_UserId",
+                table: "Comment",
+                newName: "IX_Comment_UserId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Comments_PostId",
+                table: "Comment",
+                newName: "IX_Comment_PostId");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Comment",
+                table: "Comment",
+                column: "Id");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comment_Posts_PostId",
+                table: "Comment",
+                column: "PostId",
+                principalTable: "Posts",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Comment_Users_UserId",
+                table: "Comment",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "Id");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
@@ -83,79 +156,6 @@ namespace EngineerProject.API.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_Comments_Users_UserId",
                 table: "Comments",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Comments_Posts_PostId",
-                table: "Comments");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Comments_Users_UserId",
-                table: "Comments");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Comments",
-                table: "Comments");
-
-            migrationBuilder.DropColumn(
-                name: "Content",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "DateAdded",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "EditDate",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "Edited",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "Pinned",
-                table: "Posts");
-
-            migrationBuilder.DropColumn(
-                name: "Title",
-                table: "Posts");
-
-            migrationBuilder.RenameTable(
-                name: "Comments",
-                newName: "Comment");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Comments_UserId",
-                table: "Comment",
-                newName: "IX_Comment_UserId");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Comments_PostId",
-                table: "Comment",
-                newName: "IX_Comment_PostId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Comment",
-                table: "Comment",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_Posts_PostId",
-                table: "Comment",
-                column: "PostId",
-                principalTable: "Posts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Comment_Users_UserId",
-                table: "Comment",
                 column: "UserId",
                 principalTable: "Users",
                 principalColumn: "Id");

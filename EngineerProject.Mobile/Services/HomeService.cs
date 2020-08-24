@@ -1,4 +1,4 @@
-﻿using EngineerProject.Commons.Dtos.Groups;
+﻿using EngineerProject.Commons.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

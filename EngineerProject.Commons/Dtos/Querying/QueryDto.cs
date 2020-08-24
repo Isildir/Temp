@@ -1,4 +1,4 @@
-﻿namespace EngineerProject.Commons.Dtos.Querying
+﻿namespace EngineerProject.Commons.Dtos
 {
     public class QueryDto
     {

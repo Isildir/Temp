@@ -4,6 +4,21 @@ namespace EngineerProject.API.Migrations
 {
     public partial class FilesModelUpdate : Migration
     {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "FileName",
+                table: "Files");
+
+            migrationBuilder.DropColumn(
+                name: "FileType",
+                table: "Files");
+
+            migrationBuilder.DropColumn(
+                name: "Size",
+                table: "Files");
+        }
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
@@ -23,21 +38,6 @@ namespace EngineerProject.API.Migrations
                 name: "Size",
                 table: "Files",
                 nullable: true);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "FileName",
-                table: "Files");
-
-            migrationBuilder.DropColumn(
-                name: "FileType",
-                table: "Files");
-
-            migrationBuilder.DropColumn(
-                name: "Size",
-                table: "Files");
         }
     }
 }
