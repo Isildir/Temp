@@ -33,7 +33,7 @@ namespace EngineerProject.Mobile.Views.Group.Pages
                 {
                     Name.Text = requestResult.Data.Name;
                     Description.Text = requestResult.Data.Description;
-                    Private.IsChecked = requestResult.Data.IsPrivate;
+                    IsPrivate.IsChecked = requestResult.Data.IsPrivate;
 
                     foreach (var candidate in requestResult.Data.Candidates)
                         Candidates.Add(candidate);
@@ -75,7 +75,7 @@ namespace EngineerProject.Mobile.Views.Group.Pages
         {
             var service = new GroupService();
 
-            await service.ModifyGroup(GroupPage.GroupId, Name.Text, Description.Text, Private.IsChecked);
+            await service.ModifyGroup(GroupPage.GroupId, Name.Text, Description.Text, IsPrivate.IsChecked);
         }
 
         private async Task ResolveCandidate(GroupCandidateDto candidate, bool value)

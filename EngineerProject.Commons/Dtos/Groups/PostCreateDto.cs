@@ -5,7 +5,5 @@
         public string Content { get; set; }
 
         public int GroupId { get; set; }
-
-        public string Title { get; set; }
     }
 }

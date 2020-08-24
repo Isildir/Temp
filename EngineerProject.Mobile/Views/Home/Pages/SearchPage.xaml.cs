@@ -12,11 +12,7 @@ namespace EngineerProject.Mobile.Views.Home.Pages
         public SearchPage()
         {
             InitializeComponent();
-
-            GroupsList.ItemsSource = AvailableGroups;
         }
-
-        private ObservableCollection<GroupTileDto> AvailableGroups { get; set; } = new ObservableCollection<GroupTileDto>();
 
         protected override void OnAppearing()
         {
@@ -25,33 +21,43 @@ namespace EngineerProject.Mobile.Views.Home.Pages
             base.OnAppearing();
         }
 
-        private async void OnGroupSelect(object sender, ItemTappedEventArgs e)
+        private async void OnGroupSelect(object sender, EventArgs e)
         {
-            var t = e.Item as GroupTileDto;
+            var selectedItem = (e as TappedEventArgs).Parameter as GroupTileDto;
 
-            var answer = await DisplayAlert("Dołączenie do grupy", $"Czy na pewno chcesz dołączyć do grupy {t.Name}?", "Tak", "Nie");
+            var answer = await DisplayAlert("Dołączenie do grupy", $"Czy na pewno chcesz dołączyć do grupy {selectedItem.Name}?", "Tak", "Nie");
 
             if (answer)
             {
-                var requestResponse = await new HomeService().AskForInvite(t.Id);
+                var requestResponse = await new HomeService().AskForInvite(selectedItem.Id);
 
                 if (requestResponse.IsSuccessful)
-                    AvailableGroups.Remove(t);
+                    ReloadAvailableGroups();
             }
-
-            GroupsList.SelectedItem = null;
         }
 
         private async void OnLogout(object sender, EventArgs e) => await NavigationHelpers.LogoutUser();
 
         private async void ReloadAvailableGroups()
         {
-            AvailableGroups.Clear();
+            FilteredGroups.Children.Clear();
 
             var availableGroups = await new HomeService().GetGroups(1, 10, SearchBarEntry.Text ?? string.Empty);
 
             foreach (var value in availableGroups.Data)
-                AvailableGroups.Add(value);
+                AddGroup(value);
+        }
+
+        private void AddGroup(GroupTileDto data)
+        {
+            var label = new Label { Text = data.Name, FontSize = NamedSize.Medium.GetFormattedLabelFontSize() };
+            var gesture = new TapGestureRecognizer { CommandParameter = data };
+            var frame = new Frame { Content = label, BackgroundColor = Color.WhiteSmoke, Padding = 6, Margin = 2 };
+
+            gesture.Tapped += (sender, args) => OnGroupSelect(sender, args);
+            label.GestureRecognizers.Add(gesture);
+
+            FilteredGroups.Children.Add(frame);
         }
 
         private void SearchBarTextChanged(object sender, TextChangedEventArgs e)

@@ -24,8 +24,6 @@ namespace EngineerProject.API.Entities.Models
 
         public bool Pinned { get; set; }
 
-        public string Title { get; set; }
-
         public User User { get; set; }
 
         public int UserId { get; set; }

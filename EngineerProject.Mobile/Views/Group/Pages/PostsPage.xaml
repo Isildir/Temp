@@ -8,8 +8,7 @@
             <StackLayout x:Name="MainLayout">
                 <Frame Padding="10">
                     <StackLayout x:Name="PostCreate">
-                        <Entry x:Name="Title" Placeholder="Tytuł" />
-                        <Editor x:Name="Description" Placeholder="Wiadomość" AutoSize="TextChanges" />
+                        <Editor x:Name="Content" Placeholder="Wiadomość" AutoSize="TextChanges" />
                         <controls:AppButton Text="Dodaj post">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnPostCreateSubmit" />

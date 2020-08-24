@@ -21,7 +21,7 @@ namespace EngineerProject.Mobile.Views.Group.Components
             Owner.Text = data.Owner;
             Content.Text = data.Content;
             DateAdded.Text = data.DateAdded.DateToString();
-            CommentDeleteButton.IsVisible = data.IsOwner;
+            CommentDeleteIcon.IsVisible = data.IsOwner;
         }
 
         private async void OnDelete(object sender, EventArgs e)

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Twoje grupy" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.UserGroupsPage">
+<ContentPage Title="Twoje grupy" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.UserGroupsPage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="5">
-            <Label Text="Twoje grupy" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-            <ListView x:Name="GroupsView" ItemTapped="OnGroupSelect">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Text="Dodaj nową grupę" Clicked="OnGroupCreateClick" />
+            <Label Text="Twoje grupy" VerticalOptions="Start" HorizontalOptions="Center" FontSize="Large" />
+            <ScrollView VerticalOptions="StartAndExpand">
+                <StackLayout x:Name="UserGroups" />
+            </ScrollView>
+            <controls:AppButton Text="Dodaj nową grupę" VerticalOptions="End" HorizontalOptions="Center" Padding="20,10,20,10" Margin="10">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGroupCreateClick" />
+                </Frame.GestureRecognizers>
+            </controls:AppButton>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

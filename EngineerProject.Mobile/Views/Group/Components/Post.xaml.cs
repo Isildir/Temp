@@ -17,7 +17,6 @@ namespace EngineerProject.Mobile.Views.Group.Components
             InitializeComponent();
 
             Owner.Text = data.Owner;
-            OldTitle.Text = data.Title;
             OldContent.Text = data.Content;
             DateAdded.Text = data.DateAdded.DateToString();
 
@@ -45,9 +44,6 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
         private void OnEditionAbort(object sender, EventArgs e)
         {
-            NewPostTitle.Text = OldTitle.Text;
-            NewPostContent.Text = OldContent.Text;
-
             SetElementsVisibility(false);
         }
 
@@ -55,11 +51,10 @@ namespace EngineerProject.Mobile.Views.Group.Components
         {
             var service = new GroupService();
 
-            var requestResult = await service.ModifyPost(postId, NewPostTitle.Text, NewPostContent.Text);
+            var requestResult = await service.ModifyPost(postId, NewPostContent.Text);
 
             if (requestResult.IsSuccessful)
             {
-                OldTitle.Text = NewPostTitle.Text;
                 OldContent.Text = NewPostContent.Text;
 
                 SetElementsVisibility(false);
@@ -73,8 +68,10 @@ namespace EngineerProject.Mobile.Views.Group.Components
 
         private void SetElementsVisibility(bool edition)
         {
-            DisplayDataView.IsVisible = !edition;
-            EditDataView.IsVisible = edition;
+            NewPostContent.Text = OldContent.Text;
+
+            OldContent.IsVisible = !edition;
+            NewPostContent.IsVisible = edition;
 
             AbortButton.IsVisible = edition;
             ConfirmButton.IsVisible = edition;

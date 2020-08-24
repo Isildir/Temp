@@ -23,7 +23,7 @@ namespace EngineerProject.API.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] PostCreateDto data)
         {
-            if (string.IsNullOrEmpty(data.Title) || string.IsNullOrEmpty(data.Content))
+            if (string.IsNullOrEmpty(data.Content))
                 return BadRequest();
 
             var userId = ClaimsReader.GetUserId(Request);
@@ -36,7 +36,6 @@ namespace EngineerProject.API.Controllers
                 DateAdded = DateTime.UtcNow,
                 Content = data.Content,
                 GroupId = data.GroupId,
-                Title = data.Title,
                 UserId = userId
             };
 
@@ -46,7 +45,16 @@ namespace EngineerProject.API.Controllers
             {
                 context.SaveChanges();
 
-                return Ok();
+                var result = new PostDto
+                {
+                    Id = post.Id,
+                    Content = post.Content,
+                    DateAdded = post.DateAdded,
+                    IsOwner = true,
+                    Owner = context.Users.Find(userId).Login
+                };
+
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -95,7 +103,6 @@ namespace EngineerProject.API.Controllers
                 .Select(a => new PostDto
                 {
                     Id = a.Id,
-                    Title = a.Title,
                     DateAdded = a.DateAdded,
                     Content = a.Content,
                     EditDate = a.EditDate,
@@ -117,7 +124,7 @@ namespace EngineerProject.API.Controllers
         [HttpPut]
         public IActionResult Modify([FromQuery] int id, [FromBody] PostModifyDto data)
         {
-            if (string.IsNullOrEmpty(data.Title) || string.IsNullOrEmpty(data.Content))
+            if (string.IsNullOrEmpty(data.Content))
                 return BadRequest();
 
             var userId = ClaimsReader.GetUserId(Request);
@@ -128,7 +135,6 @@ namespace EngineerProject.API.Controllers
 
             post.EditDate = DateTime.UtcNow;
             post.Content = data.Content;
-            post.Title = data.Title;
 
             try
             {

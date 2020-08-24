@@ -53,17 +53,13 @@ namespace EngineerProject.Mobile.Views.Group.Pages
 
         private async void OnPostCreateSubmit(object sender, EventArgs e)
         {
-            var title = Title.Text;
-            var description = Description.Text;
-
             var service = new GroupService();
 
-            var requestResult = await service.AddPost(GroupPage.GroupId, title, description);
+            var requestResult = await service.AddPost(GroupPage.GroupId, Content.Text);
 
             if (requestResult.IsSuccessful)
             {
-                Title.Text = string.Empty;
-                Description.Text = string.Empty;
+                Content.Text = string.Empty;
 
                 pagesLoaded = 0;
 

@@ -1,17 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage Title="Tworzenie grupy" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.GroupCreatePage">
+<ContentPage Title="Tworzenie grupy" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="EngineerProject.Mobile.Views.Home.Pages.GroupCreatePage" xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Wyloguj" Clicked="OnLogout" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="5">
-            <Entry x:Name="Name" Placeholder="Nazwa grupy"></Entry>
-            <Entry x:Name="Description" Placeholder="Opis"></Entry>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Czy grupa jest prywatna?" HorizontalOptions="StartAndExpand"></Label>
-                <CheckBox x:Name="IsPrivate" HorizontalOptions="End"></CheckBox>
+            <Entry x:Name="Name" Placeholder="Nazwa grupy" />
+            <Editor x:Name="Description" Placeholder="Opis" AutoSize="TextChanges" />
+            <StackLayout Padding="5" Orientation="Horizontal">
+                <Label Text="Czy grupa jest prywatna?" HorizontalOptions="Start" FontSize="Medium" />
+                <CheckBox x:Name="IsPrivate" HorizontalOptions="StartAndExpand" />
             </StackLayout>
-            <Button Clicked="OnSubmit" Text="Utwórz"></Button>
+            <controls:AppButton Text="Utwórz grupę" VerticalOptions="End" HorizontalOptions="Center" Padding="20,10,20,10" Margin="10">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSubmit" />
+                </Frame.GestureRecognizers>
+            </controls:AppButton>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

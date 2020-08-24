@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Frame BorderColor="Gray"
+<Frame 
        BackgroundColor="WhiteSmoke"
        CornerRadius="5"
        Padding="6"
@@ -7,7 +7,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        x:Class="EngineerProject.Mobile.Views.Group.Components.Comment"
        xmlns:controls="clr-namespace:EngineerProject.Mobile.Views.Group.Components">
-    <StackLayout>
+    <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
         <Label x:Name="Content"
                FontSize="Medium" />
         <BoxView Color="LightGray"
@@ -17,13 +18,14 @@
             <Label x:Name="Owner"
                FontSize="Small"
                    HorizontalOptions="StartAndExpand" />
-            <Label x:Name="DateAdded"
+                <Label x:Name="DateAdded"
                FontSize="Small" HorizontalOptions="EndAndExpand" />
-            <controls:AppButton Text="Usuń" x:Name="CommentDeleteButton" HorizontalOptions="End" BackgroundColor="Transparent">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnDelete" />
-                </Frame.GestureRecognizers>
-            </controls:AppButton>
-        </StackLayout>
+            </StackLayout>
     </StackLayout>
+        <Image Source="trash.png" Aspect="AspectFit" x:Name="CommentDeleteIcon" AbsoluteLayout.LayoutBounds="1, 0.02, 20, 20" AbsoluteLayout.LayoutFlags="PositionProportional" >
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnDelete" />
+            </Image.GestureRecognizers>
+        </Image>
+    </AbsoluteLayout>
 </Frame>

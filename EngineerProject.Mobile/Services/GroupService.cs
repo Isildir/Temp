@@ -13,9 +13,9 @@ namespace EngineerProject.Mobile.Services
             return MapResponse(response);
         }
 
-        public async Task<RequestResponse> AddPost(int groupId, string title, string content)
+        public async Task<RequestResponse> AddPost(int groupId, string content)
         {
-            var response = await client.PostAsync($"Posts/Create", new { groupId, title, content });
+            var response = await client.PostAsync($"Posts/Create", new { groupId, content });
 
             return MapResponse(response);
         }
@@ -83,9 +83,9 @@ namespace EngineerProject.Mobile.Services
             return MapResponse(response);
         }
 
-        public async Task<RequestResponse> ModifyPost(int postId, string title, string content)
+        public async Task<RequestResponse> ModifyPost(int postId, string content)
         {
-            var response = await client.PutAsync($"Posts/Modify?id={postId}", new { title, content });
+            var response = await client.PutAsync($"Posts/Modify?id={postId}", new { content });
 
             return MapResponse(response);
         }

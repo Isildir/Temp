@@ -5,14 +5,12 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="5">
-            <Entry x:Name="SearchBarEntry" TextChanged="SearchBarTextChanged" Placeholder="Wpisz wyszukiwaną frazę"></Entry>
-            <ListView x:Name="GroupsList" ItemTapped="OnGroupSelect">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Frame>
+                <Entry x:Name="SearchBarEntry" TextChanged="SearchBarTextChanged" Placeholder="Wpisz wyszukiwaną frazę" />
+            </Frame>
+            <ScrollView>
+                <StackLayout x:Name="FilteredGroups" />
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
