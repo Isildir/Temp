@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorComponent } from './core/pages/error-page/error-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
    declarations: [
@@ -14,12 +16,14 @@ import { ErrorComponent } from './core/pages/error-page/error-page.component';
    ],
    imports: [
       SharedModule,
-      AppRoutingModule
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      DatePipe
    ],
    exports: [
-      SharedModule
    ],
    providers: [
+      DatePipe,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
    ],
