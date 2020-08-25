@@ -1,8 +1,8 @@
-import { UserData } from './models/UserData';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService } from './services/data-services/user.service';
+import { UserService } from './authentication/services/user.service';
+import { SharedDataService } from './shared/services/shared-data.service';
 
 @Component({
   selector: 'app-root',
@@ -10,17 +10,18 @@ import { UserService } from './services/data-services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentUser: UserData;
+  userLogin: string;
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private sharedData: SharedDataService
   ) {
-    this.userService.currentUser.subscribe(data => this.currentUser = data);
+    this.sharedData.userData.subscribe(data => this.userLogin = data?.login);
   }
 
   logout() {
     this.userService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/authentication/login']);
   }
 }
