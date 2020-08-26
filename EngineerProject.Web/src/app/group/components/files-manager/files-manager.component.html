@@ -15,7 +15,7 @@
       #fileDropRef
       id="fileDropRef"
       multiple
-      (change)="fileBrowseHandler($event.target.files)"
+      (change)="onFileDropped($event.target.files)"
       class="files-manager-upload-wrapper__input"
     />
     <mat-icon class="files-manager-upload-wrapper__icon">add_circle_outline</mat-icon>

@@ -25,10 +25,10 @@ export class GroupService {
     return this.httpClient.get<GroupDetails>(url);
   }
 
-  addPost(groupId: number, title: string, content: string) {
+  addPost(groupId: number, content: string) {
     const url = `${environment.apiUrl}posts/Create`;
 
-    return this.httpClient.post<any>(url, { groupId, title, content });
+    return this.httpClient.post<any>(url, { groupId, content });
   }
 
   deletePost(id: number) {
@@ -49,10 +49,10 @@ export class GroupService {
     return this.httpClient.post<any>(url, { postId: id, content });
   }
 
-  modifyPost(postId: number, title: string, content: string) {
+  modifyPost(postId: number, content: string) {
     const url = `${environment.apiUrl}posts/Modify?id=${postId}`;
 
-    return this.httpClient.put<any>(url, { title, content });
+    return this.httpClient.put<any>(url, { content });
   }
 
   getAdminGroupDetails(groupId: number) {

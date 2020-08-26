@@ -7,7 +7,9 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorComponent } from './core/pages/error-page/error-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePipe } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
    declarations: [
@@ -15,15 +17,14 @@ import { DatePipe } from '@angular/common';
       ErrorComponent
    ],
    imports: [
-      SharedModule,
       AppRoutingModule,
       BrowserAnimationsModule,
-      DatePipe
-   ],
-   exports: [
+      SharedModule, BrowserModule,
+      ReactiveFormsModule,
+      HttpClientModule,
+      FormsModule,
    ],
    providers: [
-      DatePipe,
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
       { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
    ],

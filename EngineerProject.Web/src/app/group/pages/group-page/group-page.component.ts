@@ -1,3 +1,4 @@
+import { FilesManagerComponent } from './../../components/files-manager/files-manager.component';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,6 +23,7 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
   private groupId: number;
 
   @ViewChild(ChatComponent) chat: ChatComponent;
+  @ViewChild(FilesManagerComponent) files: FilesManagerComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +35,6 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.postForm = this.formBuilder.group({
-      title: ['', new RequiredValidator()],
       content: ['', new RequiredValidator()]
     });
 
@@ -46,6 +47,7 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.chat.setComponentData(this.groupId);
+    this.files.setComponentData(this.groupId);
   }
 
   loadGroupDetails() {
@@ -62,16 +64,15 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
 
   openDetailsDialog() {
     const dialogRef = this.dialog.open(GroupDetailsDialogComponent, { data: { groupId: this.groupId }});
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.loadGroupDetails();
     });
   }
 
   addPost() {
-    const title = this.postForm.controls.title.value;
     const content = this.postForm.controls.content.value;
 
-    this.groupService.addPost(this.groupId, title, content)
+    this.groupService.addPost(this.groupId, content)
       .subscribe(() => {
         this.reloadPosts();
         this.snackBar.open('', 'Ok', { duration: 5000 });

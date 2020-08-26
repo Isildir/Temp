@@ -21,6 +21,7 @@ import { DatePipe, CommonModule } from '@angular/common';
 
 @NgModule({
    imports: [
+      CommonModule,
       ReactiveFormsModule,
       HttpClientModule,
       FormsModule,
@@ -42,6 +43,7 @@ import { DatePipe, CommonModule } from '@angular/common';
       MatIconModule
    ],
    exports: [
+      CommonModule,
       ReactiveFormsModule,
       HttpClientModule,
       FormsModule,

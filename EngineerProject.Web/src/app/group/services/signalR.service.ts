@@ -23,6 +23,7 @@ export class SignalRService {
       accessTokenFactory: () => this.sharedData.userSubject.value.token
     };
 
+    console.log(this.sharedData.userSubject.value.token);
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(url, options)
       .build();

@@ -32,8 +32,8 @@ namespace EngineerProject.API.Configuration
                 app.UseDeveloperExceptionPage();
 
             app.UseCors();
-            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -68,6 +68,17 @@ namespace EngineerProject.API.Configuration
             {
                 x.Events = new JwtBearerEvents
                 {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/chat"))
+                            context.Token = accessToken;
+
+                        return Task.CompletedTask;
+                    },
                     OnTokenValidated = context =>
                     {
                         var dbContext = context.HttpContext.RequestServices.GetRequiredService<EngineerContext>();

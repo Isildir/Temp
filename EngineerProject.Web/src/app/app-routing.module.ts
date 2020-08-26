@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
   },
   {
-    path: 'group/:id',
+    path: 'group',
     loadChildren: () => import('./group/group.module').then(m => m.GroupModule),
   },
   {

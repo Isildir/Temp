@@ -11,6 +11,7 @@ export class RequestInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const currentUser = this.sharedData.userSubject.value;
 
+        console.log(request);
         if (!(request.params instanceof CustomHttpParams && (request.params as CustomHttpParams).passHeaderCheck)) {
             if (!request.headers.has('Content-Type')) {
                 request = request.clone({

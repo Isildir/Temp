@@ -9,15 +9,24 @@ import { FileHandlerService } from 'src/app/group/services/file-handler.service'
   styleUrls: ['./files-manager.component.css']
 })
 export class FilesManagerComponent implements OnInit {
-  @Input() groupId: number;
   @Output() parentSnackBar: EventEmitter<string> = new EventEmitter();
 
   public addedFiles = Array<NewFile>();
   public fileUploadActive = true;
   public filesToDownload: Array<GetFile>;
 
-  public onFileDropped($event: any[]) {
-    this.prepareFilesList($event);
+  private groupId: number;
+
+  constructor(private fileHandlerService: FileHandlerService) {
+  }
+
+  ngOnInit() {}
+
+  public setComponentData(groupId: number) {
+    this.groupId = groupId;
+    this.fileHandlerService.getFiles(this.groupId).subscribe(
+      data => this.filesToDownload = data,
+      error => console.log(error));
   }
 
   public onFileUploadButtonClick() {
@@ -25,18 +34,12 @@ export class FilesManagerComponent implements OnInit {
   }
 
   public onFileDownloadButtonClick() {
-    this.fileHandlerService.getFiles(this.groupId).subscribe(data => {
-      this.filesToDownload = data;
-      this.fileUploadActive = false;
-    }, error => console.log(error));
+    this.fileUploadActive = false;
   }
 
-  constructor(private fileHandlerService: FileHandlerService) {
-  }
 
-  ngOnInit() {}
-
-  public fileBrowseHandler(files: any[]) {
+  public onFileDropped(files: any[]) {
+    console.log(files);
     this.prepareFilesList(files);
   }
 
@@ -50,7 +53,9 @@ export class FilesManagerComponent implements OnInit {
     }, error => this.parentSnackBar.emit(error));
   }
 
+
   public prepareFilesList(files: Array<any>) {
+    console.log(this.groupId);
     for (const file of files) {
       this.fileHandlerService.sendFile(file, this.groupId).subscribe(result => {
         result.uploaded = true;
@@ -70,6 +75,7 @@ export class FilesManagerComponent implements OnInit {
       });
     }
   }
+
 
   public formatBytes(bytes: number, decimals: number) {
     if (bytes === 0) {

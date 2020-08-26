@@ -18,6 +18,6 @@ import { ChatComponent } from './components/chat/chat.component';
    imports: [
       GroupRoutingModule,
       SharedModule
-   ]
+   ], entryComponents: [GroupDetailsDialogComponent]
 })
 export class GroupModule { }

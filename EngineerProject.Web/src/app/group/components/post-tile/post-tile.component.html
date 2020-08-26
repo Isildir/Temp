@@ -1,12 +1,9 @@
 <div>
   <div>
-    <p>{{ data.id }}</p>
-    <p>{{ data.dateAdded | date:'short' }}</p>
-    <p>{{ data.editDate | date:'short' }}</p>
+    <p>Data dodania {{ data.dateAdded | date:'short' }}</p>
+    <p>Data edycji {{ data.editDate | date:'short' }}</p>
     <form [formGroup]="modifyPostForm">
       <fieldset>  
-        <p *ngIf="!isModified">{{ data.title }}</p>
-        <input *ngIf="isModified" name="title" formControlName="title" type="text">
         <p *ngIf="!isModified">{{ data.content }}</p>
         <input *ngIf="isModified" name="content" formControlName="content" type="text" >
       </fieldset>
@@ -18,10 +15,8 @@
   </div>
   <div *ngFor="let comment of data.comments">
     <p>---------------------------------------</p>
-    <p>{{ comment.title }}</p>
     <p>{{ comment.content }}</p>
-    <p>{{ comment.dateAdded | date:'short' }}</p>
-    <p>{{ comment.id }}</p>
+    <p>Data dodania {{ comment.dateAdded | date:'short' }}</p>
     <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)">Usuń komentarz</button>
   </div>
   <div>

@@ -27,7 +27,6 @@ export class PostTileComponent implements OnInit {
     });
 
     this.modifyPostForm = this.formBuilder.group({
-      title: [this.data.title, new RequiredValidator()],
       content: [this.data.content, new RequiredValidator()]
     });
   }
@@ -47,17 +46,14 @@ export class PostTileComponent implements OnInit {
 
   resetPostValues() {
     this.isModified = false;
-    this.modifyPostForm.controls.title.setValue(this.data.title);
     this.modifyPostForm.controls.content.setValue(this.data.content);
   }
 
   modifyPost() {
-    const title = this.modifyPostForm.controls.title.value;
     const content = this.modifyPostForm.controls.content.value;
 
-    this.groupService.modifyPost(this.data.id, title, content)
+    this.groupService.modifyPost(this.data.id, content)
       .subscribe(response => {
-        this.data.title = title;
         this.data.content = content;
         this.data.editDate = response.editDate;
         this.resetPostValues();

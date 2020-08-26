@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, debounceTime, switchMap } from 'rxjs/operators';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupTile } from 'src/app/home/interfaces/GroupTile';
@@ -51,7 +50,7 @@ export class HomePageComponent implements OnInit {
   }
 
   onGroupSelect(id: number) {
-    this.router.navigate([`/group/${id}`]);
+    this.router.navigate([`/group/overview/${id}`]);
   }
 
   joinGroup(id: number) {
