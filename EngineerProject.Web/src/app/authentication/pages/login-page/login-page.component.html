@@ -3,15 +3,15 @@
         <h1 class="login-panel__header">Logowanie</h1>
     </div>
     <form [formGroup]="loginForm" class="login-panel__form">
-        <fieldset>  
+        <fieldset>
             <div *ngIf="loginMode !== LoginMode.Register" class="form-field login-panel__field">
                 <label class="login-panel__label">Identyfikator:</label>
                 <input name="identifier" formControlName="identifier" type="text" class="login-panel__input">
-            </div>  
+            </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
                 <label class="login-panel__label">Login:</label>
                 <input name="login" formControlName="login" type="text" class="login-panel__input">
-            </div>  
+            </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
                 <label class="login-panel__label">Email:</label>
                 <input name="email" formControlName="email" type="text" class="login-panel__input">
@@ -19,7 +19,7 @@
             <div *ngIf="loginMode !== LoginMode.Recovery" class="form-field login-panel__field">
                 <label class="login-panel__label">Hasło:</label>
                 <input name="password" formControlName="password" type="password" class="login-panel__input">
-            </div>  
+            </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
                 <label class="login-panel__label">Powtórz hasło:</label>
                 <input name="confirmedPassword" formControlName="confirmedPassword" type="password" class="login-panel__input">
@@ -30,7 +30,7 @@
         <a *ngIf="loginMode !== LoginMode.Login" (click)="onReturnModeChange()" class="forgot-password__link">Powrót</a>
         <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary login-panel__button">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                Zatwierdź
+            Zatwierdź
         </button>
-      </form>
+    </form>
 </div>

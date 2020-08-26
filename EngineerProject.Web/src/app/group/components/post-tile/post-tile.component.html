@@ -1,35 +1,35 @@
 <div>
-  <div>
-    <p>Data dodania {{ data.dateAdded | date:'short' }}</p>
-    <p>Data edycji {{ data.editDate | date:'short' }}</p>
-    <form [formGroup]="modifyPostForm">
-      <fieldset>  
-        <p *ngIf="!isModified">{{ data.content }}</p>
-        <input *ngIf="isModified" name="content" formControlName="content" type="text" >
-      </fieldset>
-      <button *ngIf="isModified" (click)="resetPostValues()">Anuluj</button>
-      <button *ngIf="isModified" type="submit" [disabled]="!modifyPostForm.valid" (click)="modifyPost()">Zatwierdź</button>
-    </form>
-    <button *ngIf="data.isOwner" (click)="deletePost()">Usuń post</button>
-    <button *ngIf="data.isOwner && !isModified" (click)="setModifyFlag()">Edytuj</button>
-  </div>
-  <div *ngFor="let comment of data.comments">
-    <p>---------------------------------------</p>
-    <p>{{ comment.content }}</p>
-    <p>Data dodania {{ comment.dateAdded | date:'short' }}</p>
-    <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)">Usuń komentarz</button>
-  </div>
-  <div>
-    <form [formGroup]="commentForm">
-        <fieldset>  
-            <div>
-              <label>Treść:</label>
-              <input name="content" formControlName="content" type="text">
-          </div>  
-        </fieldset>
-        <button type="submit" [disabled]="!commentForm.valid" (click)="addComment()">
+    <div>
+        <p>Data dodania {{ data.dateAdded | date:'short' }}</p>
+        <p>Data edycji {{ data.editDate | date:'short' }}</p>
+        <form [formGroup]="modifyPostForm">
+            <fieldset>
+                <p *ngIf="!isModified">{{ data.content }}</p>
+                <input *ngIf="isModified" name="content" formControlName="content" type="text">
+            </fieldset>
+            <button *ngIf="isModified" (click)="resetPostValues()">Anuluj</button>
+            <button *ngIf="isModified" type="submit" [disabled]="!modifyPostForm.valid" (click)="modifyPost()">Zatwierdź</button>
+        </form>
+        <button *ngIf="data.isOwner" (click)="deletePost()">Usuń post</button>
+        <button *ngIf="data.isOwner && !isModified" (click)="setModifyFlag()">Edytuj</button>
+    </div>
+    <div *ngFor="let comment of data.comments">
+        <p>---------------------------------------</p>
+        <p>{{ comment.content }}</p>
+        <p>Data dodania {{ comment.dateAdded | date:'short' }}</p>
+        <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)">Usuń komentarz</button>
+    </div>
+    <div>
+        <form [formGroup]="commentForm">
+            <fieldset>
+                <div>
+                    <label>Treść:</label>
+                    <input name="content" formControlName="content" type="text">
+                </div>
+            </fieldset>
+            <button type="submit" [disabled]="!commentForm.valid" (click)="addComment()">
                 Dodaj
-        </button>
-      </form>
-  </div>
+            </button>
+        </form>
+    </div>
 </div>

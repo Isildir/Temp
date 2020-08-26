@@ -10,7 +10,6 @@ import { Message } from '../interfaces/Message';
   providedIn: 'root'
 })
 export class GroupService {
-
   constructor(private httpClient: HttpClient) { }
 
   getPosts(id: number) {

@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { CollectionViewer } from '@angular/cdk/collections';
 
 export abstract class BaseDataSource<Type> implements DataSource<Type> {
-
     protected valuesSubject = new BehaviorSubject<Type[]>([]);
     protected loadingSubject = new BehaviorSubject<boolean>(false);
     protected countSubject = new BehaviorSubject<number>(0);

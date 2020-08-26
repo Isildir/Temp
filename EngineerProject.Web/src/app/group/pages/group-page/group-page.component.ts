@@ -80,4 +80,3 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
       error => this.snackBar.open(error, 'Ok', { duration: 30000 }));
   }
 }
-

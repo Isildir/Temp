@@ -37,7 +37,6 @@ export class FilesManagerComponent implements OnInit {
     this.fileUploadActive = false;
   }
 
-
   public onFileDropped(files: any[]) {
     console.log(files);
     this.prepareFilesList(files);
@@ -52,7 +51,6 @@ export class FilesManagerComponent implements OnInit {
       }
     }, error => this.parentSnackBar.emit(error));
   }
-
 
   public prepareFilesList(files: Array<any>) {
     console.log(this.groupId);
@@ -75,7 +73,6 @@ export class FilesManagerComponent implements OnInit {
       });
     }
   }
-
 
   public formatBytes(bytes: number, decimals: number) {
     if (bytes === 0) {

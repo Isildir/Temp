@@ -1,13 +1,13 @@
 <!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="userLogin">
-  <div class="navbar-nav">
-    <a class="nav-item nav-link profile-button" routerLink="/profile">{{ userLogin }}</a>
-    <a class="nav-item nav-link profile-button" routerLink="/groups">Grupy</a>
-    <a class="nav-item nav-link" (click)="logout()">Wyloguj</a>
-  </div>
+    <div class="navbar-nav">
+        <a class="nav-item nav-link profile-button" routerLink="/profile">{{ userLogin }}</a>
+        <a class="nav-item nav-link profile-button" routerLink="/groups">Grupy</a>
+        <a class="nav-item nav-link" (click)="logout()">Wyloguj</a>
+    </div>
 </nav>
 
 <!-- main app container -->
 <div class="container">
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 </div>

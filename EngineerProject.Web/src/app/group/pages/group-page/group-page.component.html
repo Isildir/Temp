@@ -1,27 +1,27 @@
 <div>
-  <div *ngIf="details?.isOwner">
-    <button (click)="openDetailsDialog()">Popup ze szczegółami</button>
-  </div>
+    <div *ngIf="details?.isOwner">
+        <button (click)="openDetailsDialog()">Popup ze szczegółami</button>
+    </div>
 </div>
 <div>
-  <div>
-    <form [formGroup]="postForm">
-        <fieldset>  
-            <div>
-              <label>Treść:</label>
-              <input name="content" formControlName="content" type="text">
-          </div>  
-        </fieldset>
-        <button type="submit" [disabled]="!postForm.valid" (click)="addPost()">
+    <div>
+        <form [formGroup]="postForm">
+            <fieldset>
+                <div>
+                    <label>Treść:</label>
+                    <input name="content" formControlName="content" type="text">
+                </div>
+            </fieldset>
+            <button type="submit" [disabled]="!postForm.valid" (click)="addPost()">
                 Dodaj
-        </button>
-      </form>
+            </button>
+        </form>
     </div>
     <div class="group-main-page-right-menu__files">
-    <app-files-manager (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
+        <app-files-manager (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
     </div>
-  <div *ngFor="let post of posts">
-      <app-post-tile [data]="post" (reloadPosts)="reloadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
-  </div>
-  <app-chat></app-chat>
+    <div *ngFor="let post of posts">
+        <app-post-tile [data]="post" (reloadPosts)="reloadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
+    </div>
+    <app-chat></app-chat>
 </div>

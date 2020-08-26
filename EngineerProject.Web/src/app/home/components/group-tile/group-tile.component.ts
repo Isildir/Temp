@@ -13,5 +13,4 @@ export class GroupTileComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

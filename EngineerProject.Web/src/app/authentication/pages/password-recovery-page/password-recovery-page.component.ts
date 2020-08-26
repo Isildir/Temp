@@ -11,7 +11,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['../../../shared/styles/styles-forms.css', './password-recovery-page.component.css']
 })
 export class PasswordRecoveryPageComponent implements OnInit {
-
 private recoveryCode: string;
 
 public wrongCodeMessage: string;

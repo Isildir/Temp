@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./error-page.component.css']
 })
 export class ErrorComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
   }
-
 }

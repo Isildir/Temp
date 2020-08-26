@@ -1,58 +1,54 @@
 <h2 class="files-manager-wrapper__header">Pliki (.pdf, .docx, .png, .jpeg):</h2>
 <div class="files-manager-wrapper">
-  <div class="files-manager-wrapper__buttons">
-    <button mat-raised-button (click)="onFileUploadButtonClick()">Upload</button>
-    <button mat-raised-button (click)="onFileDownloadButtonClick()">Download</button>
-  </div>
-  <div 
-    *ngIf="fileUploadActive" 
-    class="files-manager-upload-wrapper"
-    appDragAndDrop
-    (fileDropped)="onFileDropped($event)" 
-  >
-    <input
-      type="file"
-      #fileDropRef
-      id="fileDropRef"
-      multiple
-      (change)="onFileDropped($event.target.files)"
-      class="files-manager-upload-wrapper__input"
-    />
-    <mat-icon class="files-manager-upload-wrapper__icon">add_circle_outline</mat-icon>
-    <p class="files-manager-upload-wrapper__text">
-      Drag and drop file here
-    </p>
-    <p class="files-manager-upload-wrapper__text files-manager-upload-wrapper__text--margin">
-      or
-    </p>
-    <label for="fileDropRef" class="files-manager-upload-wrapper__button"
-      >Browse for file</label
-    >
-    <div class="files-list">
-      <div class="single-file" *ngFor="let file of addedFiles">
-        <div class="info">
-          <p class="name">
-            {{ file.fileName }} <span class="size">{{ formatBytes(file.size, 2) }}</span>
-          </p>
-          <p *ngIf="file.errorMessage !== undefined" class="files-list__wrong-format">{{ file.errorMessage }}</p>
+    <div class="files-manager-wrapper__buttons">
+        <button mat-raised-button (click)="onFileUploadButtonClick()">Upload</button>
+        <button mat-raised-button (click)="onFileDownloadButtonClick()">Download</button>
+    </div>
+    <div *ngIf="fileUploadActive"
+         class="files-manager-upload-wrapper"
+         appDragAndDrop
+         (fileDropped)="onFileDropped($event)">
+        <input type="file"
+               #fileDropRef
+               id="fileDropRef"
+               multiple
+               (change)="onFileDropped($event.target.files)"
+               class="files-manager-upload-wrapper__input" />
+        <mat-icon class="files-manager-upload-wrapper__icon">add_circle_outline</mat-icon>
+        <p class="files-manager-upload-wrapper__text">
+            Drag and drop file here
+        </p>
+        <p class="files-manager-upload-wrapper__text files-manager-upload-wrapper__text--margin">
+            or
+        </p>
+        <label for="fileDropRef" class="files-manager-upload-wrapper__button">Browse for file</label>
+        <div class="files-list">
+            <div class="single-file" *ngFor="let file of addedFiles">
+                <div class="info">
+                    <p class="name">
+                        {{ file.fileName }} <span class="size">{{ formatBytes(file.size, 2) }}</span>
+                    </p>
+                    <p *ngIf="file.errorMessage !== undefined" class="files-list__wrong-format">{{ file.errorMessage }}</p>
+                </div>
+                <button *ngIf="file.uploaded"
+                        class="delete"
+                        width="20px"
+                        alt="file"
+                        (click)="deleteFile(file.id)">
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+            </div>
         </div>
-        <button *ngIf="file.uploaded"
-          class="delete"
-          width="20px"
-          alt="file"
-          (click)="deleteFile(file.id)"
-        ><mat-icon>delete_forever</mat-icon></button>
-      </div>
     </div>
-  </div>
-  <div *ngIf="!fileUploadActive"  class="files-manager-download-wrapper">
-    <div *ngIf="filesToDownload !== null" class="files-manager-download-wrapper__container">
-      <div class="files-manager-download-wrapper__item" *ngFor="let file of filesToDownload">
-        <p class="files-manager-download-wrapper__name">{{ file.fileName }}</p>
-        <p class="files-manager-download-wrapper__size" >{{ file.size }}</p>
-        <button class="files-manager-download-wrapper__download-button"
-        ><mat-icon>get_app</mat-icon></button>
-      </div>
+    <div *ngIf="!fileUploadActive" class="files-manager-download-wrapper">
+        <div *ngIf="filesToDownload !== null" class="files-manager-download-wrapper__container">
+            <div class="files-manager-download-wrapper__item" *ngFor="let file of filesToDownload">
+                <p class="files-manager-download-wrapper__name">{{ file.fileName }}</p>
+                <p class="files-manager-download-wrapper__size">{{ file.size }}</p>
+                <button class="files-manager-download-wrapper__download-button">
+                    <mat-icon>get_app</mat-icon>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

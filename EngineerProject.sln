@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EngineerProject.Mobile", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineerProject.Mobile.Android", "EngineerProject.Mobile.Android\EngineerProject.Mobile.Android.csproj", "{C833B12A-574F-4C38-8DB7-172C24601959}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineerProject.Commons", "EngineerProject.Commons\EngineerProject.Commons.csproj", "{63D5A1E1-2D03-4EA7-AC32-71353469499E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EngineerProject.Commons", "EngineerProject.Commons\EngineerProject.Commons.csproj", "{63D5A1E1-2D03-4EA7-AC32-71353469499E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

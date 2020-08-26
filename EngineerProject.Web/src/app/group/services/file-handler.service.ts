@@ -9,7 +9,6 @@ import { CustomHttpParams } from 'src/app/core/utility/customHttpParams';
   providedIn: 'root'
 })
 export class FileHandlerService {
-
 constructor(private httpClient: HttpClient) { }
 
   sendFile(file: File, groupId: number) {

@@ -1,26 +1,26 @@
 <div>
-  <p>{{ data?.name }}</p>
-  <p>{{ data?.description }}</p>
-  <p>{{ data?.isPrivate }}</p>
-  <div>
-    <form [formGroup]="settingsForm">
-      <input name="name" formControlName="name" type="text">
-      <input name="description" formControlName="description" type="text">
-      <input name="isPrivate" formControlName="isPrivate" type="checkbox">
-      <button type="submit" (click)="changeSettings()">Zapisz</button>
-    </form>
-  </div>
-  <div>
-    <form [formGroup]="inviteForm">
-      <label>Identyfikator:</label>
-      <input name="identifier" formControlName="identifier" type="text">
-      <button type="submit" (click)="inviteUser()">Zaproś</button>
-    </form>
-  </div>
-  <div *ngFor="let candidate of data?.candidates">
-    <p>{{ candidate.userId }}</p>
-    <p>{{ candidate.userLogin }}</p>
-    <button (click)="acceptCandidate(candidate.userId)">Akceptuj</button>
-    <button (click)="rejectCandidate(candidate.userId)">Odrzuć</button>
-  </div>
+    <p>{{ data?.name }}</p>
+    <p>{{ data?.description }}</p>
+    <p>{{ data?.isPrivate }}</p>
+    <div>
+        <form [formGroup]="settingsForm">
+            <input name="name" formControlName="name" type="text">
+            <input name="description" formControlName="description" type="text">
+            <input name="isPrivate" formControlName="isPrivate" type="checkbox">
+            <button type="submit" (click)="changeSettings()">Zapisz</button>
+        </form>
+    </div>
+    <div>
+        <form [formGroup]="inviteForm">
+            <label>Identyfikator:</label>
+            <input name="identifier" formControlName="identifier" type="text">
+            <button type="submit" (click)="inviteUser()">Zaproś</button>
+        </form>
+    </div>
+    <div *ngFor="let candidate of data?.candidates">
+        <p>{{ candidate.userId }}</p>
+        <p>{{ candidate.userLogin }}</p>
+        <button (click)="acceptCandidate(candidate.userId)">Akceptuj</button>
+        <button (click)="rejectCandidate(candidate.userId)">Odrzuć</button>
+    </div>
 </div>

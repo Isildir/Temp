@@ -7,7 +7,6 @@ import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-
   constructor(private http: HttpClient, private sharedData: SharedDataService) {
   }
 

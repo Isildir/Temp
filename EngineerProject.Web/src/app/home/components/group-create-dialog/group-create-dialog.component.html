@@ -1,23 +1,23 @@
 <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="form">
-  <h1 class="form__header">Tworzenie grupy</h1>
-  <fieldset>
-      <div class="form__form-field">
-          <label class="form__label">Nazwa:</label>
-          <input name="name" formControlName="name" type="text" class="form__input">
-      </div>
-      <div class="form__form-field">
-          <label class="form__label">Opis:</label>
-          <input name="description" formControlName="description" type="text" class="form__input">
-      </div>
-      <div class="form__form-field">
-          <label class="form__label">Czy grupa jest prywatna:</label>
-          <input name="isPrivate" formControlName="isPrivate" type="checkbox" class="form__input">
-      </div>
-      <div *ngIf="errors" class="errors__header">
-        <div *ngFor="let error of errors" [innerHTML]="error" class="errors__row"></div>
-      </div>
-      <div class="form__form-field form__button-field">
-          <button class="btn btn-primary form__button">Dodaj</button>
-      </div>
-  </fieldset>
+    <h1 class="form__header">Tworzenie grupy</h1>
+    <fieldset>
+        <div class="form__form-field">
+            <label class="form__label">Nazwa:</label>
+            <input name="name" formControlName="name" type="text" class="form__input">
+        </div>
+        <div class="form__form-field">
+            <label class="form__label">Opis:</label>
+            <input name="description" formControlName="description" type="text" class="form__input">
+        </div>
+        <div class="form__form-field">
+            <label class="form__label">Czy grupa jest prywatna:</label>
+            <input name="isPrivate" formControlName="isPrivate" type="checkbox" class="form__input">
+        </div>
+        <div *ngIf="errors" class="errors__header">
+            <div *ngFor="let error of errors" [innerHTML]="error" class="errors__row"></div>
+        </div>
+        <div class="form__form-field form__button-field">
+            <button class="btn btn-primary form__button">Dodaj</button>
+        </div>
+    </fieldset>
 </form>

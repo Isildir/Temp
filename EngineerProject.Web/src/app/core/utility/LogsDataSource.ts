@@ -6,7 +6,6 @@ import { FilteredTableModel } from '../models/LogTable';
 import { BaseDataSource } from './BaseDataSource';
 
 export class LogsDataSource extends BaseDataSource<Log> {
-
     constructor(private logsService: LogsDataService) {
         super();
     }

@@ -1,13 +1,13 @@
 <div>
-  <div *ngFor="let message of messages">
-    <p>{{ message.content }}</p>
-    <p>{{ message.dateAdded | date:'short' }}</p>
-    <p>{{ message.owner }}</p>
-  </div>
-  <div>
-    <form [formGroup]="messageForm">
-      <input name="content" formControlName="content" type="text">
-      <button type="submit" (click)="onSendMessage()">Wyślij</button>
-    </form>
-  </div>
+    <div *ngFor="let message of messages">
+        <p>{{ message.content }}</p>
+        <p>{{ message.dateAdded | date:'short' }}</p>
+        <p>{{ message.owner }}</p>
+    </div>
+    <div>
+        <form [formGroup]="messageForm">
+            <input name="content" formControlName="content" type="text">
+            <button type="submit" (click)="onSendMessage()">Wyślij</button>
+        </form>
+    </div>
 </div>

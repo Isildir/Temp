@@ -8,9 +8,7 @@ import { HomeGroupWrapper } from '../interfaces/HomeGroupWrapper';
   providedIn: 'root'
 })
 export class HomeService {
-
   constructor(private http: HttpClient) {
-
   }
 
   getUserGroups() {

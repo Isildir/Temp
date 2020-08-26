@@ -23,14 +23,14 @@
     border-left: 5px solid #19cc89;
 }
 
-.login-panel__form fieldset {
-    border: none;
-    padding: 0;
-}
+    .login-panel__form fieldset {
+        border: none;
+        padding: 0;
+    }
 
-.login-panel__form a {
-    padding-right: 5px;
-}
+    .login-panel__form a {
+        padding-right: 5px;
+    }
 
 .login-panel__field {
     margin: 40px 0;
@@ -59,10 +59,10 @@
     float: right;
 }
 
-.login-panel__button:hover {
-    cursor: pointer;
-    background: #10b577;
-}
+    .login-panel__button:hover {
+        cursor: pointer;
+        background: #10b577;
+    }
 
 .forgot-password__link {
     opacity: 0.6;
