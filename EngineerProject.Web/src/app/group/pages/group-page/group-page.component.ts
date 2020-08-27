@@ -1,3 +1,4 @@
+import { WindowScrollService } from './../../../shared/services/window-scroll.service';
 import { FilesManagerComponent } from './../../components/files-manager/files-manager.component';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
@@ -17,10 +18,14 @@ import { GroupDetailsDialogComponent } from '../../components/group-details-dial
 })
 export class GroupPageComponent implements OnInit, AfterViewInit {
   public details: GroupDetails;
-  public posts: Post[];
+  public posts = Array<Post>();
   public postForm: FormGroup;
 
   private groupId: number;
+  private postsLoaded = 0;
+  private pageSize = 10;
+  private dataLoading = false;
+  private dataEndReached = false;
 
   @ViewChild(ChatComponent) chat: ChatComponent;
   @ViewChild(FilesManagerComponent) files: FilesManagerComponent;
@@ -30,7 +35,13 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private groupService: GroupService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private scrollService: WindowScrollService) {
+      scrollService.contentScrolledPercentage.subscribe(value => {
+        if (!this.dataEndReached && !this.dataLoading && value >= 0.9) {
+          this.loadPosts();
+        }
+      });
     }
 
   ngOnInit() {
@@ -40,7 +51,7 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
 
     this.activatedRoute.params.subscribe(params => {
       this.groupId = +params.id;
-      this.reloadPosts();
+      this.loadPosts();
       this.loadGroupDetails();
     });
   }
@@ -54,8 +65,18 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
     this.groupService.getDetails(this.groupId).subscribe(data => this.details = data);
   }
 
-  reloadPosts() {
-    this.groupService.getPosts(this.groupId).subscribe(data => this.posts = data);
+  loadPosts() {
+    this.dataLoading = true;
+    this.groupService.getPosts(this.groupId, this.pageSize, Math.floor(this.postsLoaded / 10) + 1).subscribe(data => {
+      this.posts.push(...data);
+      this.postsLoaded += data.length;
+
+      if (data.length < this.pageSize) {
+        this.dataEndReached = true;
+      }
+
+      this.dataLoading = false;
+    });
   }
 
   parentSnackBar(value: string) {
@@ -74,7 +95,9 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
 
     this.groupService.addPost(this.groupId, content)
       .subscribe(() => {
-        this.reloadPosts();
+        this.posts = [];
+        this.postsLoaded = 0;
+        this.loadPosts();
         this.snackBar.open('', 'Ok', { duration: 5000 });
       },
       error => this.snackBar.open(error, 'Ok', { duration: 30000 }));

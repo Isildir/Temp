@@ -12,8 +12,9 @@ import { Message } from '../interfaces/Message';
 export class GroupService {
   constructor(private httpClient: HttpClient) { }
 
-  getPosts(id: number) {
-    const url = `${environment.apiUrl}posts/get?groupId=${id}&page=1&pageSize=10`;
+  getPosts(id: number, pageSize: number, page: number) {
+    console.log(page, pageSize);
+    const url = `${environment.apiUrl}posts/get?groupId=${id}&page=${page}&pageSize=${pageSize}`;
 
     return this.httpClient.get<Post[]>(url);
   }
