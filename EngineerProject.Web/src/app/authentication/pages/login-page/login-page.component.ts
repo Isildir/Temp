@@ -57,15 +57,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    const identifier = this.formBuilder.getValue(this.loginForm, 'identifier');
-    const login = this.formBuilder.getValue(this.loginForm, 'login');
-    const email = this.formBuilder.getValue(this.loginForm, 'email');
-    const password = this.formBuilder.getValue(this.loginForm, 'password');
-    const confirmedPassword = this.formBuilder.getValue(this.loginForm, 'confirmedPassword');
+    const values = this.formBuilder.getValues(this.loginForm, ['identifier', 'login', 'email', 'password', 'confirmedPassword']);
 
     switch (this.loginMode) {
       case LoginMode.Recovery:
-        this.authenticationService.sendPasswordRecovery(identifier)
+        this.authenticationService.sendPasswordRecovery(values.identifier)
           .subscribe(() => {
             this.onReturnModeChange();
             this.snackBar.open('Email z nowym hasłem został wysłany', 'Ok', { duration: 5000 });
@@ -73,12 +69,12 @@ export class LoginPageComponent implements OnInit {
           error => this.snackBar.open(error, 'Ok', { duration: 30000 }));
         break;
       case LoginMode.Register:
-        if (password !== confirmedPassword) {
+        if (values.password !== values.confirmedPassword) {
           this.snackBar.open('Podane hasła różnią się', 'Ok', { duration: 10000 });
           break;
         }
 
-        this.authenticationService.register(login, email, password)
+        this.authenticationService.register(values.login, values.email, values.password)
           .subscribe(() => {
             this.onReturnModeChange();
             this.snackBar.open('Rejestracja się powiodła, zaloguj się', 'Ok', { duration: 5000 });
@@ -86,7 +82,7 @@ export class LoginPageComponent implements OnInit {
           error => this.snackBar.open(error, 'Ok', { duration: 30000 }));
         break;
       case LoginMode.Login:
-        this.authenticationService.login(identifier, password)
+        this.authenticationService.login(values.identifier, values.password)
           .subscribe(() => {
             this.router.navigate([this.returnUrl]);
           },

@@ -14,6 +14,8 @@ import { GroupCreateDialogComponent } from './components/group-create-dialog/gro
    imports: [
       HomeRoutingModule,
       SharedModule
+   ], entryComponents: [
+      GroupCreateDialogComponent
    ]
 })
 export class HomeModule { }

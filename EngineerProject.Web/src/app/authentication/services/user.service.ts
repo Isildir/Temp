@@ -19,7 +19,7 @@ export class UserService {
             login: user.data.login,
             token: user.data.token
           };
-console.log(newUser);
+
           localStorage.setItem('currentUser', JSON.stringify(newUser));
           this.sharedData.userSubject.next(newUser);
           return newUser;

@@ -6,7 +6,7 @@ import { GenericField } from '../interfaces/GenericField';
   providedIn: 'root'
 })
 export class GenericFormBuilderService {
-  createForm(fields: GenericField[]) {
+  public createForm(fields: GenericField[]) {
     const form: any = {};
 
     fields.forEach(value => {
@@ -20,7 +20,19 @@ export class GenericFormBuilderService {
     return new FormGroup(form);
   }
 
-  getValue(form: FormGroup, fieldName: string) {
+  public setValue(form: FormGroup, fieldName: string, value: any) {
+    form.controls[fieldName].setValue(value);
+  }
+
+  public getValue(form: FormGroup, fieldName: string) {
     return form.controls[fieldName].value;
+  }
+
+  public getValues(form: FormGroup, fieldNames: string[]) {
+    const response: any = {};
+
+    fieldNames.forEach(value => form[value] = form.controls[value].value);
+
+    return response;
   }
 }

@@ -1,5 +1,5 @@
 export interface GenericField {
     name: string;
-    value?: string;
+    value?: any;
     isRequired?: boolean;
 }

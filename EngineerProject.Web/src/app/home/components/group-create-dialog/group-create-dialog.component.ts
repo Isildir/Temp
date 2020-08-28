@@ -29,11 +29,9 @@ export class GroupCreateDialogComponent implements OnInit {
   onSubmit() {
     this.errors = [];
 
-    const name = this.formBuilder.getValue(this.groupForm, 'name');
-    const description = this.formBuilder.getValue(this.groupForm, 'description');
-    const isPrivate = this.formBuilder.getValue(this.groupForm, 'isPrivate');
+    const values = this.formBuilder.getValues(this.groupForm, ['name', 'description', 'isPrivate']);
 
-    if (name.length < 4 || name.length > 50) {
+    if (values.name.length < 4 || values.name.length > 50) {
       this.errors.push('Nazwa musi zawierać 4-50 znaków');
     }
 
@@ -42,7 +40,7 @@ export class GroupCreateDialogComponent implements OnInit {
     }
 
     this.homeService
-    .createGroup(name, description, isPrivate)
+    .createGroup(name, values.description, values.isPrivate)
     .subscribe(
       () => this.thisDialogRef.close('Grupa została dodana'),
       error => this.errors.push(error)

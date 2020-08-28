@@ -49,17 +49,13 @@ export class PasswordRecoveryPageComponent implements OnInit {
   onSubmit() {
     this.errors = [];
 
-    const identifier = this.formBuilder.getValue(this.passwordRecoveryForm, 'identifier');
-    const password = this.formBuilder.getValue(this.passwordRecoveryForm, 'password');
-    const confirmedPassword = this.formBuilder.getValue(this.passwordRecoveryForm, 'confirmedPassword');
+    const values = this.formBuilder.getValues(this.passwordRecoveryForm, ['identifier', 'password', 'confirmedPassword']);
 
-    this.errors = [];
-
-    if (!this.sharedData.passwordRegex.test(password) || !this.sharedData.passwordRegex.test(confirmedPassword)) {
+    if (!this.sharedData.passwordRegex.test(values.password) || !this.sharedData.passwordRegex.test(values.confirmedPassword)) {
       this.errors.push(this.sharedData.passwordRequirementsError);
     }
 
-    if (password !== confirmedPassword) {
+    if (values.password !== values.confirmedPassword) {
       this.errors.push(this.sharedData.differentPasswordError);
     }
 
@@ -67,7 +63,7 @@ export class PasswordRecoveryPageComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.usePasswordRecovery(identifier, password, this.recoveryCode)
+    this.authenticationService.usePasswordRecovery(values.identifier, values.password, this.recoveryCode)
     .subscribe(
       () => {
         this.router.navigate(['/authentication/login']);

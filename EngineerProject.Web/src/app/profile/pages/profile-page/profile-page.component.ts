@@ -38,17 +38,15 @@ export class ProfilePageComponent implements OnInit {
   }
 
   onPasswordChange() {
-    const password = this.formBuilder.getValue(this.passwordChangeForm, 'password');
-    const confirmedPassword = this.formBuilder.getValue(this.passwordChangeForm, 'confirmedPassword');
-    const oldPassword = this.formBuilder.getValue(this.passwordChangeForm, 'oldPassword');
+    const values = this.formBuilder.getValues(this.passwordChangeForm, ['password', 'confirmedPassword', 'oldPassword']);
 
     this.errors = [];
 
-    if (!this.sharedData.passwordRegex.test(password) || !this.sharedData.passwordRegex.test(confirmedPassword)) {
+    if (!this.sharedData.passwordRegex.test(values.password) || !this.sharedData.passwordRegex.test(values.confirmedPassword)) {
       this.errors.push(this.sharedData.passwordRequirementsError);
     }
 
-    if (password !== confirmedPassword) {
+    if (values.password !== values.confirmedPassword) {
       this.errors.push(this.sharedData.differentPasswordError);
     }
 
@@ -56,7 +54,7 @@ export class ProfilePageComponent implements OnInit {
       return;
     }
 
-    this.userService.changePassword(oldPassword, password)
+    this.userService.changePassword(values.oldPassword, values.password)
     .subscribe(() => {
         this.passwordChangeForm.reset();
         this.snackBar.open('Hasło zostało zmienione', 'Ok', { duration: 5000 });

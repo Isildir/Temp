@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Post } from '../../interfaces/Post';
 import { GroupService } from '../../services/group.service';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-post-tile',
@@ -19,20 +20,20 @@ export class PostTileComponent implements OnInit {
 
   constructor(
     private groupService: GroupService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: GenericFormBuilderService) { }
 
   ngOnInit() {
-    this.commentForm = this.formBuilder.group({
-      content: ['', new RequiredValidator()]
-    });
+    this.commentForm = this.formBuilder.createForm([
+      { name: 'content', isRequired: true }
+    ]);
 
-    this.modifyPostForm = this.formBuilder.group({
-      content: [this.data.content, new RequiredValidator()]
-    });
+    this.modifyPostForm = this.formBuilder.createForm([
+      { name: 'content', isRequired: true, value: this.data.content }
+    ]);
   }
 
   addComment() {
-    const content = this.commentForm.controls.content.value;
+    const content = this.formBuilder.getValue(this.commentForm, 'content');
 
     this.groupService.addComment(this.data.id, content)
       .subscribe(
@@ -50,7 +51,7 @@ export class PostTileComponent implements OnInit {
   }
 
   modifyPost() {
-    const content = this.modifyPostForm.controls.content.value;
+    const content = this.formBuilder.getValue(this.modifyPostForm, 'content');
 
     this.groupService.modifyPost(this.data.id, content)
       .subscribe(response => {

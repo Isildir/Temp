@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, RequiredValidator } from '@angular/forms';
 import { GroupAdminDetails } from '../../interfaces/GroupAdminDetails';
 import { GroupService } from '../../services/group.service';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-group-details-dialog',
@@ -20,23 +21,27 @@ export class GroupDetailsDialogComponent implements OnInit {
     public thisDialogRef: MatDialogRef<GroupDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public values: any,
     private groupService: GroupService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: GenericFormBuilderService) {
       this.groupId = values.groupId;
     }
 
   ngOnInit() {
-    this.inviteForm = this.formBuilder.group({
-      identifier: ['', new RequiredValidator()]
-    });
+    this.inviteForm = this.formBuilder.createForm([
+      { name: 'identifier', isRequired: true }
+    ]);
+
+    this.settingsForm = this.formBuilder.createForm([
+      { name: 'name', isRequired: true },
+      { name: 'description' },
+      { name: 'isPrivate' },
+    ]);
 
     this.groupService.getAdminGroupDetails(this.groupId).subscribe(data => {
       this.data = data.data;
 
-      this.settingsForm = this.formBuilder.group({
-        name: [data.data.name, new RequiredValidator()],
-        description: [data.data.description, new RequiredValidator()],
-        isPrivate: [data.data.isPrivate]
-      });
+      this.formBuilder.setValue(this.settingsForm, 'name', data.data.name);
+      this.formBuilder.setValue(this.settingsForm, 'description', data.data.description);
+      this.formBuilder.setValue(this.settingsForm, 'isPrivate', data.data.isPrivate);
     });
   }
 
@@ -53,7 +58,7 @@ export class GroupDetailsDialogComponent implements OnInit {
   }
 
   public inviteUser() {
-    const identifier = this.inviteForm.controls.identifier.value;
+    const identifier = this.formBuilder.getValue(this.inviteForm, 'identifier');
 
     this.groupService.inviteUser(this.groupId, identifier).subscribe(() => this.inviteForm.controls.identifier.setValue(''));
   }
