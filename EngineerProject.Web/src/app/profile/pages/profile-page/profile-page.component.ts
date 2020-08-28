@@ -8,7 +8,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['../../../shared/styles/styles-forms.css', '../../../shared/styles/styles.css', './profile-page.component.css']
+  styleUrls: ['../../../shared/styles/styles-forms.sass', '../../../shared/styles/styles.sass', './profile-page.component.sass']
 })
 export class ProfilePageComponent implements OnInit {
   public userData: UserProfileData;

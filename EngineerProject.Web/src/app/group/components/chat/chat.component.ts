@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, RequiredValidator } from '@angular/forms';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.sass']
 })
 export class ChatComponent implements OnInit {
   public messages = [] as Message[];

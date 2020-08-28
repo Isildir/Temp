@@ -6,7 +6,7 @@ import { GroupService } from '../../services/group.service';
 @Component({
   selector: 'app-post-tile',
   templateUrl: './post-tile.component.html',
-  styleUrls: ['./post-tile.component.css']
+  styleUrls: ['./post-tile.component.sass']
 })
 export class PostTileComponent implements OnInit {
   @Input() data: Post;

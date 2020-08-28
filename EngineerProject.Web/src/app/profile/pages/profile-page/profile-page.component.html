@@ -2,7 +2,7 @@
     <div class="profile-password-change">
         <form [formGroup]="passwordChangeForm" (ngSubmit)="onPasswordChange()" class="form">
             <h3 class="form__header">Zmiana hasła</h3>
-            <fieldset>
+            <fieldset class="profile__fieldset">
                 <div class="form__form-field">
                     <label class="form__label">Stare hasło:</label>
                     <input name="oldPassword" formControlName="oldPassword" type="password" class="form__input">
@@ -27,8 +27,8 @@
     <div class="profile-settings">
         <h3 class="profile-settings__header">Pozostałe ustawienia</h3>
         <div class="profile-settings__row">
+            <mat-checkbox [checked]="userData?.receiveNotifications" (click)="changeNotificationSettings()" class="profile-settings__checkbox"></mat-checkbox>
             <p>Chce otrzymywać powiadomienia na adres e-mail</p>
-            <mat-checkbox [checked]="userData?.receiveNotifications" (click)="changeNotificationSettings()"></mat-checkbox>
         </div>
     </div>
 </div>

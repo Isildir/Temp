@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.sass']
 })
 export class LoginPageComponent implements OnInit {
   public LoginMode = LoginMode;

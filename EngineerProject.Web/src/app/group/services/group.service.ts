@@ -5,17 +5,18 @@ import { Post } from '../interfaces/Post';
 import { GroupDetails } from '../interfaces/GroupDetails';
 import { GroupAdminDetails } from '../interfaces/GroupAdminDetails';
 import { Message } from '../interfaces/Message';
+import { ApiServiceHandlerService } from 'src/app/core/services/api-service-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private t: ApiServiceHandlerService) { }
 
   getPosts(id: number, pageSize: number, page: number) {
-    console.log(page, pageSize);
     const url = `${environment.apiUrl}posts/get?groupId=${id}&page=${page}&pageSize=${pageSize}`;
 
+    this.t.get(url).subscribe(result => console.log(result));
     return this.httpClient.get<Post[]>(url);
   }
 

@@ -10,11 +10,12 @@ import { Post } from '../../interfaces/Post';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { GroupService } from '../../services/group.service';
 import { GroupDetailsDialogComponent } from '../../components/group-details-dialog/group-details-dialog.component';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-group-page',
   templateUrl: './group-page.component.html',
-  styleUrls: ['./group-page.component.css']
+  styleUrls: ['./group-page.component.sass']
 })
 export class GroupPageComponent implements OnInit, AfterViewInit {
   public details: GroupDetails;
@@ -31,12 +32,12 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
   @ViewChild(FilesManagerComponent) files: FilesManagerComponent;
 
   constructor(
-    private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private groupService: GroupService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private scrollService: WindowScrollService) {
+    private formBuilder: GenericFormBuilderService,
+    scrollService: WindowScrollService) {
       scrollService.contentScrolledPercentage.subscribe(value => {
         if (!this.dataEndReached && !this.dataLoading && value >= 0.9) {
           this.loadPosts();
@@ -45,9 +46,7 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
     }
 
   ngOnInit() {
-    this.postForm = this.formBuilder.group({
-      content: ['', new RequiredValidator()]
-    });
+    this.postForm = this.formBuilder.createForm([{ name: 'content', isRequired: true }]);
 
     this.activatedRoute.params.subscribe(params => {
       this.groupId = +params.id;
@@ -91,7 +90,7 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
   }
 
   addPost() {
-    const content = this.postForm.controls.content.value;
+    const content = this.formBuilder.getValue(this.postForm, 'content');
 
     this.groupService.addPost(this.groupId, content)
       .subscribe(() => {

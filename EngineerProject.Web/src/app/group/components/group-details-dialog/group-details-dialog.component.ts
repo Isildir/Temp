@@ -7,7 +7,7 @@ import { GroupService } from '../../services/group.service';
 @Component({
   selector: 'app-group-details-dialog',
   templateUrl: './group-details-dialog.component.html',
-  styleUrls: ['./group-details-dialog.component.css']
+  styleUrls: ['./group-details-dialog.component.sass']
 })
 export class GroupDetailsDialogComponent implements OnInit {
   public data: GroupAdminDetails;

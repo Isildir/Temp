@@ -6,7 +6,7 @@ import { HomeService } from '../../services/home.service';
 @Component({
   selector: 'app-group-create-dialog',
   templateUrl: './group-create-dialog.component.html',
-  styleUrls: ['./group-create-dialog.component.css']
+  styleUrls: ['./group-create-dialog.component.sass']
 })
 export class GroupCreateDialogComponent implements OnInit {
   public groupForm: FormGroup;

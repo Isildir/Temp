@@ -6,7 +6,7 @@ import { FileHandlerService } from 'src/app/group/services/file-handler.service'
 @Component({
   selector: 'app-files-manager',
   templateUrl: './files-manager.component.html',
-  styleUrls: ['./files-manager.component.css']
+  styleUrls: ['./files-manager.component.sass']
 })
 export class FilesManagerComponent implements OnInit {
   @Output() parentSnackBar: EventEmitter<string> = new EventEmitter();

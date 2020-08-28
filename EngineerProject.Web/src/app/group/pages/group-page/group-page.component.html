@@ -20,8 +20,10 @@
     <div class="group-main-page-right-menu__files">
         <app-files-manager (parentSnackBar)="parentSnackBar($event)"></app-files-manager>
     </div>
-    <div *ngFor="let post of posts">
-        <app-post-tile [data]="post" (reloadPosts)="loadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
+    <div class="post-list">
+        <div *ngFor="let post of posts" class="post">
+            <app-post-tile [data]="post" (reloadPosts)="loadPosts()" (parentSnackBar)="parentSnackBar($event)"></app-post-tile>
+        </div>
     </div>
     <app-chat></app-chat>
 </div>
