@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { HomeService } from '../../services/home.service';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-group-create-dialog',
@@ -14,23 +15,23 @@ export class GroupCreateDialogComponent implements OnInit {
 
   constructor(
     public thisDialogRef: MatDialogRef<GroupCreateDialogComponent>,
-    private formBuilder: FormBuilder,
+    private formBuilder: GenericFormBuilderService,
     private homeService: HomeService) { }
 
   ngOnInit() {
-    this.groupForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: [''],
-      isPrivate: [false]
-    });
+    this.groupForm = this.formBuilder.createForm([
+      { name: 'name', isRequired: true },
+      { name: 'description' },
+      { name: 'isPrivate' },
+    ]);
   }
 
   onSubmit() {
     this.errors = [];
 
-    const name = this.groupForm.controls.name.value;
-    const description = this.groupForm.controls.description.value;
-    const isPrivate = this.groupForm.controls.isPrivate.value;
+    const name = this.formBuilder.getValue(this.groupForm, 'name');
+    const description = this.formBuilder.getValue(this.groupForm, 'description');
+    const isPrivate = this.formBuilder.getValue(this.groupForm, 'isPrivate');
 
     if (name.length < 4 || name.length > 50) {
       this.errors.push('Nazwa musi zawierać 4-50 znaków');

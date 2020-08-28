@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, debounceTime, switchMap } from 'rxjs/operators';
+import { startWith, debounceTime, switchMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupTile } from 'src/app/home/interfaces/GroupTile';
 import { GroupCreateDialogComponent } from '../../components/group-create-dialog/group-create-dialog.component';
+import { GenericRequestResult } from 'src/app/shared/interfaces/GenericRequestResult';
 
 @Component({
   selector: 'app-home-page',
@@ -32,7 +33,7 @@ export class HomePageComponent implements OnInit {
         .pipe(
           startWith(''),
           debounceTime(200),
-          switchMap(filter => this.homeService.getGroups(filter || ''))
+          switchMap(filter => this.homeService.getGroups(filter || '').pipe(map(data => data.data)))
         );
 
       this.reloadGroupTiles();
@@ -43,9 +44,9 @@ export class HomePageComponent implements OnInit {
 
   reloadGroupTiles() {
     this.homeService.getUserGroups().subscribe(data => {
-      this.participantGroups = data.participant;
-      this.invitedGroups = data.invited;
-      this.awaitingGroups = data.waiting;
+      this.participantGroups = data.data.participant;
+      this.invitedGroups = data.data.invited;
+      this.awaitingGroups = data.data.waiting;
     });
   }
 

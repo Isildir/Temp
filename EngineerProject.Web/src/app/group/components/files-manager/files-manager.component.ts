@@ -25,7 +25,7 @@ export class FilesManagerComponent implements OnInit {
   public setComponentData(groupId: number) {
     this.groupId = groupId;
     this.fileHandlerService.getFiles(this.groupId).subscribe(
-      data => this.filesToDownload = data,
+      data => this.filesToDownload = data.data,
       error => console.log(error));
   }
 
@@ -56,10 +56,10 @@ export class FilesManagerComponent implements OnInit {
     console.log(this.groupId);
     for (const file of files) {
       this.fileHandlerService.sendFile(file, this.groupId).subscribe(result => {
-        result.uploaded = true;
-        result.size = file.size;
+        result.data.uploaded = true;
+        result.data.size = file.size;
 
-        this.addedFiles.push(result);
+        this.addedFiles.push(result.data);
       }, error => {
         this.parentSnackBar.emit(error);
 

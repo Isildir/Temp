@@ -61,16 +61,16 @@ export class GroupPageComponent implements OnInit, AfterViewInit {
   }
 
   loadGroupDetails() {
-    this.groupService.getDetails(this.groupId).subscribe(data => this.details = data);
+    this.groupService.getDetails(this.groupId).subscribe(data => this.details = data.data);
   }
 
   loadPosts() {
     this.dataLoading = true;
     this.groupService.getPosts(this.groupId, this.pageSize, Math.floor(this.postsLoaded / 10) + 1).subscribe(data => {
-      this.posts.push(...data);
-      this.postsLoaded += data.length;
+      this.posts.push(...data.data);
+      this.postsLoaded += data.data.length;
 
-      if (data.length < this.pageSize) {
+      if (data.data.length < this.pageSize) {
         this.dataEndReached = true;
       }
 

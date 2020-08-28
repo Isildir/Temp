@@ -1,15 +1,15 @@
 import { NewFile } from './../interfaces/NewFile';
 import { GetFile } from './../interfaces/GetFile';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CustomHttpParams } from 'src/app/core/utility/customHttpParams';
+import { HttpRequestWrapperService } from 'src/app/core/services/http-request-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileHandlerService {
-constructor(private httpClient: HttpClient) { }
+constructor(private httpRequestWrapper: HttpRequestWrapperService) { }
 
   sendFile(file: File, groupId: number) {
     const formData = new FormData();
@@ -17,18 +17,18 @@ constructor(private httpClient: HttpClient) { }
 
     const url = `${environment.apiUrl}files/UploadFile?groupId=${groupId}`;
 
-    return this.httpClient.post<NewFile>(url, formData, { params: new CustomHttpParams(true) });
+    return this.httpRequestWrapper.post<NewFile>(url, formData, { params: new CustomHttpParams(true) });
   }
 
   getFiles(groupId: number) {
     const url = `${environment.apiUrl}files/GetFiles?groupId=${groupId}&pageSize=5&page=1&filter=''`;
 
-    return this.httpClient.get<GetFile[]>(url);
+    return this.httpRequestWrapper.get<GetFile[]>(url);
   }
 
   deleteFile(id: number) {
     const url = `${environment.apiUrl}files/DeleteFile?id=${id}`;
 
-    return this.httpClient.delete<any>(url);
+    return this.httpRequestWrapper.deleteBoolean(url);
   }
 }

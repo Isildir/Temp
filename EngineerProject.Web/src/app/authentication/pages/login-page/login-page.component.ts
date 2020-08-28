@@ -2,9 +2,10 @@ import { SharedDataService } from '../../../shared/services/shared-data.service'
 import { LoginMode } from '../../enums/LoginMode.enum';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,7 +20,7 @@ export class LoginPageComponent implements OnInit {
   public loginMode = LoginMode.Login;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: GenericFormBuilderService,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: UserService,
@@ -32,13 +33,13 @@ export class LoginPageComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      identifier: [''],
-      login: [''],
-      email: [''],
-      password: [''],
-      confirmedPassword: ['']
-    });
+    this.loginForm = this.formBuilder.createForm([
+      { name: 'identifier' },
+      { name: 'login' },
+      { name: 'email' },
+      { name: 'password' },
+      { name: 'confirmedPassword' }
+    ]);
 
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
@@ -56,11 +57,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    const identifier = this.loginForm.controls.identifier.value;
-    const login = this.loginForm.controls.login.value;
-    const email = this.loginForm.controls.email.value;
-    const password = this.loginForm.controls.password.value;
-    const confirmedPassword = this.loginForm.controls.confirmedPassword.value;
+    const identifier = this.formBuilder.getValue(this.loginForm, 'identifier');
+    const login = this.formBuilder.getValue(this.loginForm, 'login');
+    const email = this.formBuilder.getValue(this.loginForm, 'email');
+    const password = this.formBuilder.getValue(this.loginForm, 'password');
+    const confirmedPassword = this.formBuilder.getValue(this.loginForm, 'confirmedPassword');
 
     switch (this.loginMode) {
       case LoginMode.Recovery:

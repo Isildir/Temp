@@ -4,6 +4,7 @@ import { UserProfileData } from '../../interfaces/UserProfileData';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { GenericFormBuilderService } from 'src/app/shared/services/generic-form-builder.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -18,17 +19,17 @@ export class ProfilePageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder,
+    private formBuilder: GenericFormBuilderService,
     private sharedData: SharedDataService) { }
 
   ngOnInit() {
-    this.passwordChangeForm = this.formBuilder.group({
-      password: ['', Validators.required],
-      oldPassword: ['', Validators.required],
-      confirmedPassword: ['', Validators.required]
-    });
+    this.passwordChangeForm = this.formBuilder.createForm([
+      { name: 'password', isRequired: true },
+      { name: 'oldPassword', isRequired: true },
+      { name: 'confirmedPassword', isRequired: true },
+    ]);
 
-    this.userService.getProfile().subscribe(data => this.userData = data);
+    this.userService.getProfile().subscribe(data => this.userData = data.data);
   }
 
   changeNotificationSettings() {
@@ -37,9 +38,9 @@ export class ProfilePageComponent implements OnInit {
   }
 
   onPasswordChange() {
-    const password = this.passwordChangeForm.controls.password.value;
-    const confirmedPassword = this.passwordChangeForm.controls.confirmedPassword.value;
-    const oldPassword = this.passwordChangeForm.controls.oldPassword.value;
+    const password = this.formBuilder.getValue(this.passwordChangeForm, 'password');
+    const confirmedPassword = this.formBuilder.getValue(this.passwordChangeForm, 'confirmedPassword');
+    const oldPassword = this.formBuilder.getValue(this.passwordChangeForm, 'oldPassword');
 
     this.errors = [];
 

@@ -30,12 +30,12 @@ export class GroupDetailsDialogComponent implements OnInit {
     });
 
     this.groupService.getAdminGroupDetails(this.groupId).subscribe(data => {
-      this.data = data;
+      this.data = data.data;
 
       this.settingsForm = this.formBuilder.group({
-        name: [data.name, new RequiredValidator()],
-        description: [data.description, new RequiredValidator()],
-        isPrivate: [data.isPrivate]
+        name: [data.data.name, new RequiredValidator()],
+        description: [data.data.description, new RequiredValidator()],
+        isPrivate: [data.data.isPrivate]
       });
     });
   }

@@ -19,10 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
    imports: [
       AppRoutingModule,
       BrowserAnimationsModule,
-      SharedModule, BrowserModule,
-      ReactiveFormsModule,
+      SharedModule,
+      BrowserModule,
       HttpClientModule,
-      FormsModule,
    ],
    providers: [
       { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

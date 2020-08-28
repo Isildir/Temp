@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
   }
 
   public setComponentData(groupId: number) {
-    this.groupService.loadComments(groupId).subscribe(data => this.messages = data);
+    this.groupService.loadComments(groupId).subscribe(data => this.messages = data.data);
     this.signalRService.startConnection(groupId);
     this.signalRService.messageListener.subscribe(data => this.messages.push(data));
   }

@@ -36,7 +36,7 @@ export class PostTileComponent implements OnInit {
 
     this.groupService.addComment(this.data.id, content)
       .subscribe(
-        data => this.data.comments.push(data),
+        data => this.data.comments.push(data.data),
         () => this.parentSnackBar.emit('Wystąpił błąd'));
   }
 
@@ -55,7 +55,7 @@ export class PostTileComponent implements OnInit {
     this.groupService.modifyPost(this.data.id, content)
       .subscribe(response => {
         this.data.content = content;
-        this.data.editDate = response.editDate;
+        this.data.editDate = response.data.editDate;
         this.resetPostValues();
       },
       () => this.parentSnackBar.emit('Wystąpił błąd'));

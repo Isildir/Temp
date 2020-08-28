@@ -15,15 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { DatePipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
    imports: [
       CommonModule,
       ReactiveFormsModule,
-      HttpClientModule,
       FormsModule,
       MatFormFieldModule,
       MatAutocompleteModule,
@@ -45,7 +43,6 @@ import { DatePipe, CommonModule } from '@angular/common';
    exports: [
       CommonModule,
       ReactiveFormsModule,
-      HttpClientModule,
       FormsModule,
       MatFormFieldModule,
       MatAutocompleteModule,
