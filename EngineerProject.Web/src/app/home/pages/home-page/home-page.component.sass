@@ -1,17 +1,75 @@
 .group-select 
     display: flex
-    margin-left: 35%
-    margin-right: 35%
+    margin: 10px 20px
+    &__button
+        background: #1f4e62
+        color: white
+        padding: 10px
+        text-align: center
+        border: none
+        text-transform: uppercase
+        font-size: .7rem
+        font-weight: 500
+        width: max-content
+        margin-left: 20px
+        &-container
+            display: flex
+            align-items: center
+    &__item
+        border-bottom: 1px solid #eae5e5
+    &__div
+        display: flex
+        align-items: center
+        justify-content: space-between
 
 .example-form 
-    width: 90%
+    border: none
+    margin-top: 5px
+    border-radius: 5px
+    width: 100%
 
 .example-full-width 
     width: 100%
 
 .group-tile-wrapper 
     display: flex
-    justify-content: space-evenly
+    flex-direction: column
 
 .group-tile 
-    margin: 20px
+    margin: 10px 20px
+
+.awaited
+    width: 20%
+    padding: 30px
+    background: #1f4e62
+    &__header
+        margin: 10px 0
+        font-weight: 500
+        text-transform: uppercase
+        font-size: .8rem
+        color: white
+    &__name
+        margin: 0
+        padding: 10px
+        border: 1px solid rgba(255, 255, 255, .6)
+        color: white
+        opacity: .5
+        font-weight: 300
+        margin-bottom: 10px
+    &__button
+        padding: 5px 0
+        width: 50%
+        text-transform: uppercase
+        font-size: .7rem
+        
+.main-container
+    width: calc(100% - 80px)
+    background: white
+    margin: 40px
+    border-radius: 10px
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.45)
+    height: calc(100% - 130px)
+    overflow-y: scroll
+    &::-webkit-scrollbar 
+        width: 0px
+        background: transparent

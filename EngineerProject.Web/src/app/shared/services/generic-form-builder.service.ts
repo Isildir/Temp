@@ -31,7 +31,7 @@ export class GenericFormBuilderService {
   public getValues(form: FormGroup, fieldNames: string[]) {
     const response: any = {};
 
-    fieldNames.forEach(value => form[value] = form.controls[value].value);
+    fieldNames.forEach(value => response[value] = form.controls[value].value);
 
     return response;
   }

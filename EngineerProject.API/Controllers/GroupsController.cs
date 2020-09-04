@@ -17,12 +17,10 @@ namespace EngineerProject.API.Controllers
     public class GroupsController : Controller
     {
         private readonly EngineerContext context;
-        private IHubContext<ChatHub> chatHub;
 
-        public GroupsController(EngineerContext context, IHubContext<ChatHub> chatHub)
+        public GroupsController(EngineerContext context)
         {
             this.context = context;
-            this.chatHub = chatHub;
         }
 
         #region Interactions
@@ -71,7 +69,9 @@ namespace EngineerProject.API.Controllers
                     Value = new
                     {
                         a.GroupId,
-                        a.Group.Name
+                        a.Group.Name,
+                        a.Group.Description,
+                        a.Group.IsPrivate
                     }
                 }).ToList();
 
@@ -81,7 +81,9 @@ namespace EngineerProject.API.Controllers
             {
                 Id = a.Value.GroupId,
                 Name = a.Value.Name,
-                IsOwner = a.Relation == GroupRelation.Owner
+                IsOwner = a.Relation == GroupRelation.Owner,
+                IsPrivate = a.Value.IsPrivate,
+                Description = a.Value.Description
             }));
 
             result.Invited.AddRange(values.Where(a => a.Relation == GroupRelation.Invited).Select(a => new GroupTileDto

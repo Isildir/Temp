@@ -1,6 +1,28 @@
 div 
     padding: 20px
-    border-radius: 5px
-    border-color: lightgray
-    border-style: dotted
-    opacity: 0.5
+    border: 1px solid #eae5e5
+
+.group-tile
+    &__item
+        position: relative
+        &-name
+            font-size: 1rem
+            font-weight: 500
+            margin: 0
+    &__description
+        font-size: .8rem
+        opacity: .9
+        margin-top: 10px
+    &__type
+        position: absolute
+        bottom: 0
+        right: 0
+        margin-bottom: 0
+        padding: 10px
+        color: white
+        text-transform: uppercase
+        font-size: .7rem
+        &--public
+            background: #1f4e62
+        &--private
+            background: #770b0b

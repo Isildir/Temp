@@ -1,48 +1,50 @@
-<div style="display: flex;">
-    <div style="width: 80%">
-        <div class="group-select">
-            <form class="example-form">
-                <mat-form-field class="example-full-width">
-                    <input matInput
-                           placeholder="State"
-                           aria-label="State"
-                           [matAutocomplete]="auto"
-                           [formControl]="stateCtrl">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let state of filteredGroups | async" [value]="state.name">
-                            <span>{{state.name}}</span> |
-                            <small>Population: {{state.population}}</small>
-                            <button (click)="joinGroup(state.id)">Dołącz</button>
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            </form>
-            <div>
-                <button (click)="openClientCreationDialog()">
-                    Dodaj grupę
+<div class="container main-container">
+    <div style="display: flex;">
+        <div style="width: 80%">
+            <div class="group-select">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <input matInput
+                            placeholder="Grupa"
+                            [matAutocomplete]="auto"
+                            [formControl]="stateCtrl">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let state of filteredGroups | async" [value]="state.name" class="group-select__item">
+                                <div class="group-select__div">
+                                    <span class="group-select__span">{{state.name}}</span>
+                                    <button (click)="joinGroup(state.id)" class="group-select__button">Dołącz</button>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+                <div class="group-select__button-container">
+                    <button (click)="openClientCreationDialog()" class="group-select__button">
+                        Dodaj grupę
+                    </button>
+                </div>
+            </div>
+            <div class="group-tile-wrapper">
+                <div *ngFor="let group of participantGroups" class="group-tile">
+                    <app-group-tile [data]="group" (click)="onGroupSelect(group.id)"></app-group-tile>
+                </div>
+            </div>
+        </div>
+        <div class="awaited">
+            <p class="awaited__header">Oczekujące</p>
+            <div *ngFor="let group of awaitingGroups">
+                <p class="awaited__name">{{ group.name }}</p>
+            </div>
+            <p class="awaited__header">Zaproszenia</p>
+            <div *ngFor="let group of invitedGroups" class="awaited__name">
+                <p>{{ group.name }}</p>
+                <button (click)="resolveGroupInvite(group.id, true)" class="awaited__button">
+                    Przyjmij
+                </button>
+                <button (click)="resolveGroupInvite(group.id, false)" class="awaited__button">
+                    Odrzuć
                 </button>
             </div>
-        </div>
-        <div class="group-tile-wrapper">
-            <div *ngFor="let group of participantGroups" class="group-tile">
-                <app-group-tile [data]="group" (click)="onGroupSelect(group.id)"></app-group-tile>
-            </div>
-        </div>
-    </div>
-    <div style="border-style: double; float: right; width: 20%;">
-        <div *ngFor="let group of awaitingGroups">
-            <p>{{ group.id }}</p>
-            <p>{{ group.name }}</p>
-        </div>
-        <div *ngFor="let group of invitedGroups">
-            <p>{{ group.id }}</p>
-            <p>{{ group.name }}</p>
-            <button (click)="resolveGroupInvite(group.id, true)">
-                Przyjmij
-            </button>
-            <button (click)="resolveGroupInvite(group.id, false)">
-                Odrzuć
-            </button>
         </div>
     </div>
 </div>

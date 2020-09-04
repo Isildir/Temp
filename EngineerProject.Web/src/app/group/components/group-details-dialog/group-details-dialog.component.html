@@ -15,7 +15,6 @@
         </form>
     </div>
     <div *ngFor="let candidate of data?.candidates">
-        <p>{{ candidate.userId }}</p>
         <p>{{ candidate.userLogin }}</p>
         <button (click)="acceptCandidate(candidate.userId)">Akceptuj</button>
         <button (click)="rejectCandidate(candidate.userId)">Odrzuć</button>

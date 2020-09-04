@@ -1,36 +1,70 @@
-.form 
-    width: 90%
-    margin: 30px auto
-    &__fieldset 
-        border: none
-        padding: 0
+.form
+    &__header 
         margin: 0
-    &__header
-        font-size: 1.5rem
-        padding-left: 10px
-        border-left: 5px solid #19cc89
-        width: max-content
-    &__button 
-        border: none
-        padding: 10px 15px
-        text-transform: uppercase
-        background: #19cc89
-        color: white
-        float: right
-        margin: 10px
-    &__input 
-        margin: 0 10px
-        padding: 5px
-        border: 1px solid #e4dddd
-    &__label 
-        width: max-content
-    &__form-field 
+        font-family: Montserrat
+        font-size: 1.7rem
+        color: #876f9b
+        font-weight: 500
+    &__description
+        font-size: .8rem
+        opacity: .8
         margin: 10px 0
+    &__form 
+        background: white
+        padding: 40px
+        width: 25%
+        min-width: 400px
+        border-radius: 10px
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+        fieldset 
+            border: none
+            padding: 0
+        a 
+            padding-right: 5px
+    &__field 
+        margin: 20px 0
         display: flex
-        justify-content: space-between
-        align-items: center
-    &__button-field 
-        float: right
+        flex-direction: column
+    &__label 
+        margin-right: 10px
+        text-transform: uppercase
+        font-weight: 500
+        opacity: .9
+        font-size: .8rem
+    &__input 
+        background: rgba(72, 98, 123, .5)
+        border: none
+        margin-top: 5px
+        border-radius: 5px
+        padding: 10px
+    &__buttons
+        display: flex
+        justify-content: flex-end
+        margin-top: 30px
+    &__button 
+        background: #1f4e62
+        color: white
+        width: 50%
+        padding: 10px
+        text-align: center
+        border: none
+        margin: 0 2px
+        text-transform: uppercase
+        font-size: .8
+        font-weight: 500
+        &--link
+            display: block
+            background: none
+            border: 2px solid #1f4e62
+            color: #1f4e62
+        &.btn-primary
+            justify-self: flex-end
+        &:hover 
+            cursor: pointer
 
 .errors
     &__header

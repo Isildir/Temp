@@ -1,36 +1,39 @@
 <div>
-    <div class="login-panel__header-container">
-        <h1 class="login-panel__header">Logowanie</h1>
-    </div>
     <form [formGroup]="loginForm" class="login-panel__form">
+        <h1 *ngIf="loginMode == LoginMode.Register" class="login-panel__header">Rejestracja</h1>
+        <h1 *ngIf="loginMode == LoginMode.Login" class="login-panel__header">Logowanie</h1>
+        <h1 *ngIf="loginMode == LoginMode.Recovery" class="login-panel__header">Przypomnij hasło</h1>
+        <p *ngIf="loginMode !== LoginMode.Recovery" class="login-panel__description">Dołącz do naszej społeczności i ciesz się swobodą w każdym miejscu.</p>
         <fieldset>
             <div *ngIf="loginMode !== LoginMode.Register" class="form-field login-panel__field">
-                <label class="login-panel__label">Identyfikator:</label>
+                <label class="login-panel__label">Identyfikator</label>
                 <input name="identifier" formControlName="identifier" type="text" class="login-panel__input">
             </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
-                <label class="login-panel__label">Login:</label>
+                <label class="login-panel__label">Login</label>
                 <input name="login" formControlName="login" type="text" class="login-panel__input">
             </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
-                <label class="login-panel__label">Email:</label>
+                <label class="login-panel__label">Email</label>
                 <input name="email" formControlName="email" type="text" class="login-panel__input">
             </div>
             <div *ngIf="loginMode !== LoginMode.Recovery" class="form-field login-panel__field">
-                <label class="login-panel__label">Hasło:</label>
+                <label class="login-panel__label">Hasło</label>
                 <input name="password" formControlName="password" type="password" class="login-panel__input">
+                <a *ngIf="loginMode === LoginMode.Login" (click)="onPasswordRecoveryMode()" class="forgot-password__link">Przypomnij hasło</a>
             </div>
             <div *ngIf="loginMode === LoginMode.Register" class="form-field login-panel__field">
-                <label class="login-panel__label">Powtórz hasło:</label>
+                <label class="login-panel__label">Powtórz hasło</label>
                 <input name="confirmedPassword" formControlName="confirmedPassword" type="password" class="login-panel__input">
             </div>
         </fieldset>
-        <a *ngIf="loginMode === LoginMode.Login" (click)="onPasswordRecoveryMode()" class="forgot-password__link">Przypomnij hasło</a>
-        <a *ngIf="loginMode === LoginMode.Login" (click)="onRegisterModeChange()" class="forgot-password__link">Zarejestruj</a>
-        <a *ngIf="loginMode !== LoginMode.Login" (click)="onReturnModeChange()" class="forgot-password__link">Powrót</a>
-        <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary login-panel__button">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Zatwierdź
-        </button>
+        <div class="login-panel__buttons">
+            <a *ngIf="loginMode !== LoginMode.Login" (click)="onReturnModeChange()" class="login-panel__button login-panel__button--link">Powrót</a>
+            <a *ngIf="loginMode === LoginMode.Login" (click)="onRegisterModeChange()" class="login-panel__button login-panel__button--link">Zarejestruj</a>
+            <button type="submit" [disabled]="loading" (click)="onSubmit()" class="btn btn-primary login-panel__button">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Zatwierdź
+            </button>
+        </div>
     </form>
 </div>

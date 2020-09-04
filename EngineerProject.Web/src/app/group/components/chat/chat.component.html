@@ -1,13 +1,15 @@
-<div>
-    <div *ngFor="let message of messages">
-        <p>{{ message.content }}</p>
-        <p>{{ message.dateAdded | date:'short' }}</p>
-        <p>{{ message.owner }}</p>
+<div class="chat">
+    <div *ngFor="let message of messages" class="chat-item" [ngClass]="{'chat-item__aligned' : message.owner}">
+        <p class="chat-item__date">{{ message.dateAdded | date:'short' }}</p>
+        <p class="chat-item__text">{{ message.content }}</p>
+        <p class="chat-item__username">~ {{ message.owner }}</p>
     </div>
-    <div>
+    <div class="chat-item__new-field">
         <form [formGroup]="messageForm">
-            <input name="content" formControlName="content" type="text">
-            <button type="submit" (click)="onSendMessage()">Wyślij</button>
+            <input name="content" formControlName="content" type="text" class="chat-item__input" placeholder="Wpisz treść...">
+            <div class="chat-item__button-container">
+                <button type="submit" class="chat-item__button" (click)="onSendMessage()">Wyślij</button>
+            </div>
         </form>
     </div>
 </div>

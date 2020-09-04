@@ -1,4 +1,6 @@
-<div>
-    <p>{{ data.id }}</p>
-    <p>{{ data.name }}</p>
+<div class="group-tile__item">
+    <p class="group-tile__item-name">{{ data.name }}</p>
+    <p class="group-tile__description">{{ data.description }}</p>
+    <p *ngIf="data.isPrivate" class="group-tile__type group-tile__type--private">Grupa prywatna</p>
+    <p *ngIf="!data.isPrivate" class="group-tile__type group-tile__type--public">Grupa publiczna</p>
 </div>

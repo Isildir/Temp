@@ -3,4 +3,5 @@ export interface Comment {
     dateAdded: Date;
     id: number;
     isOwner: boolean;
+    owner: string;
 }

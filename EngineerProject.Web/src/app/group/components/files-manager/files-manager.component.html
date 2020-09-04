@@ -1,8 +1,8 @@
-<h2 class="files-manager-wrapper__header">Pliki (.pdf, .docx, .png, .jpeg):</h2>
+<p class="files-manager-wrapper__header">Pliki (.pdf, .docx, .png, .jpeg):</p>
 <div class="files-manager-wrapper">
     <div class="files-manager-wrapper__buttons">
-        <button mat-raised-button (click)="onFileUploadButtonClick()">Upload</button>
-        <button mat-raised-button (click)="onFileDownloadButtonClick()">Download</button>
+        <button mat-raised-button (click)="onFileUploadButtonClick()">Dodaj plik</button>
+        <button mat-raised-button (click)="onFileDownloadButtonClick()">Pobierz plik</button>
     </div>
     <div *ngIf="fileUploadActive"
          class="files-manager-upload-wrapper"
@@ -16,12 +16,12 @@
                class="files-manager-upload-wrapper__input" />
         <mat-icon class="files-manager-upload-wrapper__icon">add_circle_outline</mat-icon>
         <p class="files-manager-upload-wrapper__text">
-            Drag and drop file here
+            Przeciągnij plik tutaj
         </p>
         <p class="files-manager-upload-wrapper__text files-manager-upload-wrapper__text--margin">
-            or
+            albo
         </p>
-        <label for="fileDropRef" class="files-manager-upload-wrapper__button">Browse for file</label>
+        <label for="fileDropRef" class="files-manager-upload-wrapper__button">Wybierz plik</label>
         <div class="files-list">
             <div class="single-file" *ngFor="let file of addedFiles">
                 <div class="info">

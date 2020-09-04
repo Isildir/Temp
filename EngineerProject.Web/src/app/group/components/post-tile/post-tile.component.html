@@ -1,6 +1,6 @@
 <div class="post">
     <div>
-        <p class="post__date">Data dodania: {{ data.dateAdded | date:'short' }} | Data edycji: {{ data.editDate | date:'short' }}</p>
+        <p class="post__date">Data dodania: {{ data.dateAdded | date:'short' }} | Autor: {{ data.owner }} | Data edycji: {{ data.editDate | date:'short' }}</p>
         <form [formGroup]="modifyPostForm" class="post__form">
             <fieldset class="post__fieldset">
                 <p *ngIf="!isModified">{{ data.content }}</p>
@@ -9,13 +9,17 @@
             <button *ngIf="isModified" (click)="resetPostValues()" class="post__button post__button--line">Anuluj</button>
             <button *ngIf="isModified" type="submit" [disabled]="!modifyPostForm.valid" (click)="modifyPost()" class="post__button post__button--background">Zatwierdź</button>
         </form>
-        <button *ngIf="data.isOwner" (click)="deletePost()" class="post__button">Usuń post</button>
-        <button *ngIf="data.isOwner && !isModified" (click)="setModifyFlag()" class="post__button">Edytuj</button>
+        <div class="post__button-container">
+            <button *ngIf="data.isOwner && !isModified" (click)="setModifyFlag()" class="post__button post__button--border" >Edytuj</button>
+            <button *ngIf="data.isOwner" (click)="deletePost()" class="post__button">Usuń post</button>
+        </div>
     </div>
     <div *ngFor="let comment of data.comments" class="post__comment">
-        <p class="post__date">Data dodania {{ comment.dateAdded | date:'short' }}</p>
+        <p class="post__date">Data dodania {{ comment.dateAdded | date:'short' }} | Autor: {{ comment.owner }}</p>
         <p>{{ comment.content }}</p>
-        <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)" class="post__button">Usuń komentarz</button>
+        <div *ngIf="comment.isOwner" class="post__button-container">
+            <button *ngIf="comment.isOwner" (click)="deleteComment(comment.id)" class="post__button">Usuń komentarz</button>
+        </div>
     </div>
     <div>
         <form [formGroup]="commentForm">
@@ -24,9 +28,11 @@
                     <input name="content" formControlName="content" type="text" class="post__input" placeholder="Napisz komentarz...">
                 </div>
             </fieldset>
-            <button type="submit" [disabled]="!commentForm.valid" (click)="addComment()" class="post__button">
-                Dodaj
-            </button>
+            <div class="post__button-container">
+                <button type="submit" [disabled]="!commentForm.valid" (click)="addComment()" class="post__button">
+                    Dodaj
+                </button>
+            </div>
         </form>
     </div>
 </div>

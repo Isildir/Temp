@@ -48,6 +48,7 @@ export class HomePageComponent implements OnInit {
       this.invitedGroups = data.data.invited;
       this.awaitingGroups = data.data.waiting;
     });
+
   }
 
   onGroupSelect(id: number) {

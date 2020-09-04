@@ -27,3 +27,50 @@
 
 .profile-settings__row 
     display: flex
+
+
+.profile
+    background: white
+    padding: 40px
+    width: 25%
+    min-width: 400px
+    border-radius: 10px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%,-50%)
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+    &-password-change
+        width: 100%
+    .form
+        fieldset 
+            border: none
+            padding: 0
+        a 
+            padding-right: 5px
+        &__button
+            background: #1f4e62
+            color: white
+            width: 50%
+            padding: 10px
+            text-align: center
+            border: none
+            margin: 0 2px
+            text-transform: uppercase
+            font-size: .8
+            font-weight: 500
+            margin-top: 20px
+        &__form-field
+            margin: 20px 0
+            display: flex
+            flex-direction: column
+        &__form-button
+            display: flex
+            justify-content: flex-end
+            flex-direction: inherit
+    .profile-settings  
+        width: 100%
+        font-size: .8rem
+        opacity: .8
+        border-top: 1px solid #eae5e5
+        padding-top: 10px
